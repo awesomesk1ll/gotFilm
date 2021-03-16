@@ -1,3 +1,5 @@
+![GotFilm.tk](./repository-open-graph-template_720x.png)
+
 ## Добро пожаловать на gotfilm.tk
 
 **[gotfilm.tk](https://gotfilm.tk)** - это приложение для поиска фильма к просмотру за пару кликов.
