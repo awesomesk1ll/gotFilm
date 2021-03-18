@@ -1,0 +1,7 @@
+.cardItem {
+    width: 200px;
+    height: 300px;
+    border: 1px solid #000;
+    text-align: center;
+    margin: 0 20px 20px 0
+}

@@ -1,0 +1,4 @@
+.catalogWrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
