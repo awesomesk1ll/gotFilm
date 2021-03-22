@@ -7,11 +7,10 @@ const initStore = {
 
 export default function filmReducer(store = initStore, action) {
     switch (action.type) {
-        case FIND_FILM: {
+        case FIND_FILM:
             return update(store, {
                 films: [...store.films]
             });
-        }
         default:
             return store;
     }
