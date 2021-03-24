@@ -1,10 +1,10 @@
 import React from "react";
+import './style.css';
 
-class Filter extends React.Component {
+export default class Filter extends React.Component {
   render(){
     return(
       <p>filter</p>
     );
   }
 }
-export default Filter;
