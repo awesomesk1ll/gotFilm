@@ -1,6 +1,6 @@
 import React from 'react';
-import ThemeButton from '../components/ThemeButton';
-import Home from '../pages/Home';
+import ThemeButton from '../components/ThemeButton/ThemeButton';
+import Home from '../pages/Home/Home';
 
 const App = (props) => {
   return (
