@@ -13,13 +13,12 @@ const ThemeButton = (props) => {
     <Button
       type="primary"
       ghost
-      onClick={changeTheme}
+      onClick={ changeTheme }
       id="changeTheme"
-      style={{
+      style={ {
         display: "block",
-        margin: "25px auto ",
         textTransform: "uppercase",
-      }}
+      } }
     >
       change theme
     </Button>
