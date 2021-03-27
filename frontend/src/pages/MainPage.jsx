@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import search from "../assets/icons/search_icon.svg";
 
 const MainPage = (props) => {
 
@@ -8,7 +7,6 @@ const MainPage = (props) => {
     <section className="mainPage">
       <p className="mainPage__title">gotfilm</p>
       <NavLink className="mainPage__link" to="/catalog">
-        <img className="mainPage__icon" src={search} alt="search_icon" />
       </NavLink>
     </section>
   );
