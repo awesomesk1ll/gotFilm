@@ -1,6 +1,11 @@
+@import '../../styles/variables.scss';
+
 .loginForm {
   max-width: 300px;
   margin: 50px auto;
+  padding: 20px;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
   &__title {
     text-align: center;
   }
