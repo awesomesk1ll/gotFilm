@@ -2,7 +2,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { NavLink } from 'react-router-dom';
 import "./LoginPage.scss"
 
-const NormalLoginForm = (props) => {
+const LoginForm = (props) => {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
@@ -64,7 +64,7 @@ const NormalLoginForm = (props) => {
   );
 };
 
-export default NormalLoginForm;
+export default LoginForm;
 
 // import React from "react";
 // import { Field, reduxForm } from "redux-form";
