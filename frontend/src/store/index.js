@@ -25,4 +25,6 @@ export const store = createStore(
     ),
 );
 
+window.store = store;
+
 export const persistor = persistStore(store);

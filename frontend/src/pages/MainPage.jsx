@@ -6,7 +6,7 @@ const MainPage = (props) => {
 
   return (
     <section className="mainPage">
-      <h1 className="mainPage__title">gotfilm</h1>
+      <p className="mainPage__title">gotfilm</p>
       <NavLink className="mainPage__link" to="/catalog">
         <img className="mainPage__icon" src={search} alt="search_icon" />
       </NavLink>

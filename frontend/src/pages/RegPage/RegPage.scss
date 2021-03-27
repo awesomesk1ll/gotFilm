@@ -1,0 +1,10 @@
+.regForm {
+  max-width: 300px;
+  margin: 50px auto;
+  &__title {
+    text-align: center;
+  }
+  &__button {
+    width: 100%;
+  }
+}

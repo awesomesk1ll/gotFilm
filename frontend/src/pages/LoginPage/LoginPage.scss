@@ -1,0 +1,17 @@
+.loginForm {
+  max-width: 300px;
+  margin: 50px auto;
+  &__title {
+    text-align: center;
+  }
+  &__button {
+    width: 100%;
+  }
+  &__forgot {
+    float: right;
+  }
+}
+
+.ant-col-rtl .loginForm__forgot {
+  float: left;
+}
