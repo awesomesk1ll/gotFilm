@@ -66,7 +66,7 @@ const RegistrationForm = (props) => {
         rules={[
           {
             required: true,
-            message: "Пожалуйста подтвертите введённый пароль!",
+            message: "Пожалуйста подтвердите введённый пароль!",
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
