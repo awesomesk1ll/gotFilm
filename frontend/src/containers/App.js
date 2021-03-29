@@ -1,6 +1,6 @@
 import React from 'react';
-import ThemeButton from '../components/ThemeButton';
-import MainPage from '../pages/MainPage';
+import ThemeButton from '../components/ThemeButton/ThemeButton';
+import Home from '../pages/Home/Home';
 
 
 const App = (props) => {
@@ -8,7 +8,7 @@ const App = (props) => {
     <div className="App">
       Hello World!
       <ThemeButton />
-      <MainPage />
+      <Home />
     </div>
   );
 };
