@@ -1,68 +1,99 @@
-import React, { useState } from 'react';
-import ChooseButton from '../components/ChooseButton/ChooseButton';
+import React, { useEffect, useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
+import connect from 'react-redux/es/connect/connect';
+import { bindActionCreators } from 'redux';
+
+import ButtonGroup from '../components/ButtonGroup/ButtonGroup';
 import Star from '../components/icons/Star';
+import { blacklistFilm, alreadySeenFilm, changeFilm, getFilmsFromApi } from '../store/actions/filmActions';
 
 const FilmCard = (props) => {
-    const [name, setName] = useState(() => {
-        return 'друзья';
-    });
-    const [rate, setRate] = useState(() => {
-        return '9.2';
-    });
-    const [secondName, setSecondName] = useState(() => {
-        return 'friends';
-    });
-    const [year, setYear] = useState(() => {
-        return '1994';
-    });
-    const [countries, setCountries] = useState(() => {
-        return ['США'];
-    });
+    useEffect(() => {
+        props.getFilmsFromApi();
+        console.log(props.films);
+        console.log(props.film);
+    }, []);
 
-    const [genres, setGenres] = useState(() => {
-        return ['комедия', 'мелодрама'];
-    });
+    /*const fetchFilms = useCallback(async () => {
+        let response = await Axios.get("./films.json")
+            .then(response => {
+                let data = response.data;
+                props.loadFilms(data);
+            });
+    }, [props.loadFilms, props.newFilms]);*/
 
-    const [age, setAge] = useState(() => {
-        return '16+';
-    });
-    const [description, setDescription] = useState(() => {
-        return 'Главные герои - шестеро друзей - Рейчел, Моника, Фиби, Джоуи, Чендлер и Росс. Три девушки и три парня, которые дружат, живут по соседству, вместе убивают время и противостоят жестокой реальности, делятся своими секретами и иногда очень сильно влюбляются.';
-    });
+    const handleChangeFilm = useCallback(() => {
+        let randomFilm = Math.round(Math.random() * ((props.films.length - 1) - 0) + 0);
+        if (!props.alreadySeenFilms.includes(props.films[randomFilm]) && !props.blacklistFilms.includes(props.films[randomFilm])) {
+            props.changeFilm(randomFilm);
+        }
+    }, [props.films, props.alreadySeenFilms, props.blacklistFilms]);
 
-    let genresList = genres.map((item, i) => <span key={i}>{item}, </span>);
-    let countryList = countries.map((item, i) => i + 1 < countries.length ? <span key={i}>{item}, </span> : <span key={i}>{item}</span>);
+    const handleRemoveFilmToBlacklist = useCallback(() => {
+        if (!props.blacklistFilms.includes(props.film)) {
+            props.blacklistFilm(props.film);
+        }
+        console.log(props.blacklistFilms);
+        handleChangeFilm();
+    }, [props.blacklistFilms, props.film]);
+
+    const handleRemoveFilmToAlreadySeen = useCallback(() => {
+        if (!props.alreadySeenFilms.includes(props.film)) {
+            props.alreadySeenFilm(props.film);
+        }
+        console.log(props.alreadySeenFilms);
+        handleChangeFilm();
+    }, [props.alreadySeenFilms, props.film]);
+
+    let genresList = props.film.genres.map((item, i) => <span key={i}>{item}, </span>);
+    let countryList = props.film.countries.map((item, i) => i + 1 < props.film.countries.length ? <span key={i}>{item}, </span> : <span key={i}>{item}</span>);
 
     return (
         <div className="filmCard--wrapper">
             <div className="filmCard__poster">
-                <img src="https://kinopoiskapiunofficial.tech/images/posters/kp_small/77044.jpg" alt="poster" className="filmCard__poster__image" />
+                <img src={`https://kinopoiskapiunofficial.tech/images/posters/kp_small/${props.film.id}.jpg`} alt="poster" className="filmCard__poster__image" />
             </div>
             <div className="filmCard__infoBlock">
                 <div className="filmCard__infoBlock--titleWrapper">
-                    <h3 className="filmCard__infoBlock__title" style={{ fontSize: name.length > 10 ? '20px' : '' }}>{name}</h3>
+                    <h3 className="filmCard__infoBlock__title" style={{ fontSize: props.film.name.length > 10 ? '20px' : '' }}>{props.film.name}</h3>
                     <p className="filmCard__infoBlock__rate">
                         <Star />
-                        {rate}
+                        {props.film.rate}
                     </p>
                 </div>
                 <div className="filmCard__infoBlock--secondTitleWrapper">
-                    <p className="filmCard__infoBlock__secondTitle">{secondName}</p>
-                    <p className="filmCard__infoBlock__year">{year}г. ({countryList})</p>
+                    <p className="filmCard__infoBlock__secondTitle">{props.film.secondName}</p>
+                    <p className="filmCard__infoBlock__year">{props.film.year}г. ({countryList})</p>
                 </div>
-                <p className="filmCard__infoBlock__genre">{genresList}<span>{age}</span></p>
+                <p className="filmCard__infoBlock__genre">{genresList}<span>{props.film.age}</span></p>
                 <hr className="filmCard__infoBlock--underline" />
-                <p className="filmCard__infoBlock__description">{description}</p>
-                <div className="filmCard__infoBlock__buttonGroup">
-                    <ChooseButton>не предлагать</ChooseButton>
-                    <ChooseButton>уже смотрел</ChooseButton>
-                    <ChooseButton>в другой раз</ChooseButton>
-                </div>
+                <p className="filmCard__infoBlock__description">{props.film.description}</p>
+                <ButtonGroup changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} />
                 <div className="emptyBlock"></div>
             </div>
             <div className="navigation"></div>
         </div>
     )
-}
+};
 
-export default FilmCard;
+FilmCard.propTypes = {
+    film: PropTypes.object,
+    films: PropTypes.array,
+    blacklistFilms: PropTypes.array,
+    alreadySeenFilms: PropTypes.array,
+    blacklistFilm: PropTypes.func,
+    alreadySeenFilm: PropTypes.func,
+    changeFilm: PropTypes.func,
+    getFilmsFromApi: PropTypes.func
+};
+
+const mapStateToProps = ({ filmReducer }) => ({
+    films: filmReducer.films,
+    film: filmReducer.film,
+    blacklistFilms: filmReducer.blacklistFilms,
+    alreadySeenFilms: filmReducer.alreadySeenFilms
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ changeFilm, getFilmsFromApi, blacklistFilm, alreadySeenFilm }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilmCard);
