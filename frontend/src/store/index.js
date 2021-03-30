@@ -15,7 +15,7 @@ const persistConfig = {
     key: 'filmSearch',
     storage,
     stateReconciler: autoMergeLevel2,
-    blacklist: ['filmReducer'],
+    whitelist: ['filmReducer'],
 };
 
 export const store = createStore(

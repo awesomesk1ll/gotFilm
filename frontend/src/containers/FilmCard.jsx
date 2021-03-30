@@ -8,10 +8,18 @@ import Star from '../components/icons/Star';
 import { blacklistFilm, alreadySeenFilm, changeFilm, getFilmsFromApi } from '../store/actions/filmActions';
 
 const FilmCard = (props) => {
-    useEffect(() => {
+    const [mounted, setMounted] = useState(() => {
+        return false;
+    })
+
+    if(!mounted) {
         props.getFilmsFromApi();
-        console.log(props.films);
-        console.log(props.film);
+    }
+
+    useEffect(() => {
+        setMounted(() => {
+            return true;
+        })
     }, []);
 
     /*const fetchFilms = useCallback(async () => {
@@ -33,7 +41,6 @@ const FilmCard = (props) => {
         if (!props.blacklistFilms.includes(props.film)) {
             props.blacklistFilm(props.film);
         }
-        console.log(props.blacklistFilms);
         handleChangeFilm();
     }, [props.blacklistFilms, props.film]);
 
@@ -41,7 +48,6 @@ const FilmCard = (props) => {
         if (!props.alreadySeenFilms.includes(props.film)) {
             props.alreadySeenFilm(props.film);
         }
-        console.log(props.alreadySeenFilms);
         handleChangeFilm();
     }, [props.alreadySeenFilms, props.film]);
 

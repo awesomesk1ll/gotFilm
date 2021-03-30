@@ -27,7 +27,7 @@ export const alreadySeenFilm = (film) => ({
 
 export const getFilmsFromApi = () => {
     return async (dispatch) => {
-        let response = await axios.get("./films.json")
+        await axios.get("./films.json")
             .then(response => {
                 dispatch(loadFilms(response.data));
             })

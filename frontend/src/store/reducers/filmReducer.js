@@ -5,17 +5,7 @@ const initStore = {
     films: [],
     blacklistFilms: [],
     alreadySeenFilms: [],
-    film: {
-        id: 77044,
-        name: "друзья",
-        rate: 9.2,
-        secondName: "friends",
-        year: 1994,
-        countries: ["США"],
-        genres: ["комедия","мелодрама"],
-        age: "16+",
-        description: "Главные герои - шестеро друзей - Рейчел, Моника, Фиби, Джоуи, Чендлер и Росс. Три девушки и три парня, которые дружат, живут по соседству, вместе убивают время и противостоят жестокой реальности, делятся своими секретами и иногда очень сильно влюбляются."
-    }
+    film: {}
 }
 
 export default function filmReducer(store = initStore, action) {
@@ -26,9 +16,9 @@ export default function filmReducer(store = initStore, action) {
                 films: {
                     $set: [...action.films]
                 },
-                /*film: {
+                film: {
                     $set: { ...store.films[randomFilm] }
-                }*/
+                }
             });
         }
         case CHANGE_FILM: {
