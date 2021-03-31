@@ -12,7 +12,7 @@ import './styles/styles.scss';
 import App from './containers/App';
 import { store, persistor, history } from './store';
 import Catalog from './pages/Catalog';
-import SettingsPage from './pages/SettingsPage';
+import SettingsPage from './pages/Settings/SettingsPage.jsx';
 
 ReactDOM.render(
   <Provider store={store}>
