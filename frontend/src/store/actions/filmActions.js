@@ -1,13 +1,18 @@
 import axios from 'axios';
 
 export const LOAD_FILMS = '@@film/LOAD_FILMS';
-export const BLACKLIST_FILM = '@@film/BLACKLIST_FILM';
-export const ALREADY_SEEN_FILM = '@@film/ALREADY_SEEN_FILM';
+export const ADD_TO_BLACKLIST_FILMS = '@@film/BLACKLIST_FILMS';
+export const ADD_TO_ALREADY_SEEN_FILMS = '@@film/ALREADY_SEEN_FILMS';
 export const CHANGE_FILM = '@@film/CHANGE_FILM';
+export const GET_RANDOM_FILM = '@@film/RANDOM_FILM';
 
 export const changeFilm = (film) => ({
     type: CHANGE_FILM,
     film
+});
+
+export const getRandomFilm = () => ({
+    type: GET_RANDOM_FILM,
 });
 
 export const loadFilms = (films) => ({
@@ -15,13 +20,13 @@ export const loadFilms = (films) => ({
     films
 });
 
-export const blacklistFilm = (film) => ({
-    type: BLACKLIST_FILM,
+export const addToBlacklistFilms = (film) => ({
+    type: ADD_TO_BLACKLIST_FILMS,
     film
 });
 
-export const alreadySeenFilm = (film) => ({
-    type: ALREADY_SEEN_FILM,
+export const addToAlreadySeenFilms = (film) => ({
+    type: ADD_TO_ALREADY_SEEN_FILMS,
     film
 });
 
@@ -29,7 +34,8 @@ export const getFilmsFromApi = () => {
     return async (dispatch) => {
         await axios.get("./films.json")
             .then(response => {
-                dispatch(loadFilms(response.data));
+                dispatch(loadFilms(response.data)); 
+                dispatch(getRandomFilm());
             })
     }
 }

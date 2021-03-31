@@ -1,21 +1,25 @@
 import update from 'react-addons-update';
-import { ALREADY_SEEN_FILM, BLACKLIST_FILM, CHANGE_FILM, LOAD_FILMS } from '../actions/filmActions';
+import { ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, CHANGE_FILM, LOAD_FILMS, GET_RANDOM_FILM } from '../actions/filmActions';
 
 const initStore = {
     films: [],
+    film: {},
     blacklistFilms: [],
-    alreadySeenFilms: [],
-    film: {}
+    alreadySeenFilms: []
 }
 
 export default function filmReducer(store = initStore, action) {
     switch (action.type) {
         case LOAD_FILMS: {
-            let randomFilm = Math.round(Math.random() * ((store.films.length - 1) - 0) + 0);
             return update(store, {
                 films: {
                     $set: [...action.films]
-                },
+                }
+            });
+        }
+        case GET_RANDOM_FILM: {
+            let randomFilm = Math.round(Math.random() * ((store.films.length - 1) - 0) + 0);
+            return update(store, {
                 film: {
                     $set: { ...store.films[randomFilm] }
                 }
@@ -28,14 +32,14 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
-        case BLACKLIST_FILM: {
+        case ADD_TO_BLACKLIST_FILMS: {
             return update(store, {
                 blacklistFilms: {
                     $merge: [...store.blacklistFilms, action.film]
                 }
             });
         }
-        case ALREADY_SEEN_FILM: {
+        case ADD_TO_ALREADY_SEEN_FILMS: {
             return update(store, {
                 alreadySeenFilms: {
                     $merge: [...store.alreadySeenFilms, action.film]
