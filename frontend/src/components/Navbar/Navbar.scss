@@ -141,12 +141,13 @@
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   .navbar {
     &__mobile {
       display: none;
     }
     &__desktop {
+      background: #fff;
       padding: 0 2rem;
       height: 46px;
       display: flex;

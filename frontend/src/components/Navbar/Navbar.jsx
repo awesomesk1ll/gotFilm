@@ -7,7 +7,6 @@ import Search from "../icons/Search";
 import "./Navbar.scss";
 
 const Navbar = () => {
-
   return (
     <div className="navbar">
       <div className="navbar__mobile">
@@ -27,12 +26,17 @@ const Navbar = () => {
         <Link className="navbar__desktop-item" to="/">
           Главная
         </Link>
+        <Link className="navbar__desktop-item" to="/film_lists">
+          Списки фильмов
+        </Link>
         <Link className="navbar__desktop-item" to="/setings">
           Настройки
         </Link>
         <form className="navbar__desktop-form">
           <Input placeholder="Поиск..." />
-          <Button><Search /></Button>
+          <Button>
+            <Search />
+          </Button>
         </form>
 
         <Link className="navbar__desktop-item login" to="/login">

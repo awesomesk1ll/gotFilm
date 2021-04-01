@@ -1,23 +1,27 @@
-import React from 'react';
-import { Route, Switch } from 'react-router';
-import Home from "./pages/Home/Home"
-import Catalog from './pages/Catalog';
-import LoginForm from './pages/LoginPage/LoginPage';
-import RegistrationForm from "./pages/RegistrationPage/RegistrationPage";
-import FilmLists from './pages/FilmLists/FilmLists';
+import React, { useEffect }  from 'react';
+import PropTypes from 'prop-types';
+import connect from 'react-redux/es/connect/connect';
+import { bindActionCreators } from 'redux';
+
+import Router from './containers/Router';
+import { getFilmsFromApi } from './store/actions/getApiAction';
 
 const App = (props) => {
+  useEffect(() => {
+    props.getFilmsFromApi();
+  }, []);
+
   return (
     <div className="App">
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/catalog" component={Catalog} />
-          <Route path="/film_lists" component={FilmLists} />
-          <Route path="/login" component={LoginForm} />
-          <Route path="/registration" component={RegistrationForm} />
-        </Switch>
+        <Router />
     </div>
   );
 };
 
-export default App;
+App.propTypes = {
+  getFilmsFromApi: PropTypes.func
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators({ getFilmsFromApi }, dispatch);
+
+export default connect(null, mapDispatchToProps)(App);
