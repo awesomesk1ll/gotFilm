@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
@@ -7,6 +7,20 @@ import FilmCard from '../pages/FilmCard/FilmCard';
 import { addToBlacklistFilms, addToAlreadySeenFilms, changeFilm } from '../store/actions/filmActions';
 
 const FilmCardContainer = (props) => {
+    useEffect(() => {
+        handleScrollToBottom();
+    }, []);
+
+    useEffect(() => {
+        handleScrollToBottom();
+    }, [props.film]);
+
+    const cardEndRef = useRef(null);
+
+    const handleScrollToBottom = () => {
+        cardEndRef.current.scrollIntoView({ behavior: "smooth" });
+    };
+
     const handleChangeFilm = useCallback(() => {
         let randomFilm = Math.round(Math.random() * ((props.films.length - 1) - 0) + 0);
         if (!props.alreadySeenFilms.includes(props.films[randomFilm]) && !props.blacklistFilms.includes(props.films[randomFilm])) {
@@ -39,7 +53,9 @@ const FilmCardContainer = (props) => {
     }, [props.film]);
 
     return (
-        <FilmCard film={props.film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
+        <div className="wrapper">
+            <FilmCard cardEndRef={cardEndRef} film={props.film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
+        </div>
     )
 };
 

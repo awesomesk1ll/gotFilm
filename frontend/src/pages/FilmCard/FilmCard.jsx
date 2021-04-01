@@ -6,6 +6,8 @@ import Star from '../../components/icons/Star';
 import './FilmCard.scss';
 
 const FilmCard = (props) => {
+    
+
     let genresList = props.film.genres.map((item, i) => <span key={i}>{item}, </span>);
     let countryList = props.film.countries.map((item, i) => i + 1 < props.film.countries.length ? <span key={i}>{item}, </span> : <span key={i}>{item}</span>);
 
@@ -36,7 +38,7 @@ const FilmCard = (props) => {
                     <FilmCardButton eventAction={props.seenFilm}>не предлагать</FilmCardButton>
                     <FilmCardButton eventAction={props.changeFilm}>в другой раз</FilmCardButton>
                 </div>
-                <div className="filmCard__footer__emptyBlock"></div>
+                <div className="filmCard__footer__emptyBlock" ref={props.cardEndRef}></div>
             </div>
             <div className="navigation"></div>
         </div>
@@ -45,10 +47,11 @@ const FilmCard = (props) => {
 
 FilmCard.propTypes = {
     film: PropTypes.object,
+    cardEndRef: PropTypes.object,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,
     changeFilm: PropTypes.func,
-    changeFontSize: PropTypes.func
+    changeFontSize: PropTypes.func,
 };
 
 export default FilmCard;
