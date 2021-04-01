@@ -1,0 +1,196 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import "../../styles/variables.scss";
+
+.navbar {
+  &__desktop {
+    display: none;
+  }
+  &__mobile {
+    box-shadow: $box-shadow;
+    height: 46px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__item {
+    display: block;
+    & svg {
+      width: 28px;
+    }
+    &:hover,
+    :active {
+      fill: $activbtn;
+    }
+  }
+}
+
+.search-container {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  height: 100px;
+  .search {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background: $activbtn;
+    border-radius: 50%;
+    transition: all 1s;
+    z-index: 4;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+    &:hover {
+      cursor: pointer;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      margin: auto;
+      top: 22px;
+      right: 0;
+      bottom: 0;
+      left: 22px;
+      width: 12px;
+      height: 2px;
+      background: white;
+      transform: rotate(45deg);
+      transition: all 0.5s;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      margin: auto;
+      top: -5px;
+      right: 0;
+      bottom: 0;
+      left: -5px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 2px solid white;
+      transition: all 0.5s;
+    }
+  }
+
+  input {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    outline: none;
+    border: none;
+    background: $activbtn;
+    color: white;
+    text-shadow: 0 0 10px $activbtn;
+    padding: 0 80px 0 20px;
+    border-radius: 30px;
+    box-shadow: 0 0 25px 0 $activbtn, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+    transition: all 1s;
+    opacity: 0;
+    z-index: 5;
+    letter-spacing: 0.1em;
+    &:hover {
+      cursor: pointer;
+    }
+    &:focus {
+      width: 300px;
+      opacity: 1;
+      cursor: text;
+    }
+    &:focus ~ .search {
+      right: -250px;
+      background: #151515;
+      z-index: 6;
+      &::before {
+        top: 0;
+        left: 0;
+        width: 25px;
+      }
+      &::after {
+        top: 0;
+        left: 0;
+        width: 25px;
+        height: 2px;
+        border: none;
+        background: white;
+        border-radius: 0%;
+        transform: rotate(-45deg);
+      }
+    }
+    &::placeholder {
+      color: white;
+      opacity: 0.5;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar {
+    &__mobile {
+      display: none;
+    }
+    &__desktop {
+      padding: 0 2rem;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      box-shadow: $box-shadow;
+    }
+    &__desktop-item {
+      margin: 0 0 0 2rem;
+      color: #000;
+      font-size: 18px;
+      &:hover,
+      :active {
+        color: $activbtn;
+      }
+    }
+    &__desktop-form {
+      width: 300px;
+      margin-left: auto;
+      display: flex;
+      & input {
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid #ccc;
+      }
+      & input:hover {
+        border-bottom: 1px solid $activbtn;
+      }
+      & button {
+        border: none;
+        background: transparent;
+        height: 32px;
+        padding: 0 8px;
+        & svg {
+          width: 30px;
+          height: 30px;
+        }
+        :hover, :active {
+          fill: $activbtn;
+        }
+      }
+    }
+  }
+
+  .login {
+    margin-left: 2rem;
+  }
+}
