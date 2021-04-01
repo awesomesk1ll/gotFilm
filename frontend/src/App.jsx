@@ -10,11 +10,11 @@ const App = (props) => {
   return (
     <div className="App">
         <Switch>
-          <Route exact path="/" render={() => <Home />} />
-          <Route path="/catalog" render={() => <Catalog />} />
-          <Route path="/film_lists" render={() => <FilmLists />} />
-          <Route path="/login" render={() => <LoginForm />} />
-          <Route path="/registration" render={() => <RegistrationForm />} />
+          <Route exact path="/" component={Home} />
+          <Route path="/catalog" component={Catalog} />
+          <Route path="/film_lists" component={FilmLists} />
+          <Route path="/login" component={LoginForm} />
+          <Route path="/registration" component={RegistrationForm} />
         </Switch>
     </div>
   );
