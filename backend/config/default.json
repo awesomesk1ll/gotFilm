@@ -1,0 +1,6 @@
+{
+    "port": "5000",
+    "jwtSecret": "some secret",
+    "mongoUri": "mongodb+srv://gotFilm:1234qwer@cluster0.nhqom.mongodb.net/gotFilmDatabase?retryWrites=true&w=majority",
+    "baseUrl": "http://localhost:5000"
+}
