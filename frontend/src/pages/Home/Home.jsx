@@ -1,31 +1,18 @@
-import React, { useCallback } from 'react';
-import { push } from 'connected-react-router';
-import PropTypes from 'prop-types';
-import connect from 'react-redux/es/connect/connect';
-import { bindActionCreators } from 'redux';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Search from '../../components/icons/Search';
-import './home.scss';
+import './Home.scss';
 
 const Home = (props) => {
-  const handleNavigate = useCallback(link => {
-    props.push(link);
-  }, []);
-
   return (
     <div className="main-page">
       <h1 className="main-page__title">gotfilm</h1>
-      <a className="main-page__icon" onClick={() => handleNavigate('/film')}>
+      <Link className="main-page__icon" to="/film">
         <Search />
-      </a>
+      </Link>
     </div>
   );
 };
 
-Home.propTypes = {
-  push: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = dispatch => bindActionCreators({ push }, dispatch);
-
-export default connect(null, mapDispatchToProps)(Home);
+export default Home;
