@@ -5,7 +5,6 @@ import Search from '../../components/icons/Search';
 import './home.scss';
 
 const Home = (props) => {
-
   return (
     <div className="main-page">
       <h1 className="main-page__title">gotfilm</h1>
