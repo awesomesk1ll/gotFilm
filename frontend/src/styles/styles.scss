@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import './variables.scss'; 
+
 body {
   margin: 0;
   padding: 0;
@@ -7,4 +10,14 @@ body {
     background: #343a40;
     color: #fff;
   }
+}
+
+button {
+  cursor: pointer;
+}
+
+input, button {
+  outline: none;
+  background: transparent;
+  border: none;
 }
