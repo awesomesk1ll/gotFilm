@@ -12,7 +12,6 @@ const FilmCard = (props) => {
 
     return (
         <div className="filmCard--wrapper">
-            <Navbar />
             <div className="filmCard__poster">
                 <img src={`https://kinopoiskapiunofficial.tech/images/posters/kp_small/${props.film.id}.jpg`} alt="poster" className="filmCard__poster__image" />
             </div>
@@ -40,6 +39,7 @@ const FilmCard = (props) => {
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={props.cardEndRef}></div>
             </div>
+            <Navbar />
         </div>
     )
 };

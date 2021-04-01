@@ -22,13 +22,13 @@ const HamburgerMenu = (props) => {
           </Link>
         </li>
         <li>
-          <Link className="navbar__desktop-item" to="/film_lists">
+          <Link className="hamburger-menu__item" to="/film_lists">
             Списки фильмов
           </Link>
         </li>
         <li>
           <Link className="hamburger-menu__item" to="/settings">
-            Избранные
+            Настройки
           </Link>
         </li>
       </ul>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Search from '../../components/icons/Search';
-import './home.scss';
+import './Home.scss';
 
 const Home = (props) => {
 
