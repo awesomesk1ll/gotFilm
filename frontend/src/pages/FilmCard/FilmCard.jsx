@@ -6,8 +6,6 @@ import Star from '../../components/icons/Star';
 import './FilmCard.scss';
 
 const FilmCard = (props) => {
-    
-
     let genresList = props.film.genres.map((item, i) => <span key={i}>{item}, </span>);
     let countryList = props.film.countries.map((item, i) => i + 1 < props.film.countries.length ? <span key={i}>{item}, </span> : <span key={i}>{item}</span>);
 
