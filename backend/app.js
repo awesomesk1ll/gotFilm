@@ -18,7 +18,7 @@ async function start() {
             useCreateIndex: true,
             useFindAndModify: false 
         })
-        app.listen(5000, () => console.log(`Server has benn started on port ${PORT}...`));
+        app.listen(PORT, () => console.log(`Server has benn started on port ${PORT}...`));
     } catch (e) {
         console.log('Server Error', e.message);
         process.exit(1)
