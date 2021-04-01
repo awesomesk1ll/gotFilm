@@ -76,4 +76,4 @@ const mapStateToProps = ({ filmReducer }) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({ changeFilm, addToBlacklistFilms, addToAlreadySeenFilms }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilmCardContainer); 
+export default connect(mapStateToProps, mapDispatchToProps)(FilmCardContainer);
