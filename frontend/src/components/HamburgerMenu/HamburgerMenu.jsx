@@ -12,11 +12,6 @@ const HamburgerMenu = (props) => {
 
       <ul className="hamburger-menu__box">
         <li>
-          <Link className="hamburger-menu__item" to="/login">
-            Войти
-          </Link>
-        </li>
-        <li>
           <Link className="hamburger-menu__item" to="/">
             Главная
           </Link>

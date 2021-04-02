@@ -38,10 +38,6 @@ const Navbar = () => {
             <Search />
           </Button>
         </form>
-
-        <Link className="navbar__desktop-item login" to="/login">
-          Войти
-        </Link>
       </div>
     </div>
   );
