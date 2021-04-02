@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import './variables.scss'; 
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: .2s all ease-in;
+  &.dark {
+    background: #343a40;
+    color: #fff;
+  }
+}
+
+button {
+  cursor: pointer;
+}
+
+input, button {
+  outline: none;
+  background: transparent;
+  border: none;
+}
