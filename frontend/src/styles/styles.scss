@@ -37,4 +37,5 @@ div.ant-image-preview {
 /* fix ant image in modal grows for 100% available width */
 img.ant-image-preview-img {
   width: 100%;
+  object-fit: scale-down;
 }
