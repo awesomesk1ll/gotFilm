@@ -33,7 +33,7 @@ const FilmCard = (props) => {
                 <p className="filmCard__infoBlock__genre">{genresList}<span>{props.film.age}</span></p>
                 <hr className="filmCard__infoBlock--underline" />
                 <input type="checkbox" name="hiddenDesc" id="hiddenDesc" className="inputDesc" />
-                <label htmlFor="hiddenDesc" className="filmCard__infoBlock__description--limited">
+                <label htmlFor="hiddenDesc" className="filmCard__infoBlock__description--label">
                     <p className="filmCard__infoBlock__description">{props.film.description}</p>
                 </label>
             </div>
