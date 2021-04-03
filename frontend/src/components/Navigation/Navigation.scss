@@ -1,0 +1,15 @@
+@import '../../styles/variables.scss';
+
+.navigation-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.ant-radio {
+    display: none;
+}
+
+.ant-radio-wrapper-checked {
+    fill: $activbtn;
+}
