@@ -133,7 +133,7 @@
     opacity: 0;
     &:checked ~ .filmCard__infoBlock__description--label {
       //-webkit-line-clamp: 10;
-      max-height: 350px;
+      max-height: 100%;
     }
   }
   
