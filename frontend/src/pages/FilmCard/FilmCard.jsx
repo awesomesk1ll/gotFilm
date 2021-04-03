@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Image } from 'antd';
 import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
 import Star from '../../components/icons/Star';
 import './FilmCard.scss';
@@ -12,7 +13,10 @@ const FilmCard = (props) => {
     return (
         <div className="filmCard--wrapper">
             <div className="filmCard__poster">
-                <img src={`https://kinopoiskapiunofficial.tech/images/posters/kp_small/${props.film.id}.jpg`} alt="poster" className="filmCard__poster__image" />
+                <Image 
+                    src={`https://kinopoiskapiunofficial.tech/images/posters/kp_small/${props.film.id}.jpg`}
+                    className="filmCard__poster__image"
+                />
             </div>
             <div className="filmCard__infoBlock">
                 <div className="filmCard__infoBlock--titleWrapper">
@@ -28,7 +32,10 @@ const FilmCard = (props) => {
                 </div>
                 <p className="filmCard__infoBlock__genre">{genresList}<span>{props.film.age}</span></p>
                 <hr className="filmCard__infoBlock--underline" />
-                <p className="filmCard__infoBlock__description">{props.film.description}</p>
+                <input type="checkbox" name="hiddenDesc" id="hiddenDesc" className="inputDesc" />
+                <label htmlFor="hiddenDesc" className="filmCard__infoBlock__description--limited">
+                    <p className="filmCard__infoBlock__description">{props.film.description}</p>
+                </label>
             </div>
             <div className="filmCard__footer">
                 <div className="filmCard__footer__buttonGroup">
