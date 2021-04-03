@@ -6,6 +6,7 @@
     display: none;
   }
   &__mobile {
+    background: $templateBackgroundColor;
     box-shadow: $box-shadow;
     height: 46px;
     position: fixed;
@@ -30,14 +31,14 @@
 }
 
 .search-container {
-  position: absolute;
+  position: relative;
   margin: auto;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   width: 300px;
-  height: 100px;
+  height: 46px;
   .search {
     position: absolute;
     margin: auto;
@@ -110,7 +111,7 @@
       cursor: pointer;
     }
     &:focus {
-      width: 300px;
+      width: 250px;
       opacity: 1;
       cursor: text;
     }
@@ -184,7 +185,8 @@
           width: 30px;
           height: 30px;
         }
-        :hover, :active {
+        :hover,
+        :active {
           fill: $activbtn;
         }
       }

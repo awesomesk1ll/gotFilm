@@ -37,9 +37,9 @@ const FilmCard = (props) => {
                     <FilmCardButton eventAction={props.seenFilm}>не предлагать</FilmCardButton>
                     <FilmCardButton eventAction={props.changeFilm}>в другой раз</FilmCardButton>
                 </div>
-                <div className="filmCard__footer__emptyBlock" ref={props.cardEndRef}></div>
+                <div className="filmCard__footer__emptyBlock" ref={props.cardEndRef}><Navbar /></div>
             </div>
-            <Navbar />
+            
         </div>
     )
 };

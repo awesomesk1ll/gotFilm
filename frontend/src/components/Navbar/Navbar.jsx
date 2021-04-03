@@ -32,12 +32,6 @@ const Navbar = () => {
         <Link className="navbar__desktop-item" to="/setings">
           Настройки
         </Link>
-        <form className="navbar__desktop-form">
-          <Input placeholder="Поиск..." />
-          <Button>
-            <Search />
-          </Button>
-        </form>
       </div>
     </div>
   );
