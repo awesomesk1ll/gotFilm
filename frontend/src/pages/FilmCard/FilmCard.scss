@@ -16,16 +16,23 @@
     }
     &__poster {
       width: 100%;
-      height: 35%;
-      background-color: lightgray;
+      height: 35vh;
+      background-color: black;
       display: flex;
       object-fit: cover;
       .ant-image {
         width: 100%
       }
+      &__background {
+        height: 35vh;
+        position: fixed;
+        width: 100%;
+        filter: blur(7px);
+      }
       &__image {
         width: 100%;
         height: 100%;
+        object-fit: scale-down;
       }
     }
     &__infoBlock {
@@ -104,7 +111,6 @@
     }
     &__footer {
         width: 100%;
-        height: 138px;
         background-color: $templateBackgroundColor;
         flex: 0 0 auto;
         &__buttonGroup {

@@ -6,6 +6,8 @@ import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
 import Star from '../../components/icons/Star';
 import './FilmCard.scss';
 
+const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
+
 const FilmCard = (props) => {
     let genresList = props.film.genres.map((item, i) => <span key={i}>{item}, </span>);
     let countryList = props.film.countries.map((item, i) => i + 1 < props.film.countries.length ? <span key={i}>{item}, </span> : <span key={i}>{item}</span>);
@@ -13,9 +15,12 @@ const FilmCard = (props) => {
     return (
         <div className="filmCard--wrapper">
             <div className="filmCard__poster">
-                <Image 
-                    src={`https://kinopoiskapiunofficial.tech/images/posters/kp_small/${props.film.id}.jpg`}
-                    className="filmCard__poster__image"
+                <img className="filmCard__poster__background"
+                     src={`${IMAGE_ENDPOINT}/film_iphone/iphone360_${props.film.id}.jpg`}
+                />
+                <Image className="filmCard__poster__image"
+                       preview={{src: `${IMAGE_ENDPOINT}/film_big/${props.film.id}.jpg`}}
+                       src={`${IMAGE_ENDPOINT}/film_iphone/iphone360_${props.film.id}.jpg`}
                 />
             </div>
             <div className="filmCard__infoBlock">
