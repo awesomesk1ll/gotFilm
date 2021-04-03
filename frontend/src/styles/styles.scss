@@ -21,3 +21,21 @@ input, button {
   background: transparent;
   border: none;
 }
+
+/* ANTD style patches */
+
+/* fix for antd modal window when scroll hidden */
+body.ant-scrolling-effect {
+  width: 100% !important;
+}
+
+/* patch makes preview always comes from x 50% y 12% coords */
+div.ant-image-preview {
+  transform-origin: 50% 12% !important;
+}
+
+/* fix ant image in modal grows for 100% available width */
+img.ant-image-preview-img {
+  width: 100%;
+  object-fit: scale-down;
+}
