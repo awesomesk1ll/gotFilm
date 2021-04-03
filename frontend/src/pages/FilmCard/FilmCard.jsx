@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { Image } from 'antd';
@@ -9,6 +9,20 @@ import './FilmCard.scss';
 const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
 
 const FilmCard = (props) => {
+    useEffect(() => {
+        handleScrollToBottom();
+    }, []);
+
+    useEffect(() => {
+        handleScrollToBottom();
+    }, [props.film]);
+
+    const cardEndRef = useRef(null);
+
+    const handleScrollToBottom = useCallback(() => {
+        cardEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }, []);
+
     let genresList = props.film.genres.map((item, i) => <span key={i}>{item}, </span>);
     let countryList = props.film.countries.map((item, i) => i + 1 < props.film.countries.length ? <span key={i}>{item}, </span> : <span key={i}>{item}</span>);
 
@@ -48,7 +62,7 @@ const FilmCard = (props) => {
                     <FilmCardButton eventAction={props.seenFilm}>не предлагать</FilmCardButton>
                     <FilmCardButton eventAction={props.changeFilm}>в другой раз</FilmCardButton>
                 </div>
-                <div className="filmCard__footer__emptyBlock" ref={props.cardEndRef}></div>
+                <div className="filmCard__footer__emptyBlock" ref={cardEndRef}></div>
             </div>
             <div className="navigation"></div>
         </div>
@@ -57,7 +71,7 @@ const FilmCard = (props) => {
 
 FilmCard.propTypes = {
     film: PropTypes.object,
-    cardEndRef: PropTypes.object,
+    //cardEndRef: PropTypes.object,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,
     changeFilm: PropTypes.func,
