@@ -11,11 +11,11 @@ import FilmCardContainer from './FilmCardContainer';
 const Router = (props) => {
     return (
         <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/catalog" component={Catalog} />
-            <Route path="/login" component={LoginForm} />
-            <Route path="/registration" component={RegistrationForm} />
-            <Route path="/film" component={FilmCardContainer} />
+            <Route exact path="/" component={ Home } />
+            <Route path="/catalog" component={ Catalog } />
+            <Route path="/login" component={ LoginForm } />
+            <Route path="/registration" component={ RegistrationForm } />
+            <Route path="/film" component={ FilmCardContainer } />
         </Switch>
     );
 };
