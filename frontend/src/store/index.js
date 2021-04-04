@@ -4,6 +4,7 @@ import { routerMiddleware } from 'connected-react-router';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import thunk from 'redux-thunk';
 
 import RootReducers from './reducers';
 import middlewares from './middlewares';
@@ -14,15 +15,20 @@ const persistConfig = {
     key: 'filmSearch',
     storage,
     stateReconciler: autoMergeLevel2,
-    blacklist: ['filmReducer'],
+    whitelist: ['filmReducer'],
 };
+
+// тернарник внутри compose не сработает
+const composer = window.__REDUX_DEVTOOLS_EXTENSION__ ? compose(
+    applyMiddleware(routerMiddleware(history), thunk, ...middlewares),
+    window.__REDUX_DEVTOOLS_EXTENSION__(),
+) : compose(
+    applyMiddleware(routerMiddleware(history), thunk, ...middlewares),
+);
 
 export const store = createStore(
     persistReducer(persistConfig, RootReducers(history)),
-    compose(
-        applyMiddleware(routerMiddleware(history), ...middlewares),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    ),
+    composer,
 );
 
 export const persistor = persistStore(store);
