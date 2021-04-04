@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Search from '../icons/Search';
 import Settings from '../icons/Settings';
 import Hamburger from '../icons/Hamburger';
@@ -8,11 +7,10 @@ import CustomLink from '../CustomLink';
 import { Radio } from 'antd';
 
 import './Navigation.scss';
-import renderEmpty from "antd/lib/config-provider/renderEmpty";
 
-const Navigation = () => {
+const Navigation = (props) => {
     return (
-        <Radio.Group className="navigation-container" name="radiogroup" defaultValue={ 'search' } >
+        <Radio.Group className="navigation-container" name="radiogroup" defaultValue={ props.checked } >
 
             <CustomLink
                 tag={ Radio }
