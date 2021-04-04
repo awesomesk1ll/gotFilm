@@ -18,12 +18,17 @@ const persistConfig = {
     whitelist: ['filmReducer'],
 };
 
+// тернарник внутри compose не сработает
+const composer = window.__REDUX_DEVTOOLS_EXTENSION__ ? compose(
+    applyMiddleware(routerMiddleware(history), thunk, ...middlewares),
+    window.__REDUX_DEVTOOLS_EXTENSION__(),
+) : compose(
+    applyMiddleware(routerMiddleware(history), thunk, ...middlewares),
+);
+
 export const store = createStore(
     persistReducer(persistConfig, RootReducers(history)),
-    compose(
-        applyMiddleware(routerMiddleware(history), thunk, ...middlewares),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    ),
+    composer,
 );
 
 export const persistor = persistStore(store);
