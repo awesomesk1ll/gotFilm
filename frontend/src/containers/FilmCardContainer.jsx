@@ -2,9 +2,10 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { Spin } from 'antd';
 
 import FilmCard from '../pages/FilmCard/FilmCard';
-import { addToBlacklistFilms, addToAlreadySeenFilms, changeFilm } from '../store/actions/filmActions';
+import { addToBlacklistFilms, addToAlreadySeenFilms, changeFilm } from '../store/actions/AddActions';
 
 const FilmCardContainer = (props) => {
     const handleChangeFilm = useCallback(() => {
@@ -39,7 +40,7 @@ const FilmCardContainer = (props) => {
     }, [props.film]);
 
     return (
-        <FilmCard film={props.film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
+        props.isLoading ? <Spin /> : <FilmCard error={props.error} film={props.film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
     )
 };
 
@@ -48,6 +49,8 @@ FilmCardContainer.propTypes = {
     films: PropTypes.array,
     blacklistFilms: PropTypes.array,
     alreadySeenFilms: PropTypes.array,
+    isLoading: PropTypes.bool,
+    error: PropTypes.string,
     addToBlacklistFilms: PropTypes.func,
     addToAlreadySeenFilms: PropTypes.func,
     changeFilm: PropTypes.func
@@ -57,7 +60,9 @@ const mapStateToProps = ({ filmReducer }) => ({
     films: filmReducer.films,
     film: filmReducer.film,
     blacklistFilms: filmReducer.blacklistFilms,
-    alreadySeenFilms: filmReducer.alreadySeenFilms
+    alreadySeenFilms: filmReducer.alreadySeenFilms,
+    isLoading: filmReducer.isLoading,
+    error: filmReducer.error
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ changeFilm, addToBlacklistFilms, addToAlreadySeenFilms }, dispatch);

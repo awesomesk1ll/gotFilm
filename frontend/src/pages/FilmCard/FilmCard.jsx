@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { Image } from 'antd';
+import ErrorFilmCard from './ErrorFilmCard';
 import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
 import Star from '../../components/icons/Star';
 import './FilmCard.scss';
@@ -27,6 +28,7 @@ const FilmCard = (props) => {
     let countryList = props.film.countries.map((item, i) => i + 1 < props.film.countries.length ? <span key={i}>{item}, </span> : <span key={i}>{item}</span>);
 
     return (
+        props.error ? <ErrorFilmCard error={props.error}/> :
         <div className="filmCard--wrapper">
             <div className="filmCard__poster">
                 <img className="filmCard__poster__background"
@@ -71,7 +73,6 @@ const FilmCard = (props) => {
 
 FilmCard.propTypes = {
     film: PropTypes.object,
-    //cardEndRef: PropTypes.object,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,
     changeFilm: PropTypes.func,
