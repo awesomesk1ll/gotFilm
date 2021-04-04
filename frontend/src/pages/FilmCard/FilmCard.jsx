@@ -51,7 +51,6 @@ const FilmCard = (props) => {
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={ props.cardEndRef }></div>
             </div>
-            {/* <div className="navigation"></div> */ }
             <Navigation checked={ 'search' } />
         </div>
     )
