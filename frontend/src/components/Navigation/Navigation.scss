@@ -4,6 +4,15 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    align-content: center;
+    position: fixed;
+    width: 100%;
+    height: $navigationHeight;
+    bottom: 0;
+    background-color: #eee;
+    background: linear-gradient(0deg, #aaa, #eee);
+    border-top: 1px solid #ccc;
+    
 }
 
 .ant-radio {
