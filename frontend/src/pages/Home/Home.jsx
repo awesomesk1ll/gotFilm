@@ -10,7 +10,7 @@ const Home = (props) => {
     <div className="main-page">
       <h1 className="main-page__title">gotfilm</h1>
       <Link className="main-page__icon" to="/film">
-        <Search />
+        <Search className="search-icon_home" />
       </Link>
     </div>
   );

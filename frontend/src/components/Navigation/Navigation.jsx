@@ -16,20 +16,25 @@ const Navigation = (props) => {
                 tag={ Radio }
                 to='/'
                 value={ 'hamburger' }
+                className={ `navigation-buttons ${props.checked === 'hamburger' ? 'navigation-buttons__checked' : ''}` }
             >
                 <Hamburger />
             </CustomLink>
+            <span className="divition-line"></span>
             <CustomLink
                 tag={ Radio }
                 to='/film'
                 value={ 'search' }
+                className={ `navigation-buttons ${props.checked === 'search' ? 'navigation-buttons__checked' : ''}` }
             >
-                <Search />
+                <Search className="search-icon_small" />
             </CustomLink>
+            <span className="divition-line"></span>
             <CustomLink
                 tag={ Radio }
                 to='/'
                 value={ 'settings' }
+                className={ `navigation-buttons ${props.checked === 'settings' ? 'navigation-buttons__checked' : ''}` }
             >
                 <Settings />
             </CustomLink>
