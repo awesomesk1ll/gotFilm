@@ -1,13 +1,12 @@
 import React from 'react';
-
 import { Typography, Button, Switch, Slider, Select } from 'antd';
-import './Settings.scss';
 import Navigation from '../../components/Navigation';
+import './Settings.scss';
 
-const {Title, Text} = Typography;
+const { Title, Text } = Typography;
 
-const ratings = {5: 'от 5', 10: 'до 10'};
-const years = {1980: 'c 1980', 2021: 'по 2021'};
+const ratings = { 5: 'от 5', 10: 'до 10' };
+const years = { 1980: 'c 1980', 2021: 'по 2021' };
 const genres = [{ value: 'боевик' }, { value: 'комедия' }, { value: 'драма' }, { value: 'мюзикл' }];
 const countries = [{ value: 'Россия' }, { value: 'США' }, { value: 'Франция' }, { value: 'Германия' }];
 
