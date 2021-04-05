@@ -10,7 +10,6 @@ const years = { 1980: 'c 1980', 2021: 'по 2021' };
 const genres = [{ value: 'боевик' }, { value: 'комедия' }, { value: 'драма' }, { value: 'мюзикл' }];
 const countries = [{ value: 'Россия' }, { value: 'США' }, { value: 'Франция' }, { value: 'Германия' }];
 
-
 const Settings = (props) => {
     
     return (

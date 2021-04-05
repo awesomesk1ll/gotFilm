@@ -39,3 +39,67 @@ img.ant-image-preview-img {
   width: 100%;
   object-fit: scale-down;
 }
+
+/* ant  sliders patches */
+.ant-slider {
+  padding-top: 6px;
+  transform: translateY(50%);
+  &:hover {
+    .ant-slider-track {
+      background-color: $activeBtnLighter;
+    }
+    .ant-slider-handle {
+      border: solid $handleSize/6 $activbtn !important;
+    }
+  }
+  &-rail {
+    display: none;
+  }
+  &-step {
+    padding-left: 60px;
+    border-radius: $sliderHeight*0.5;
+    height: $sliderHeight;
+    background: #888;
+  }
+  &-track {
+    background-color: $activbtn;
+    height: $sliderHeight;
+    z-index: 1;
+  }
+  &-dot {
+    display: none;
+  }
+  &-handle {
+    &-dragging {
+      border: solid $handleSize/6 $activeBtnDarker !important;
+      -webkit-box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
+      box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
+    }
+    &:focus {
+      border: solid $handleSize/6 $activbtn !important;
+      -webkit-box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
+      box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
+    }
+    margin-top: -$handleSize/2;
+    z-index: 2;
+    transform: translate3d(-50%, $sliderHeight/2, 0px) !important;
+    width: $handleSize;
+    height: $handleSize;
+    border: solid $handleSize/6 $activbtn !important;
+  }
+  &-mark {
+    top: -22px;
+    left: calc(2% + 4px);
+    width: calc(95% - 4px);
+    &-text {
+      width: 60px;
+    }
+  }
+}
+
+/* ant switch patches */
+.ant-switch {
+  &-checked {
+    background-color: $activbtn;
+  }
+}

@@ -4,6 +4,7 @@
 
 .settings {
   &--wrapper {
+    overflow: hidden;
     min-width: 151px;
     height: 100vh;
     display: flex;
@@ -31,19 +32,20 @@
     padding-bottom: $navigationHeight;
   }
   &__content--row {
-    width: 80%;
+    padding-left: 6px;
+    width: 90%;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   &__content--slider {
-    width: 70%;
+    width: 68%;
   }
   &__content--select {
-    width: 70%;
+    width: 80%;
   }
   &__content--login {
-    width: 80%;
+    width: 90%;
     border-radius: 10px;
     background-color: $activbtn;
     color: white;
@@ -52,7 +54,7 @@
     font-weight: bold;
   }
   &__content--reset {
-    width: 80%;
+    width: 90%;
     border-radius: 10px;
     background-color: transparent;
     color: $activbtn;
