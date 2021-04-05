@@ -5,6 +5,7 @@ import Home from "../pages/Home/Home"
 import LoginForm from '../pages/LoginPage/LoginPage';
 import RegistrationForm from "../pages/RegPage/RegPage";
 import FilmCardContainer from './FilmCardContainer';
+import Settings from '../pages/Settings';
 
 
 const Router = (props) => {
@@ -14,6 +15,7 @@ const Router = (props) => {
             <Route path="/login" component={ LoginForm } />
             <Route path="/registration" component={ RegistrationForm } />
             <Route path="/film" component={ FilmCardContainer } />
+            <Route path="/settings" component={ Settings } />
         </Switch>
     );
 };
