@@ -28,10 +28,10 @@
 }
 
 .divition-line {
-    height: ($navigationHeight - 10px);
+    height: ($navigationHeight - 12px);
     width: 1px;
     background-color: $navigationButtonColor;
-    opacity: 0.8;
+    opacity: 0.6;
     align-self: center;
 }
 
