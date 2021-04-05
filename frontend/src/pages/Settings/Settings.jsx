@@ -23,28 +23,28 @@ const Settings = (props) => {
                 </Button>
 
                 <div className="settings__content--row">
-                    <Text strong>Темная версия оформления</Text>
+                    <Text>Темная версия оформления</Text>
                     <Switch/>
                 </div>
 
                 <Title level={3}>Настройки поиска</Title>
 
                 <div className="settings__content--row">
-                    <Text strong>Рейтинг</Text>
+                    <Text>Рейтинг</Text>
                     <Slider className="settings__content--slider" range
                             marks={ratings} min={5} max={10} step={0.5} defaultValue={[7, 9]}
                     />
                 </div>
 
                 <div className="settings__content--row">
-                    <Text strong>Годы</Text>
+                    <Text>Годы</Text>
                     <Slider className="settings__content--slider" range
                             marks={years} min={1980} max={2021} defaultValue={[1990, 2020]}
                     />
                 </div>
 
                 <div className="settings__content--row">
-                    <Text strong>Жанры</Text>
+                    <Text>Жанры</Text>
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
@@ -54,7 +54,7 @@ const Settings = (props) => {
                 </div>
 
                 <div className="settings__content--row">
-                    <Text strong>Страны</Text>
+                    <Text>Страны</Text>
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
