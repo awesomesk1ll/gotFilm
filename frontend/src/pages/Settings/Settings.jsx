@@ -27,7 +27,7 @@ const Settings = (props) => {
                     <Switch/>
                 </div>
 
-                <Title level={4}>Настройки поиска</Title>
+                <Title level={3}>Настройки поиска</Title>
 
                 <div className="settings__content--row">
                     <Text strong>Рейтинг</Text>
