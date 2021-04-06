@@ -6,10 +6,10 @@ import { bindActionCreators } from 'redux';
 import Router from './containers/Router';
 import { getFilmsFromApi } from './store/actions/getApiAction';
 
-const App = (props) => {
+const App = ({ getFilmsFromApi }) => {
   useEffect(() => {
-    props.getFilmsFromApi();
-  }, []);
+    getFilmsFromApi();
+  }, [getFilmsFromApi]);
 
   return (
     <div className="App">

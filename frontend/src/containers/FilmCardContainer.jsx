@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
@@ -6,54 +6,40 @@ import { bindActionCreators } from 'redux';
 import FilmCard from '../pages/FilmCard';
 import { addToBlacklistFilms, addToAlreadySeenFilms, changeFilm } from '../store/actions/filmActions';
 
-const FilmCardContainer = (props) => {
-    useEffect(() => {
-        handleScrollToBottom();
-    }, []);
-
-    useEffect(() => {
-        handleScrollToBottom();
-    }, [props.film]);
-
-    const cardEndRef = useRef(null);
-
-    const handleScrollToBottom = () => {
-        cardEndRef.current.scrollIntoView({ behavior: "smooth" });
-    };
-
+const FilmCardContainer = ({ film, films, blacklistFilms, alreadySeenFilms, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm }) => {
     const handleChangeFilm = useCallback(() => {
-        let randomFilm = Math.round(Math.random() * ((props.films.length - 1) - 0) + 0);
-        if (!props.alreadySeenFilms.includes(props.films[randomFilm]) && !props.blacklistFilms.includes(props.films[randomFilm])) {
-            props.changeFilm(randomFilm);
+        let randomFilm = Math.round(Math.random() * ((films.length - 1) - 0) + 0);
+        if (!alreadySeenFilms.includes(films[randomFilm]) && !blacklistFilms.includes(films[randomFilm])) {
+            changeFilm(randomFilm);
         }
-    }, [props.films, props.alreadySeenFilms, props.blacklistFilms, props.film]);
+    }, [films, alreadySeenFilms, blacklistFilms, changeFilm]);
 
     const handleRemoveFilmToBlacklist = useCallback(() => {
-        if (!props.blacklistFilms.includes(props.film)) {
-            props.addToBlacklistFilms(props.film);
+        if (!blacklistFilms.includes(film)) {
+            addToBlacklistFilms(film);
         }
         handleChangeFilm();
-    }, [props.blacklistFilms, props.film]);
+    }, [blacklistFilms, film, addToBlacklistFilms, handleChangeFilm]);
 
     const handleRemoveFilmToAlreadySeen = useCallback(() => {
-        if (!props.blacklistFilms.includes(props.film)) {
-            props.addToAlreadySeenFilms(props.film);
+        if (!alreadySeenFilms.includes(film)) {
+            addToAlreadySeenFilms(film);
         }
         handleChangeFilm();
-    }, [props.alreadySeenFilms, props.film]);
+    }, [alreadySeenFilms, film, addToAlreadySeenFilms, handleChangeFilm]);
 
     const handleChangeFontSize = useCallback(() => {
-        if (props.film.name.length > 15 && props.film.name.length < 30) {
+        if (film.name.length > 15 && film.name.length < 30) {
             return '20px';
-        } else if (props.film.name.length >= 30) {
+        } else if (film.name.length >= 30) {
             return '18px';
         } else {
             return '25px';
         }
-    }, [props.film]);
+    }, [film]);
 
     return (
-        <FilmCard cardEndRef={cardEndRef} film={props.film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
+        <FilmCard film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
     )
 };
 
