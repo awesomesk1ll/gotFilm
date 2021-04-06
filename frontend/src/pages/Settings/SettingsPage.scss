@@ -1,5 +1,9 @@
+@import '../../styles/variables.scss';
+.section-settings{
+  height: 100%;
+}
 .div-filter {
-  box-shadow:         inset 0 0 5px #ddd;
+  box-shadow: inset 0 3px 3px #eee;
   text-align: center;
 }
 .reg-button {
@@ -7,7 +11,7 @@
   padding: 5px 80px 5px 80px;
   margin: 40px 0 20px 0;
   color: #ffffff;
-  background-color: #d89437;
+  background-color: $activbtn;
   border: none;
   border-radius: 7px;
   font-size: 10px;
@@ -24,7 +28,7 @@
   display: inline-block;
   border-style: solid;
   border-radius: 10px;
-  border-color: #d89437;
+  border-color: $activbtn;
   border-width: 1px;
   vertical-align: middle;
   margin: 0px 15px;
@@ -32,7 +36,7 @@
 .h2-fil-slider-point{
   width: 14px;
   height: 14px;
-  background-color: #d89437;
+  background-color: $activbtn;
   display: inline-block;
   border-radius: 7px;
   vertical-align: top;
@@ -45,11 +49,11 @@
 .delete-button{
   margin: 20px;
   padding: 5px 80px 5px 80px;
-  margin: 40px 0 20px 0;
-  color: #d89437;
+  margin: 20px 0 20px 0;
+  color: $activbtn;
   background-color: #fff;
   border: solid;
-  border-color: #d89437;
+  border-color: $activbtn;
   border-width: 2px;
   border-radius: 7px;
   font-size: 10px;
@@ -57,7 +61,7 @@
 }
 
 .switch-style{
-  background-color: #d89437;
+  background-color: $activbtn;
   margin: 0 10px 0 10px;
 }
 .div-range-slider{

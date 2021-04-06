@@ -11,39 +11,39 @@ const LoginForm = (props) => {
     <Form
       name="normal_login"
       className="loginForm"
-      initialValues={{
+      initialValues={ {
         remember: true,
-      }}
-      onFinish={onFinish}
+      } }
+      onFinish={ onFinish }
     >
       <h1 className="loginForm__title">Вход</h1>
       <Form.Item
         name="username"
-        rules={[
+        rules={ [
           {
             required: true,
             message: 'Пожалуйста введите имя или ник!',
           },
-        ]}
+        ] }
       >
         <Input placeholder="Ваше имя" />
       </Form.Item>
 
       <Form.Item
         name="password"
-        rules={[
+        rules={ [
           {
             required: true,
             message: 'Пожалуйста введите пароль!',
           },
-        ]}
+        ] }
       >
         <Input.Password
           type="password"
           placeholder="Ваш пароль"
         />
       </Form.Item>
-      
+
       <Form.Item>
         <Form.Item name="remember" valuePropName="checked" noStyle>
           <Checkbox>Запомнить меня</Checkbox>

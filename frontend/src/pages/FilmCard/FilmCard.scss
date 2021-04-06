@@ -37,8 +37,9 @@
     }
     &__infoBlock {
       width: 100%;
-      min-height: 49.5%;
-      position: relative;
+      position: fixed;
+      top: 35vh;
+      max-height: 49.5vh;
       display: flex;
       flex-direction: column;
       flex: 1 0 auto;
@@ -48,6 +49,7 @@
       color: $textColor;
       margin-top: -50px;
       padding: 19px 15px 0;
+      margin-bottom: 102px + $navigationHeight;
       &--titleWrapper {
         display: flex;
         justify-content: space-between;
@@ -93,6 +95,9 @@
         color: rgb(112, 112, 112);
         margin: 0 auto 13px;
       }
+      &--scrollableWrapper {
+        overflow: auto;
+      }
       &__description {
         text-align: justify;
         hyphens: auto;
@@ -111,6 +116,9 @@
     }
     &__footer {
         width: 100%;
+        position: fixed;
+        bottom: 0px;
+        height: 102px + $navigationHeight;
         background-color: $templateBackgroundColor;
         flex: 0 0 auto;
         &__buttonGroup {
@@ -135,12 +143,4 @@
       //-webkit-line-clamp: 10;
       max-height: 350px;
     }
-  }
-  
-  .navigation {
-    position: fixed;
-    width: 100%;
-    height: $navigationHeight;
-    bottom: 0;
-    background-color:gray;
   }

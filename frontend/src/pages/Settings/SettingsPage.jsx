@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Header from "../../components/Header/Header.jsx";
 import Filter from "../../components/Filter/Filter.jsx";
-import FooterBar from "../../components/FooterBar/FooterBar";
+import Navigation from "../../components/Navigation";
 import "./SettingsPage.scss";
 import { Slider, Switch, Select, Tag } from 'antd';
 
@@ -14,7 +14,7 @@ const SettingsPage = () => {
   const countries = [{ value: 'Россия' }, { value: 'США' }, { value: 'Франция' }, { value: 'Германия' }];
 
   return (
-    <section>
+    <section className='section-settings'>
       <Header title="Настройки" />
       <div className="div-filter">
         <button className="reg-button">ВХОД / РЕГИСТРАЦИЯ"</button>
@@ -36,17 +36,17 @@ const SettingsPage = () => {
             }
             }
             trackStyle={[{
-              backgroundColor: '#d89437',
+              backgroundColor: '#DA952D',
             },{
-              backgroundColor: '#d89437',
+              backgroundColor: '#DA952D',
             }]}
             handleStyle={[{
-              borderColor: '#d89437',
-              backgroundColor: '#d89437',
+              borderColor: '#DA952D',
+              backgroundColor: '#DA952D',
             },
             {
-              borderColor: '#d89437',
-              backgroundColor: '#d89437',
+              borderColor: '#DA952D',
+              backgroundColor: '#DA952D',
             }
             ]}
             className='range-slider-filter'
@@ -64,17 +64,17 @@ const SettingsPage = () => {
               setRightNumberYear(value[1]);
             }}
             trackStyle={[{
-              backgroundColor: '#d89437',
+              backgroundColor: '#DA952D',
             },{
-              backgroundColor: '#d89437',
+              backgroundColor: '#DA952D',
             }]}
             handleStyle={[{
-              borderColor: '#d89437',
-              backgroundColor: '#d89437',
+              borderColor: '#DA952D',
+              backgroundColor: '#DA952D',
             },
             {
-              borderColor: '#d89437',
-              backgroundColor: '#d89437',
+              borderColor: '#DA952D',
+              backgroundColor: '#DA952D',
             }
             ]}
             className='range-slider-filter'
@@ -100,7 +100,7 @@ const SettingsPage = () => {
         </div>
         <button className="delete-button">СБРОСИТЬ НАСТРОЙКИ</button>
       </div>
-      <FooterBar />
+      <Navigation />
     </section>
   );
 };
