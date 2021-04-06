@@ -1,15 +1,15 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { NavLink } from "react-router-dom";
-import "./RegPage.scss";
+import "./RegistrationPage.scss";
 
-const RegistrationForm = (props) => {
+const RegistrationPage = (props) => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
 
   return (
     <Form
-      name="normal_login"
+      name="registration-form"
       className="regForm"
       initialValues={{
         remember: true,
@@ -110,4 +110,4 @@ const RegistrationForm = (props) => {
   );
 };
 
-export default RegistrationForm;
+export default RegistrationPage;

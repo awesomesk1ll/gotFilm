@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router';
 
 import Home from "../pages/Home/Home"
 import LoginForm from '../pages/LoginPage/LoginPage';
-import RegistrationForm from "../pages/RegPage/RegPage";
+import RegistrationForm from "../pages/RegistrationPage/RegistrationPage";
 import FilmCardContainer from './FilmCardContainer';
 
 
