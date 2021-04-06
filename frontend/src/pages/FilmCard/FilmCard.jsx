@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { Image } from 'antd';
+import ErrorFilmCard from './ErrorFilmCard';
 import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
 import Star from '../../components/icons/Star';
 import './FilmCard.scss';
@@ -9,7 +10,7 @@ import Navigation from '../../components/Navigation/Navigation';
 
 const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
 
-const FilmCard = ({ film, changeFontSize, changeFilm, seenFilm, removeFilm }) => {
+const FilmCard = ({ film, changeFontSize, changeFilm, seenFilm, removeFilm, error }) => {
     const cardEndRef = useRef(null);
     
     const handleScrollToBottom = useCallback(() => {
@@ -28,6 +29,7 @@ const FilmCard = ({ film, changeFontSize, changeFilm, seenFilm, removeFilm }) =>
     let countryList = film.countries.map((item, i) => i + 1 < film.countries.length ? <span key={ i }>{ item }, </span> : <span key={ i }>{ item }</span>);
 
     return (
+        error ? <ErrorFilmCard error={error}/> :
         <div className="filmCard--wrapper">
             <div className="filmCard__poster">
                 <img className="filmCard__poster__background"
@@ -74,6 +76,7 @@ const FilmCard = ({ film, changeFontSize, changeFilm, seenFilm, removeFilm }) =>
 };
 
 FilmCard.propTypes = {
+    error: PropTypes.string,
     film: PropTypes.object,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,

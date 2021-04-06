@@ -2,11 +2,12 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { Spin } from 'antd';
 
 import FilmCard from '../pages/FilmCard';
-import { addToBlacklistFilms, addToAlreadySeenFilms, changeFilm } from '../store/actions/filmActions';
+import { addToBlacklistFilms, addToAlreadySeenFilms, changeFilm } from '../store/actions/addActions';
 
-const FilmCardContainer = ({ film, films, blacklistFilms, alreadySeenFilms, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm }) => {
+const FilmCardContainer = ({ film, films, blacklistFilms, alreadySeenFilms, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, isLoading, error }) => {
     const handleChangeFilm = useCallback(() => {
         let randomFilm = Math.round(Math.random() * ((films.length - 1) - 0) + 0);
         if (!alreadySeenFilms.includes(films[randomFilm]) && !blacklistFilms.includes(films[randomFilm])) {
@@ -39,11 +40,13 @@ const FilmCardContainer = ({ film, films, blacklistFilms, alreadySeenFilms, addT
     }, [film]);
 
     return (
-        <FilmCard film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
+        isLoading ? <Spin /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
     )
 };
 
 FilmCardContainer.propTypes = {
+    isLoading: PropTypes.bool,
+    error: PropTypes.string,
     film: PropTypes.object,
     films: PropTypes.array,
     blacklistFilms: PropTypes.array,
@@ -54,6 +57,8 @@ FilmCardContainer.propTypes = {
 };
 
 const mapStateToProps = ({ filmReducer }) => ({
+    isLoading: filmReducer.isLoading,
+    error: filmReducer.error,
     films: filmReducer.films,
     film: filmReducer.film,
     blacklistFilms: filmReducer.blacklistFilms,
