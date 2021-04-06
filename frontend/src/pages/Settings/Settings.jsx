@@ -1,7 +1,8 @@
 import React from 'react';
-import { Typography, Button, Switch, Slider, Select } from 'antd';
+import { Typography, Button, Slider, Select } from 'antd';
 import Navigation from '../../components/Navigation';
 import './Settings.scss';
+import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch';
 
 const { Title, Text } = Typography;
 
@@ -13,8 +14,8 @@ const countries = [{ value: 'Россия' }, { value: 'США' }, { value: 'Ф�
 const Settings = (props) => {
     
     return (
-        <div className="settings--wrapper">
-            <div className="settings__header">
+        <div className="settings--wrapper theme">
+            <div className="settings__header theme">
                 <Title className="settings__header--title" level={2}>Настройки</Title>
             </div>
             <div className="settings__content">
@@ -23,28 +24,28 @@ const Settings = (props) => {
                 </Button>
 
                 <div className="settings__content--row">
-                    <Text>Темная версия оформления</Text>
-                    <Switch/>
+                    <Text className="theme">Темная версия оформления</Text>
+                    <ThemeSwitch/>
                 </div>
 
                 <Title level={3}>Настройки поиска</Title>
 
-                <div className="settings__content--row">
-                    <Text>Рейтинг</Text>
+                <div className="settings__content--row theme">
+                    <Text className="theme">Рейтинг</Text>
                     <Slider className="settings__content--slider" range
                             marks={ratings} min={5} max={10} step={0.5} defaultValue={[7, 9]}
                     />
                 </div>
 
                 <div className="settings__content--row">
-                    <Text>Годы</Text>
+                    <Text className="theme">Годы</Text>
                     <Slider className="settings__content--slider" range
                             marks={years} min={1980} max={2021} defaultValue={[1990, 2020]}
                     />
                 </div>
 
                 <div className="settings__content--row">
-                    <Text>Жанры</Text>
+                    <Text className="theme">Жанры</Text>
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
@@ -54,7 +55,7 @@ const Settings = (props) => {
                 </div>
 
                 <div className="settings__content--row">
-                    <Text>Страны</Text>
+                    <Text className="theme">Страны</Text>
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
