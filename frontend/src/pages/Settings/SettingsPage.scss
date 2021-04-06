@@ -55,3 +55,24 @@
   font-size: 10px;
   font-size: 12px;
 }
+
+.switch-style{
+  background-color: #d89437;
+  margin: 0 10px 0 10px;
+}
+.div-range-slider{
+  display: flex;
+  flex-direction: row;
+}
+.range-slider-title{
+  width: 30%;
+  margin: 5px 0 5px 0;
+}
+.range-slider-filter{
+  width: 60%;
+}
+.div-selector{
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+}

@@ -6,7 +6,7 @@ import Catalog from '../pages/Catalog';
 import LoginForm from '../pages/LoginPage/LoginPage';
 import RegistrationForm from "../pages/RegPage/RegPage";
 import FilmCardContainer from './FilmCardContainer';
-
+import SettingsPage from '../pages/Settings/SettingsPage';
 
 const Router = (props) => {
     return (
@@ -16,6 +16,7 @@ const Router = (props) => {
             <Route path="/login" component={LoginForm} />
             <Route path="/registration" component={RegistrationForm} />
             <Route path="/film" component={FilmCardContainer} />
+            <Route path="/settings" component={SettingsPage} />
         </Switch>
     );
 };
