@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Header from "../../components/Header/Header.jsx";
-import Filter from "../../components/Filter/Filter.jsx";
 import Navigation from "../../components/Navigation";
 import "./SettingsPage.scss";
 import { Slider, Switch, Select, Tag } from 'antd';
@@ -106,8 +105,3 @@ const SettingsPage = () => {
 };
 
 export default SettingsPage;
-// <span className="h2-fil-switch">
-//   <span className="h2-fil-slider-point"></span>
-// </span>
-
-// <Filter settingName="Рейтинг"/>
