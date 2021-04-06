@@ -1,18 +1,30 @@
 import React from 'react';
 import { Typography, Button, Slider, Select } from 'antd';
 import Navigation from '../../components/Navigation';
+import { RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
 import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch';
 
 const { Title, Text } = Typography;
 
-const ratings = { 5: 'от 5', 10: 'до 10' };
-const years = { 1980: 'c 1980', 2021: 'по 2021' };
-const genres = [{ value: 'боевик' }, { value: 'комедия' }, { value: 'драма' }, { value: 'мюзикл' }];
-const countries = [{ value: 'Россия' }, { value: 'США' }, { value: 'Франция' }, { value: 'Германия' }];
-
 const Settings = (props) => {
-    
+    const [selectedGenres, setSelectedGenres] = React.useState(['боевик','комедия']);
+    const [selectedCountries, setSelectedCountries] = React.useState(['Россия','США']);
+
+    const handleSelect = (value, type) => {
+        if (value === "Все") {
+            (type === "genres")
+                ? setSelectedGenres(GENRES.map(genre => genre.value))
+                : setSelectedCountries(COUNTRIES.map(country => country.value));
+        }
+    }
+
+    const handleDeSelect = (value, type) => {
+        if (value === "Все") {
+            (type === "genres") ? setSelectedGenres([]) : setSelectedCountries([])
+        }
+    }
+
     return (
         <div className="settings--wrapper theme">
             <div className="settings__header theme">
@@ -33,14 +45,14 @@ const Settings = (props) => {
                 <div className="settings__content--row theme">
                     <Text className="theme">Рейтинг</Text>
                     <Slider className="settings__content--slider" range
-                            marks={ratings} min={5} max={10} step={0.5} defaultValue={[7, 9]}
+                            marks={RATINGS} min={5} max={10} step={0.5} defaultValue={[7, 9]}
                     />
                 </div>
 
                 <div className="settings__content--row">
                     <Text className="theme">Годы</Text>
                     <Slider className="settings__content--slider" range
-                            marks={years} min={1980} max={2021} defaultValue={[1990, 2020]}
+                            marks={YEARS} min={1980} max={2021} defaultValue={[1990, 2020]}
                     />
                 </div>
 
@@ -49,8 +61,12 @@ const Settings = (props) => {
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
-                            defaultValue={['боевик', 'мюзикл']}
-                            options={genres}
+                            value={selectedGenres}
+                            onSelect={(val) => {handleSelect(val, "genres")}}
+                            onDeselect={(val) => {handleDeSelect(val, "genres")}}
+                            onChange={setSelectedGenres}
+                            options={GENRES}
+                            maxTagCount={3}
                     />
                 </div>
 
@@ -59,8 +75,12 @@ const Settings = (props) => {
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
-                            defaultValue={['Россия', 'США']}
-                            options={countries}
+                            value={selectedCountries}
+                            onSelect={(val) => {handleSelect(val, "countries")}}
+                            onDeselect={(val) => {handleDeSelect(val, "countries")}}
+                            onChange={setSelectedCountries}
+                            options={COUNTRIES}
+                            maxTagCount={4}
                     />
                 </div>
 

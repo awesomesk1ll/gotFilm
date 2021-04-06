@@ -52,6 +52,10 @@
     width: 78%;
   }
   &__content--select {
+    // отключаем возможность набора
+    .ant-select-selection-search input {
+      visibility: hidden;
+    }
     width: 80%;
   }
   &__content--login {
