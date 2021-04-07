@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../styles/variables.scss'; 
 
 const Star = (props) => {
     return (
