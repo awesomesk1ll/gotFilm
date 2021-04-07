@@ -14,7 +14,7 @@ const FilmCard = (props) => {
     let countryList = props.film.countries.map((item, i) => i + 1 < props.film.countries.length ? <span key={ i }>{ item }, </span> : <span key={ i }>{ item }</span>);
 
     return (
-        <div className="filmCard--wrapper">
+        <div className="filmCard--wrapper theme">
             <div className="filmCard__poster">
                 <img className="filmCard__poster__background"
                     src={ `${IMAGE_ENDPOINT}/film_iphone/iphone360_${props.film.id}.jpg` }
@@ -24,7 +24,7 @@ const FilmCard = (props) => {
                     src={ `${IMAGE_ENDPOINT}/film_iphone/iphone360_${props.film.id}.jpg` }
                 />
             </div>
-            <div className="filmCard__infoBlock">
+            <div className="filmCard__infoBlock theme">
                 <div className="filmCard__infoBlock--titleWrapper">
                     <h3 className="filmCard__infoBlock__title" style={ { fontSize: props.changeFontSize() } }>{ props.film.name }</h3>
                     <p className="filmCard__infoBlock__rate">
@@ -45,7 +45,7 @@ const FilmCard = (props) => {
                     </label>
                 </div>
             </div>
-            <div className="filmCard__footer">
+            <div className="filmCard__footer theme">
                 <div className="filmCard__footer__buttonGroup">
                     <FilmCardButton eventAction={ props.removeFilm }>уже смотрел</FilmCardButton>
                     <FilmCardButton eventAction={ props.seenFilm }>не предлагать</FilmCardButton>

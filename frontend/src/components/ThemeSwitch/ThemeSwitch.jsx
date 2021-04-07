@@ -1,9 +1,9 @@
 import React from "react";
 import { Switch } from 'antd';
 
-const ThemeButton = (props) => {
+const ThemeSwitch = (props) => {
   const onChange = (checked) => {
-    document.body.classList.toggle("dark");
+    document.body.classList.toggle("dark", checked);
   }
 
   return (
@@ -11,5 +11,4 @@ const ThemeButton = (props) => {
   );
 };
 
-
-export default ThemeButton;
+export default ThemeSwitch;

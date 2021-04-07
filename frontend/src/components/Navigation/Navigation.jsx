@@ -32,7 +32,7 @@ const Navigation = (props) => {
             <span className="divition-line"></span>
             <CustomLink
                 tag={ Radio }
-                to='/'
+                to='/settings'
                 value={ 'settings' }
                 className={ `navigation-buttons ${props.checked === 'settings' ? 'navigation-buttons__checked' : ''}` }
             >
