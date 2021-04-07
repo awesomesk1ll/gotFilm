@@ -40,7 +40,7 @@ const FilmCardContainer = ({ film, films, blacklistFilms, alreadySeenFilms, addT
     }, [film]);
 
     return (
-        isLoading ? <Spin /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
+        isLoading ? <Spin className="loadingSpinner" /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
     )
 };
 

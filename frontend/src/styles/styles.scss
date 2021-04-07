@@ -22,6 +22,11 @@ input, button {
   border: none;
 }
 
+.loadingSpinner {
+  width: 100%;
+  margin: 200px 0;
+}
+
 /* ANTD style patches */
 
 /* fix for antd modal window when scroll hidden */
