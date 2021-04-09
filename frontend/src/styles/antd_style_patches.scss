@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 /* ANTD style patches */
 
@@ -36,7 +36,7 @@ img.ant-image-preview-img {
   }
   &-step {
     padding-left: 60px;
-    border-radius: $sliderHeight*0.5;
+    border-radius: $sliderHeight * 0.5;
     height: $sliderHeight;
     background: #888;
   }
@@ -101,7 +101,7 @@ img.ant-image-preview-img {
 /* ant select style patches */
 .ant-select {
   &-focused,
-  &:hover, 
+  &:hover,
   &:focus {
     & .ant-select-selector {
       border-color: $activbtn !important;
@@ -120,4 +120,35 @@ img.ant-image-preview-img {
   &-selection {
     background-color: violet;
   }
+}
+
+/* ant input style patches */
+.ant-input {
+  &:hover,
+  &:focus {
+    border-color: $activeBtnLighter;
+    box-shadow: none;
+  }
+}
+
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+    border-color: $activeBtnLighter;
+    box-shadow: none;
+}
+
+/* ant checkbox style patches */
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: $activbtn;
+  border: none;
+}
+
+.ant-checkbox {
+  &::after {
+    border-color: $activeBtnLighter;
+  }
+  &-wrapper {
+    & :hover .ant-checkbox-inner  {
+      border-color: $border-color;
+    }
+}
 }

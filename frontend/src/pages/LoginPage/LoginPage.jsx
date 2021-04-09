@@ -45,7 +45,7 @@ const LoginForm = (props) => {
       </Form.Item>
 
       <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
+        <Form.Item name="remember" noStyle>
           <Checkbox>Запомнить меня</Checkbox>
         </Form.Item>
 
@@ -56,9 +56,9 @@ const LoginForm = (props) => {
 
       <Form.Item>
         <Button htmlType="submit" className="loginForm__button">
-          Войти
+          войти
         </Button>
-        или <NavLink to="/registration">Зарегистрироваться</NavLink>
+        или <NavLink className="loginForm__linkToRegistration" to="/registration">Зарегистрироваться</NavLink>
       </Form.Item>
     </Form>
   );

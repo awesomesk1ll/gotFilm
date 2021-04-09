@@ -84,7 +84,6 @@ const RegistrationPage = (props) => {
 
       <Form.Item
         name="agreement"
-        valuePropName="checked"
         rules={[
           {
             validator: (_, value) =>
@@ -95,7 +94,7 @@ const RegistrationPage = (props) => {
         ]}
       >
         <Checkbox>
-          Я прочитал(а) <NavLink to="/agreement">соглашение</NavLink>
+          Я прочитал(а) <NavLink className="regForm__agreement" to="/agreement">соглашение</NavLink>
         </Checkbox>
       </Form.Item>
 
@@ -105,7 +104,7 @@ const RegistrationPage = (props) => {
         </Button>
       </Form.Item>
 
-      <NavLink to="/login">Уже есть аккаунт</NavLink>
+      <NavLink className="regForm__linkToLogin" to="/login">Уже есть аккаунт</NavLink>
     </Form>
   );
 };
