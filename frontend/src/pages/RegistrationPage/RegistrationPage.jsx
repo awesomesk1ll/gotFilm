@@ -1,4 +1,5 @@
 import { Form, Input, Button, Checkbox } from "antd";
+import Title from "antd/lib/typography/Title";
 import { NavLink } from "react-router-dom";
 import "./RegistrationPage.scss";
 
@@ -16,7 +17,7 @@ const RegistrationPage = (props) => {
       }}
       onFinish={onFinish}
     >
-      <h1 className="regForm__title">Регистрация</h1>
+      <Title className="regForm__title" level={2}>Регистрация</Title>
       <Form.Item
         name="username"
         rules={[

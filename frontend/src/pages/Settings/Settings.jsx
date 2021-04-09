@@ -4,6 +4,7 @@ import Navigation from '../../components/Navigation';
 import { RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
 import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch';
+import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
@@ -31,9 +32,12 @@ const Settings = (props) => {
                 <Title className="settings__header--title" level={2}>Настройки</Title>
             </div>
             <div className="settings__content">
-                <Button type="secondary" size="large" className="settings__content--login">
+                {/* <Button type="secondary" size="large" className="settings__content--login">
                     Вход / Регистрация
-                </Button>
+                </Button> */}
+                <Link type="secondary" size="large" className="settings__content--login" to='/login'>
+                    Вход / Регистрация
+                </Link>
 
                 <div className="settings__content--row">
                     <Text className="theme">Темная версия оформления</Text>

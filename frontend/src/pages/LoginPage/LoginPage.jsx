@@ -1,4 +1,5 @@
 import { Form, Input, Button, Checkbox } from 'antd';
+import Title from 'antd/lib/typography/Title';
 import { NavLink } from 'react-router-dom';
 import "./LoginPage.scss"
 
@@ -16,7 +17,7 @@ const LoginForm = (props) => {
       } }
       onFinish={ onFinish }
     >
-      <h1 className="loginForm__title">Вход</h1>
+      <Title className="loginForm__title" level={2}>Вход</Title>
       <Form.Item
         name="username"
         rules={ [
