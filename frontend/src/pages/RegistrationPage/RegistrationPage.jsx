@@ -85,6 +85,7 @@ const RegistrationPage = (props) => {
 
       <Form.Item
         name="agreement"
+        valuePropName="checked"
         rules={[
           {
             validator: (_, value) =>

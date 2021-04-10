@@ -46,7 +46,7 @@ const LoginForm = (props) => {
       </Form.Item>
 
       <Form.Item>
-        <Form.Item name="remember" noStyle>
+        <Form.Item name="remember" noStyle valuePropName="checked">
           <Checkbox>Запомнить меня</Checkbox>
         </Form.Item>
 
