@@ -1,7 +1,5 @@
 import React from 'react';
-import { List, Typography, Divider } from 'antd';
-import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
-import Star from '../../components/icons/Star';
+import { List, Typography } from 'antd';
 import './Lists.scss';
 import Navigation from '../../components/Navigation';
 
