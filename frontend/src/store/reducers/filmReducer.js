@@ -3,10 +3,10 @@ import { ALREADY_SEEN_FILM, BLACKLIST_FILM, LOAD_FILMS, GET_RANDOM_FILM, LOAD_FI
 
 const initStore = {
     films: [],
-    film: {},
+    film: null,
     blacklistFilms: [],
     alreadySeenFilms: [],
-    isLoading: false,
+    isLoading: true,
     error: null
 }
 

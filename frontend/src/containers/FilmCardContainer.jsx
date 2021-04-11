@@ -7,40 +7,23 @@ import Spinner from '../components/Spinner/Spinner';
 import FilmCard from '../pages/FilmCard';
 import { addToBlacklistFilms, addToAlreadySeenFilms, changeFilm } from '../store/actions/addActions';
 
-const FilmCardContainer = ({ film, films, blacklistFilms, alreadySeenFilms, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, isLoading, error }) => {
+const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, error, isLoading }) => {
     const handleChangeFilm = useCallback(() => {
-        let randomFilm = Math.round(Math.random() * ((films.length - 1) - 0) + 0);
-        if (!alreadySeenFilms.includes(films[randomFilm]) && !blacklistFilms.includes(films[randomFilm])) {
-            changeFilm(randomFilm);
-        }
-    }, [films, alreadySeenFilms, blacklistFilms, changeFilm]);
+        changeFilm();
+    }, [changeFilm]);
 
     const handleRemoveFilmToBlacklist = useCallback(() => {
-        if (!blacklistFilms.includes(film)) {
-            addToBlacklistFilms(film);
-        }
+        addToBlacklistFilms();
         handleChangeFilm();
-    }, [blacklistFilms, film, addToBlacklistFilms, handleChangeFilm]);
+    }, [addToBlacklistFilms, handleChangeFilm]);
 
     const handleRemoveFilmToAlreadySeen = useCallback(() => {
-        if (!alreadySeenFilms.includes(film)) {
-            addToAlreadySeenFilms(film);
-        }
+        addToAlreadySeenFilms();
         handleChangeFilm();
-    }, [alreadySeenFilms, film, addToAlreadySeenFilms, handleChangeFilm]);
-
-    const handleChangeFontSize = useCallback(() => {
-        if (film.name.length > 15 && film.name.length < 30) {
-            return '20px';
-        } else if (film.name.length >= 30) {
-            return '18px';
-        } else {
-            return '25px';
-        }
-    }, [film]);
+    }, [addToAlreadySeenFilms, handleChangeFilm]);
 
     return (
-        isLoading ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} changeFontSize={handleChangeFontSize} />
+        isLoading ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} />
     )
 };
 
@@ -48,9 +31,6 @@ FilmCardContainer.propTypes = {
     isLoading: PropTypes.bool,
     error: PropTypes.string,
     film: PropTypes.object,
-    films: PropTypes.array,
-    blacklistFilms: PropTypes.array,
-    alreadySeenFilms: PropTypes.array,
     addToBlacklistFilms: PropTypes.func,
     addToAlreadySeenFilms: PropTypes.func,
     changeFilm: PropTypes.func
@@ -59,10 +39,7 @@ FilmCardContainer.propTypes = {
 const mapStateToProps = ({ filmReducer }) => ({
     isLoading: filmReducer.isLoading,
     error: filmReducer.error,
-    films: filmReducer.films,
-    film: filmReducer.film,
-    blacklistFilms: filmReducer.blacklistFilms,
-    alreadySeenFilms: filmReducer.alreadySeenFilms
+    film: filmReducer.film
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ changeFilm, addToBlacklistFilms, addToAlreadySeenFilms }, dispatch);

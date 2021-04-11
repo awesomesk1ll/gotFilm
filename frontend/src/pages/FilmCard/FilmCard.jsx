@@ -10,7 +10,7 @@ import Navigation from '../../components/Navigation/Navigation';
 
 const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
 
-const FilmCard = ({ film, changeFontSize, changeFilm, seenFilm, removeFilm, error }) => {
+const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
     const cardEndRef = useRef(null);
     
     const handleScrollToBottom = useCallback(() => {
@@ -24,6 +24,16 @@ const FilmCard = ({ film, changeFontSize, changeFilm, seenFilm, removeFilm, erro
     useEffect(() => {
         handleScrollToBottom();
     }, [film, handleScrollToBottom]);
+
+    const handleChangeFontSize = useCallback(() => {
+        if (film.name.length > 15 && film.name.length < 30) {
+            return '20px';
+        } else if (film.name.length >= 30) {
+            return '18px';
+        } else {
+            return '25px';
+        }
+    }, [film]);
 
     let genresList = film.genres.map((item, i) => <span key={ i }>{ item }, </span>);
     let countryList = film.countries.map((item, i) => i + 1 < film.countries.length ? <span key={ i }>{ item }, </span> : <span key={ i }>{ item }</span>);
@@ -43,7 +53,7 @@ const FilmCard = ({ film, changeFontSize, changeFilm, seenFilm, removeFilm, erro
             </div>
             <div className="filmCard__infoBlock">
                 <div className="filmCard__infoBlock--titleWrapper">
-                    <h3 className="filmCard__infoBlock__title" style={ { fontSize: changeFontSize() } }>{ film.name }</h3>
+                    <h3 className="filmCard__infoBlock__title" style={ { fontSize: handleChangeFontSize() } }>{ film.name }</h3>
                     <p className="filmCard__infoBlock__rate">
                         <Star />
                         { film.rate }
@@ -80,8 +90,7 @@ FilmCard.propTypes = {
     film: PropTypes.object,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,
-    changeFilm: PropTypes.func,
-    changeFontSize: PropTypes.func,
+    changeFilm: PropTypes.func
 };
 
 export default FilmCard;

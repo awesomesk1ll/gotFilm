@@ -4,12 +4,12 @@ import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 
 import Router from './containers/Router';
-import { getFilmsFromApi } from './store/actions/getApiAction';
+import { fetchFilms } from './store/actions/getApiAction';
 
-const App = ({ getFilmsFromApi }) => {
+const App = ({ fetchFilms }) => {
   useEffect(() => {
-    getFilmsFromApi();
-  }, [getFilmsFromApi]);
+    fetchFilms();
+  }, [fetchFilms]);
 
   return (
     <div className="App">
@@ -19,9 +19,9 @@ const App = ({ getFilmsFromApi }) => {
 };
 
 App.propTypes = {
-  getFilmsFromApi: PropTypes.func
+  fetchFilms: PropTypes.func
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ getFilmsFromApi }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchFilms }, dispatch);
 
 export default connect(null, mapDispatchToProps)(App);
