@@ -1,12 +1,12 @@
 import update from 'react-addons-update';
-import { ALREADY_SEEN_FILM, BLACKLIST_FILM, LOAD_FILMS, GET_RANDOM_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE } from '../actions/filmActions';
+import { ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, LOAD_FILMS, GET_RANDOM_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE } from '../actions/filmActions';
 
 const initStore = {
     films: [],
     film: null,
     blacklistFilms: [],
     alreadySeenFilms: [],
-    isLoading: true,
+    isLoading: false,
     error: null
 }
 
@@ -52,14 +52,14 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
-        case BLACKLIST_FILM: {
+        case ADD_TO_BLACKLIST_FILMS: {
             return update(store, {
                 blacklistFilms: {
                     $merge: [...store.blacklistFilms, action.film]
                 }
             });
         }
-        case ALREADY_SEEN_FILM: {
+        case ADD_TO_ALREADY_SEEN_FILMS: {
             return update(store, {
                 alreadySeenFilms: {
                     $merge: [...store.alreadySeenFilms, action.film]

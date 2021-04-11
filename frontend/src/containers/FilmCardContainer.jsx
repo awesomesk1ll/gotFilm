@@ -5,30 +5,30 @@ import { bindActionCreators } from 'redux';
 
 import Spinner from '../components/Spinner';
 import FilmCard from '../pages/FilmCard';
-import { addToBlacklistFilms, addToAlreadySeenFilms, changeFilm } from '../store/actions/addActions';
+import { addToBlacklistFilms, addToAlreadySeenFilms } from '../store/actions/filmActions';
+import { changeFilm } from '../store/actions/changeFilmAction';
 
-const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, error, isLoading }) => {
+const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, error }) => {
     const handleChangeFilm = useCallback(() => {
         changeFilm();
     }, [changeFilm]);
 
     const handleRemoveFilmToBlacklist = useCallback(() => {
-        addToBlacklistFilms();
+        addToBlacklistFilms(film);
         handleChangeFilm();
-    }, [addToBlacklistFilms, handleChangeFilm]);
+    }, [film, addToBlacklistFilms, handleChangeFilm]);
 
     const handleRemoveFilmToAlreadySeen = useCallback(() => {
-        addToAlreadySeenFilms();
+        addToAlreadySeenFilms(film);
         handleChangeFilm();
-    }, [addToAlreadySeenFilms, handleChangeFilm]);
+    }, [film, addToAlreadySeenFilms, handleChangeFilm]);
 
     return (
-        isLoading ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} />
+        !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} />
     )
 };
 
 FilmCardContainer.propTypes = {
-    isLoading: PropTypes.bool,
     error: PropTypes.string,
     film: PropTypes.object,
     addToBlacklistFilms: PropTypes.func,
@@ -37,7 +37,6 @@ FilmCardContainer.propTypes = {
 };
 
 const mapStateToProps = ({ filmReducer }) => ({
-    isLoading: filmReducer.isLoading,
     error: filmReducer.error,
     film: filmReducer.film
 });
