@@ -22,11 +22,11 @@ const FilmCardContainer = (props) => {
     };
 
     const handleChangeFilm = useCallback(() => {
-        let randomFilm = Math.round(Math.random() * ((props.films.length - 1) - 0) + 0);
-        if (!props.alreadySeenFilms.includes(props.films[randomFilm]) && !props.blacklistFilms.includes(props.films[randomFilm])) {
+        let randomFilm = Math.round(Math.random() * ((props.idFilmsFiltered.length - 1) - 0) + 0);
+        if (!props.alreadySeenFilms.includes(props.idFilmsFiltered[randomFilm]) && !props.blacklistFilms.includes(props.idFilmsFiltered[randomFilm])) {
             props.changeFilm(randomFilm);
         }
-    }, [props.films, props.alreadySeenFilms, props.blacklistFilms, props.film]);
+    }, [props.idFilmsFiltered, props.alreadySeenFilms, props.blacklistFilms, props.film]);
 
     const handleRemoveFilmToBlacklist = useCallback(() => {
         if (!props.blacklistFilms.includes(props.film)) {
@@ -71,7 +71,8 @@ const mapStateToProps = ({ filmReducer }) => ({
     films: filmReducer.films,
     film: filmReducer.film,
     blacklistFilms: filmReducer.blacklistFilms,
-    alreadySeenFilms: filmReducer.alreadySeenFilms
+    alreadySeenFilms: filmReducer.alreadySeenFilms,
+    idFilmsFiltered: filmReducer.idFilmsFiltered
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ changeFilm, addToBlacklistFilms, addToAlreadySeenFilms }, dispatch);

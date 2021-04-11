@@ -3,6 +3,7 @@ export const ADD_TO_BLACKLIST_FILMS = '@@film/BLACKLIST_FILMS';
 export const ADD_TO_ALREADY_SEEN_FILMS = '@@film/ALREADY_SEEN_FILMS';
 export const CHANGE_FILM = '@@film/CHANGE_FILM';
 export const GET_RANDOM_FILM = '@@film/GET_RANDOM_FILM';
+export const UPDATE_FILTERED_FILMS = '@@film/UPDATE_FILTERED_FILMS';
 
 export const changeFilm = (film) => ({
     type: CHANGE_FILM,
@@ -25,5 +26,10 @@ export const addToBlacklistFilms = (film) => ({
 
 export const addToAlreadySeenFilms = (film) => ({
     type: ADD_TO_ALREADY_SEEN_FILMS,
+    film
+});
+
+export const updateFilteredFilms = (film) => ({
+    type: UPDATE_FILTERED_FILMS,
     film
 });

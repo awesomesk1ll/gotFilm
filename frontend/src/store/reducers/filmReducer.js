@@ -1,11 +1,12 @@
 import update from 'react-addons-update';
-import { ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, CHANGE_FILM, LOAD_FILMS, GET_RANDOM_FILM } from '../actions/filmActions';
+import { ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, CHANGE_FILM, LOAD_FILMS, GET_RANDOM_FILM, UPDATE_FILTERED_FILMS} from '../actions/filmActions';
 
 const initStore = {
     films: [],
     film: {},
     blacklistFilms: [],
-    alreadySeenFilms: []
+    alreadySeenFilms: [],
+    idFilmsFiltered: [],
 }
 
 export default function filmReducer(store = initStore, action) {
@@ -18,10 +19,10 @@ export default function filmReducer(store = initStore, action) {
             });
         }
         case GET_RANDOM_FILM: {
-            let randomFilm = Math.round(Math.random() * ((store.films.length - 1) - 0) + 0);
+            let randomFilm = Math.round(Math.random() * ((store.idFilmsFiltered.length - 1) - 0) + 0);
             return update(store, {
                 film: {
-                    $set: { ...store.films[randomFilm] }
+                    $set: { ...store.idFilmsFiltered[randomFilm] }
                 }
             });
         }
@@ -43,6 +44,13 @@ export default function filmReducer(store = initStore, action) {
             return update(store, {
                 alreadySeenFilms: {
                     $merge: [...store.alreadySeenFilms, action.film]
+                }
+            });
+        }
+        case UPDATE_FILTERED_FILMS: {
+            return update(store, {
+                idFilmsFiltered: {
+                    $set: action.film
                 }
             });
         }

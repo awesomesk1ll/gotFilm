@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 
 .navigation {
-    &-container {
+  &__container {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -13,28 +13,24 @@
     background-color: #eee;
     background: linear-gradient(0deg, #ccc, #eee);
     border-top: 1px solid #ccc;
+    .ant-radio {
+      display: none;
     }
-
-    &-buttons {
-        fill: $navigationButtonColor;
-        &__checked {
-            fill: $activbtn;
-        }
+    .divition-line {
+      height: ($navigationHeight - 12px);
+      width: 1px;
+      background-color: $navigationButtonColor;
+      opacity: 0.6;
+      align-self: center;
     }
-}
-
-.ant-radio {
-    display: none;
-}
-
-.divition-line {
-    height: ($navigationHeight - 12px);
-    width: 1px;
-    background-color: $navigationButtonColor;
-    opacity: 0.6;
-    align-self: center;
-}
-
-.search-icon_small {
-    font-size: 30px;
+    .search-icon_small {
+      font-size: 30px;
+    }
+  }
+  &__buttons {
+    fill: $navigationButtonColor;
+    &.ant-radio-wrapper-checked {
+      fill: $activbtn;
+    }
+  }
 }
