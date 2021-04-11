@@ -42,11 +42,10 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
         error ? <ErrorFilmCard error={error}/> :
         <div className="filmCard--wrapper theme">
             <div className="filmCard__poster">
-                <img className="filmCard__poster__background"
+                <img className="filmCard__poster__background" alt=""
                     src={ `${IMAGE_ENDPOINT}/film_iphone/iphone360_${film.id}.jpg` }
-                    alt="film_poster"
                 />
-                <Image className="filmCard__poster__image"
+                <Image className="filmCard__poster__image" alt={ film.name }
                     preview={ { src: `${IMAGE_ENDPOINT}/film_big/${film.id}.jpg` } }
                     src={ `${IMAGE_ENDPOINT}/film_iphone/iphone360_${film.id}.jpg` }
                 />
