@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 
-import Spinner from '../components/Spinner/Spinner';
+import Spinner from '../components/Spinner';
 import FilmCard from '../pages/FilmCard';
 import { addToBlacklistFilms, addToAlreadySeenFilms, changeFilm } from '../store/actions/addActions';
 

@@ -9,7 +9,7 @@ const LoginForm = (props) => {
 
   return (
     <Form
-      name="normal_login"
+      name="login-form"
       className="loginForm"
       initialValues={ {
         remember: true,
