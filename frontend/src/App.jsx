@@ -9,7 +9,7 @@ import { fetchFilms } from './store/actions/getApiAction';
 const App = ({ fetchFilms }) => {
   useEffect(() => {
     fetchFilms();
-  }, [fetchFilms]);
+  });
 
   return (
     <div className="App">
