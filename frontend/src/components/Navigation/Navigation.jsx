@@ -10,34 +10,36 @@ import './Navigation.scss';
 
 const Navigation = (props) => {
     return (
-        <Radio.Group className="navigation-container" name="radiogroup" defaultValue={ props.checked } >
+        <Radio.Group className="navigation__container" defaultValue={ props.checked } >
 
-            <CustomLink
-                tag={ Radio }
-                to='/'
-                value={ 'hamburger' }
-                className={ `navigation-buttons ${props.checked === 'hamburger' ? 'navigation-buttons__checked' : ''}` }
+            <CustomLink to='/'
+                        value="hamburger"
+                        tag={ Radio }
+                        className="navigation__buttons"
             >
                 <Hamburger />
             </CustomLink>
+
             <span className="divition-line"></span>
-            <CustomLink
-                tag={ Radio }
-                to='/film'
-                value={ 'search' }
-                className={ `navigation-buttons ${props.checked === 'search' ? 'navigation-buttons__checked' : ''}` }
+
+            <CustomLink to='/film'
+                        value="search"
+                        tag={ Radio }
+                        className="navigation__buttons"
             >
                 <Search className="search-icon_small" />
             </CustomLink>
+
             <span className="divition-line"></span>
-            <CustomLink
-                tag={ Radio }
-                to='/'
-                value={ 'settings' }
-                className={ `navigation-buttons ${props.checked === 'settings' ? 'navigation-buttons__checked' : ''}` }
+
+            <CustomLink to='/settings'
+                        value="settings"
+                        tag={ Radio }
+                        className="navigation__buttons"
             >
                 <Settings />
             </CustomLink>
+
         </Radio.Group>
     )
 }

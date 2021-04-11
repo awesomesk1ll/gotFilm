@@ -1,9 +1,20 @@
 $activbtn: #DA952D;
+$activeBtnLighter: #E2AC5A;
+$activeBtnDarker: #B67A20;
 $box-shadow: 4px 4px 8px 1px rgba(34, 60, 80, 0.29);
 $border-color: #ccc;
 $border-radius: 5px;
 $generalFont: 400 16px 'Roboto', sans-serif;
 $textColor: rgb(112, 112, 112);
 $templateBackgroundColor: rgb(245, 245, 245);
+$headerHeight: 50px;
 $navigationHeight: 50px;
 $navigationButtonColor: #888;
+// sliders
+$sliderHeight: 6px;
+$handleSize: 24px;
+// dark mode
+$templateBackgroundColorDarkNormal: #222;
+$templateBackgroundColorDarkBright: #333;
+$textColorDarkNormal: #ccc;
+$textColorDarkBright: #eee;

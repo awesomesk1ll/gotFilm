@@ -1,0 +1,123 @@
+@import './variables.scss';
+
+/* ANTD style patches */
+
+/* fix for antd modal window when scroll hidden */
+body.ant-scrolling-effect {
+  width: 100% !important;
+}
+
+/* patch makes preview always comes from x 50% y 12% coords */
+div.ant-image-preview {
+  transform-origin: 50% 12% !important;
+}
+
+/* fix ant image in modal grows for 100% available width */
+img.ant-image-preview-img {
+  width: 100%;
+  object-fit: scale-down;
+}
+
+/* ant  sliders patches */
+.ant-slider {
+  width: 98%;
+  padding-top: 6px;
+  transform: translateY(50%);
+  &:hover {
+    .ant-slider-track {
+      background-color: $activeBtnLighter;
+    }
+    .ant-slider-handle {
+      border: solid $handleSize/6 $activbtn !important;
+    }
+  }
+  &-rail {
+    display: none;
+  }
+  &-step {
+    padding-left: 60px;
+    border-radius: $sliderHeight*0.5;
+    height: $sliderHeight;
+    background: #888;
+  }
+  &-track {
+    background-color: $activbtn;
+    height: $sliderHeight;
+    z-index: 1;
+  }
+  &-dot {
+    display: none;
+  }
+  &-handle {
+    &-dragging {
+      border: solid $handleSize/6 $activeBtnDarker !important;
+      -webkit-box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
+      box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
+    }
+    &:focus {
+      border: solid $handleSize/6 $activbtn !important;
+      -webkit-box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
+      box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
+    }
+    margin-top: -$handleSize/2;
+    z-index: 2;
+    transform: translate3d(-50%, $sliderHeight/2, 0px) !important;
+    width: $handleSize;
+    height: $handleSize;
+    border: solid $handleSize/6 $activbtn !important;
+  }
+  &-mark {
+    top: -24px;
+    left: calc(1.5%);
+    width: calc(97%);
+    &-text {
+      width: 60px;
+    }
+  }
+}
+
+/* ant switch patches */
+.ant-switch {
+  transform: scale(1.2);
+  &-checked {
+    &:focus {
+      -webkit-box-shadow: 0 0 0 2px rgba(140, 140, 140, 0.2) !important;
+      box-shadow: 0 0 0 2px rgba(140, 140, 140, 0.2) !important;
+    }
+    background-color: $activbtn;
+  }
+}
+
+/* ant button patches */
+.ant-btn {
+  &:hover,
+  &:focus {
+    color: $activbtn;
+    background: #fff;
+    border-color: $activeBtnLighter;
+  }
+}
+
+/* ant select style patches */
+.ant-select {
+  &-focused,
+  &:hover, 
+  &:focus {
+    & .ant-select-selector {
+      border-color: $activbtn !important;
+      -webkit-box-shadow: 0 0 0 2px rgba(140, 140, 140, 0.2) !important;
+      box-shadow: 0 0 0 2px rgba(140, 140, 140, 0.2) !important;
+    }
+  }
+  &-item-option {
+    &-state {
+      color: $activeBtnDarker !important;
+    }
+    &-selected {
+      background-color: $activeBtnLighter !important;
+    }
+  }
+  &-selection {
+    background-color: violet;
+  }
+}

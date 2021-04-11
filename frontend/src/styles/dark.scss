@@ -1,0 +1,26 @@
+@import './variables.scss';
+
+/* Dark theme */
+body {
+  &.dark .theme,
+  &.dark .theme h1,
+  &.dark .theme h2,
+  &.dark .theme h3,
+  &.dark .theme h4,
+  &.dark .theme h5,
+  &.dark .theme h6 {
+    background-color: $templateBackgroundColorDarkNormal !important;
+    color: $textColorDarkBright !important
+  }
+  &.dark .theme > span {
+    color: $textColorDarkNormal !important
+  }
+}
+
+/* Dark theme for antd */
+body {
+  &.dark .theme .ant-select-selector {
+    background-color: $templateBackgroundColorDarkBright !important;
+    color: $textColorDarkBright !important
+  }
+}

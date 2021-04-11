@@ -40,7 +40,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
 
     return (
         error ? <ErrorFilmCard error={error}/> :
-        <div className="filmCard--wrapper">
+        <div className="filmCard--wrapper theme">
             <div className="filmCard__poster">
                 <img className="filmCard__poster__background"
                     src={ `${IMAGE_ENDPOINT}/film_iphone/iphone360_${film.id}.jpg` }
@@ -51,7 +51,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
                     src={ `${IMAGE_ENDPOINT}/film_iphone/iphone360_${film.id}.jpg` }
                 />
             </div>
-            <div className="filmCard__infoBlock">
+            <div className="filmCard__infoBlock theme">
                 <div className="filmCard__infoBlock--titleWrapper">
                     <h3 className="filmCard__infoBlock__title" style={ { fontSize: handleChangeFontSize() } }>{ film.name }</h3>
                     <p className="filmCard__infoBlock__rate">
@@ -72,7 +72,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
                     </label>
                 </div>
             </div>
-            <div className="filmCard__footer">
+            <div className="filmCard__footer theme">
                 <div className="filmCard__footer__buttonGroup">
                     <FilmCardButton eventAction={ removeFilm }>уже смотрел</FilmCardButton>
                     <FilmCardButton eventAction={ seenFilm }>не предлагать</FilmCardButton>
