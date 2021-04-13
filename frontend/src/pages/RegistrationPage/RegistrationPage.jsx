@@ -5,6 +5,7 @@ import "./RegistrationPage.scss";
 
 const RegistrationPage = (props) => {
   const onFinish = (values) => {
+    alert('Юзернейм, email, пароль, подтверждение пароля, статус чекбокса выведены в консоль.');
     console.log("Received values of form: ", values);
   };
 
@@ -27,7 +28,10 @@ const RegistrationPage = (props) => {
           },
         ]}
       >
-        <Input placeholder="Ваше имя" />
+        <label>
+          Имя пользователя
+          <Input placeholder="Ваше имя" />
+        </label>
       </Form.Item>
 
       <Form.Item
@@ -44,7 +48,10 @@ const RegistrationPage = (props) => {
           },
         ]}
       >
-        <Input placeholder="Ваша почта" />
+        <label>
+          E-mail
+          <Input placeholder="Ваша почта" />
+        </label>
       </Form.Item>
 
       <Form.Item
@@ -57,7 +64,10 @@ const RegistrationPage = (props) => {
         ]}
         hasFeedback
       >
-        <Input.Password placeholder="Ваш пароль" />
+        <label>
+          Пароль
+          <Input.Password placeholder="Ваш пароль" />
+        </label>
       </Form.Item>
 
       <Form.Item
@@ -80,7 +90,10 @@ const RegistrationPage = (props) => {
           }),
         ]}
       >
-        <Input.Password placeholder="Подтвердите свой пароль" />
+        <label>
+          Подтверждение пароля
+          <Input.Password placeholder="Подтвердите свой пароль" />
+        </label>
       </Form.Item>
 
       <Form.Item
@@ -105,8 +118,10 @@ const RegistrationPage = (props) => {
           Зарегистрироваться
         </Button>
       </Form.Item>
-
-      <NavLink className="regForm__linkToLogin" to="/login">Уже есть аккаунт</NavLink>
+      
+      <div className="regForm--switcher">
+        или <NavLink className="regForm__linkToLogin" to="/login">уже есть аккаунт</NavLink>
+      </div>
     </Form>
   );
 };

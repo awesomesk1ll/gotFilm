@@ -7,8 +7,23 @@
   padding: 20px;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
+  & label,
+  &__agreement,
+  &--switcher {
+    color: $textColor; 
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+  }
+  &--switcher {
+    display: flex;
+    justify-content: center;
+    & a {
+      margin-left: 0.3em;
+    }
+  }
   &__title {
     text-align: center;
+    text-transform: uppercase;
   }
   &__button {
     display: flex;
