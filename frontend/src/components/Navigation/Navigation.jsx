@@ -12,8 +12,8 @@ const Navigation = (props) => {
     return (
         <Radio.Group className="navigation__container" defaultValue={ props.checked } >
 
-            <CustomLink to='/'
-                        value="hamburger"
+            <CustomLink to='/lists'
+                        value="lists"
                         tag={ Radio }
                         className="navigation__buttons"
             >
