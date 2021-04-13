@@ -17,6 +17,7 @@
     background-color: #fff;
     margin-bottom: 0px !important;
     box-shadow: 0 3px 4px rgba(0,0,0, 0.2);
+    z-index: 1;
     &--title {
       letter-spacing: 0.5px;
       margin: 0 !important;
@@ -27,5 +28,6 @@
     color: $textColor; 
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
+    font-size: 16px;
   }
 }

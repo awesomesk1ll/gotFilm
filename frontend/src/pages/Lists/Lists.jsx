@@ -21,9 +21,8 @@ const Lists = (props) => {
                 <List
                     className="lists__content--list"
                     size="large"
-                    bordered
                     dataSource={data}
-                    renderItem={item => <List.Item>{item}</List.Item>}
+                    renderItem={item => <List.Item className="theme">{item}</List.Item>}
                 />
             </div>
             <Navigation checked={'lists'} />
