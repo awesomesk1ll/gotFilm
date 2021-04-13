@@ -5,6 +5,7 @@ import "./LoginPage.scss"
 
 const LoginForm = (props) => {
   const onFinish = (values) => {
+    alert('Логин, пароль, статус чекбокса выведены в консоль.');
     console.log('Received values of form: ', values);
   };
 
@@ -27,7 +28,10 @@ const LoginForm = (props) => {
           },
         ] }
       >
-        <Input placeholder="Ваше имя" />
+        <label>
+          Имя пользователя
+          <Input placeholder="Ваше имя" />
+        </label>
       </Form.Item>
 
       <Form.Item
@@ -39,10 +43,13 @@ const LoginForm = (props) => {
           },
         ] }
       >
-        <Input.Password
-          type="password"
-          placeholder="Ваш пароль"
-        />
+        <label>
+          Пароль
+          <Input.Password
+            type="password"
+            placeholder="Ваш пароль"
+          />
+        </label>
       </Form.Item>
 
       <Form.Item>
@@ -59,7 +66,9 @@ const LoginForm = (props) => {
         <Button htmlType="submit" className="loginForm__button">
           войти
         </Button>
-        или <NavLink className="loginForm__linkToRegistration" to="/registration">Зарегистрироваться</NavLink>
+        <div className="loginForm--switcher">
+          или <NavLink className="loginForm__linkToRegistration" to="/registration">зарегистрировать аккаунт</NavLink>
+        </div>
       </Form.Item>
     </Form>
   );
