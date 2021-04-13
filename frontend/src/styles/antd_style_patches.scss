@@ -18,6 +18,10 @@ img.ant-image-preview-img {
   object-fit: scale-down;
 }
 
+a:hover {
+  color: $activeBtnDarker;
+}
+
 /* ant  sliders patches */
 .ant-slider {
   width: 98%;
