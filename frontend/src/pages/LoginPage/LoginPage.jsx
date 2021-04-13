@@ -1,9 +1,11 @@
 import { Form, Input, Button, Checkbox } from 'antd';
+import Title from 'antd/lib/typography/Title';
 import { NavLink } from 'react-router-dom';
 import "./LoginPage.scss"
 
 const LoginForm = (props) => {
   const onFinish = (values) => {
+    alert('Логин, пароль, статус чекбокса выведены в консоль.');
     console.log('Received values of form: ', values);
   };
 
@@ -16,7 +18,7 @@ const LoginForm = (props) => {
       } }
       onFinish={ onFinish }
     >
-      <h1 className="loginForm__title">Вход</h1>
+      <Title className="loginForm__title" level={2}>Вход</Title>
       <Form.Item
         name="username"
         rules={ [
@@ -26,7 +28,10 @@ const LoginForm = (props) => {
           },
         ] }
       >
-        <Input placeholder="Ваше имя" />
+        <label>
+          Имя пользователя
+          <Input placeholder="Ваше имя" />
+        </label>
       </Form.Item>
 
       <Form.Item
@@ -38,14 +43,17 @@ const LoginForm = (props) => {
           },
         ] }
       >
-        <Input.Password
-          type="password"
-          placeholder="Ваш пароль"
-        />
+        <label>
+          Пароль
+          <Input.Password
+            type="password"
+            placeholder="Ваш пароль"
+          />
+        </label>
       </Form.Item>
 
       <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
+        <Form.Item name="remember" noStyle valuePropName="checked">
           <Checkbox>Запомнить меня</Checkbox>
         </Form.Item>
 
@@ -56,9 +64,11 @@ const LoginForm = (props) => {
 
       <Form.Item>
         <Button htmlType="submit" className="loginForm__button">
-          Войти
+          войти
         </Button>
-        или <NavLink to="/registration">Зарегистрироваться</NavLink>
+        <div className="loginForm--switcher">
+          или <NavLink className="loginForm__linkToRegistration" to="/registration">зарегистрировать аккаунт</NavLink>
+        </div>
       </Form.Item>
     </Form>
   );
