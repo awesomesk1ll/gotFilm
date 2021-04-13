@@ -32,8 +32,8 @@ const Settings = (props) => {
                 <Title className="settings__header--title" level={2}>Настройки</Title>
             </div>
             <div className="settings__content">
-                <Link type="secondary" size="large" className="settings__content--login" to='/login'>
-                    Вход / Регистрация
+                <Link type="secondary" className="settings__content--login" to='/login'>
+                    <Button size="large">Вход / Регистрация</Button>
                 </Link>
 
                 <div className="settings__content--row">
