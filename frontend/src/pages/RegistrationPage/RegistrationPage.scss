@@ -1,15 +1,44 @@
 @import '../../styles/variables.scss';
 
 .regForm {
+  background-color: $templateBackgroundColor;
   max-width: 300px;
   margin: 50px auto;
   padding: 20px;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
+  & label,
+  &__agreement,
+  &--switcher {
+    color: $textColor; 
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+  }
+  &--switcher {
+    display: flex;
+    justify-content: center;
+    & a {
+      margin-left: 0.3em;
+    }
+  }
   &__title {
     text-align: center;
+    text-transform: uppercase;
   }
   &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    border-radius: 10px;
+    background-color: $activbtn;
+    color: white;
+    border: 2px solid $activbtn;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  &__agreement,
+  &__linkToLogin {
+    color: $activbtn;
   }
 }
