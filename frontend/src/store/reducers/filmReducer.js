@@ -29,7 +29,7 @@ export default function filmReducer(store = initStore, action) {
         case CHANGE_FILM: {
             return update(store, {
                 film: {
-                    $set: { ...store.films[action.film] }
+                    $set: { ...store.idFilmsFiltered[action.film] }
                 }
             });
         }
