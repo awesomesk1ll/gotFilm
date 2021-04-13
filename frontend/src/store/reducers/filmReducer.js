@@ -19,10 +19,10 @@ export default function filmReducer(store = initStore, action) {
             });
         }
         case GET_RANDOM_FILM: {
-            let randomFilm = Math.round(Math.random() * ((store.idFilmsFiltered.length - 1) - 0) + 0);
+            let randomFilm = Math.round(Math.random() * ((store.films.length - 1) - 0) + 0);
             return update(store, {
                 film: {
-                    $set: { ...store.idFilmsFiltered[randomFilm] }
+                    $set: { ...store.films[randomFilm] }
                 }
             });
         }
