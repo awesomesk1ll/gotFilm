@@ -1,8 +1,8 @@
 export const LOAD_FILMS = '@@film/LOAD_FILMS';
 export const LOAD_FILMS_STARTED = '@@film/LOAD_FILMS_STARTED';
 export const LOAD_FILMS_FAILURE = '@@film/LOAD_FILMS_FAILURE';
-export const BLACKLIST_FILM = '@@film/BLACKLIST_FILM';
-export const ALREADY_SEEN_FILM = '@@film/ALREADY_SEEN_FILM';
+export const ADD_TO_BLACKLIST_FILMS = '@@film/ADD_TO_BLACKLIST_FILMS';
+export const ADD_TO_ALREADY_SEEN_FILMS = '@@film/ADD_TO_ALREADY_SEEN_FILMS';
 export const GET_RANDOM_FILM = '@@film/GET_RANDOM_FILM';
 
 export const loadFilms = (films) => ({
@@ -24,12 +24,12 @@ export const getRandomFilm = (film) => ({
     film
 });
 
-export const blacklistFilm = (film) => ({
-    type: BLACKLIST_FILM,
-    film
+export const addToBlacklistFilms = (filmId) => ({
+    type: ADD_TO_BLACKLIST_FILMS,
+    filmId
 });
 
-export const alreadySeenFilm = (film) => ({
-    type: ALREADY_SEEN_FILM,
-    film
+export const addToAlreadySeenFilms = (filmId) => ({
+    type: ADD_TO_ALREADY_SEEN_FILMS,
+    filmId
 });

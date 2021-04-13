@@ -8,9 +8,9 @@ export const fetchFilms = () => {
 
         axios.get("./films.json")
             .then(response => {
-                let randomFilm = Math.round(Math.random() * ((response.data.length - 1) - 0) + 0);
+                let randomIndex = ~~(Math.random() * response.data.length);
                 dispatch(loadFilms(response.data));
-                dispatch(getRandomFilm(randomFilm));
+                dispatch(getRandomFilm(randomIndex));
             })
             .catch(err => {
                 dispatch(loadFilmsFailure(err.message));
