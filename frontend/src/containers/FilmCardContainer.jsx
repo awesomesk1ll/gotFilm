@@ -14,12 +14,12 @@ const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, c
     }, [changeFilm]);
 
     const handleRemoveFilmToBlacklist = useCallback(() => {
-        addToBlacklistFilms(film);
+        addToBlacklistFilms(film.id);
         handleChangeFilm();
     }, [film, addToBlacklistFilms, handleChangeFilm]);
 
     const handleRemoveFilmToAlreadySeen = useCallback(() => {
-        addToAlreadySeenFilms(film);
+        addToAlreadySeenFilms(film.id);
         handleChangeFilm();
     }, [film, addToAlreadySeenFilms, handleChangeFilm]);
 

@@ -8,10 +8,8 @@ export const changeFilm = () => {
             randomIndex = ~~(Math.random() * films.length);
             film = films[randomIndex];
         } while (
-            // eslint-disable-next-line
-            blacklistFilms.some(item => item.id === film.id) ||
-            // eslint-disable-next-line
-            alreadySeenFilms.some(item => item.id === film.id)
+            blacklistFilms.list[film.id]||
+            alreadySeenFilms.list[film.id]
         )
         dispatch(getRandomFilm(randomIndex));
     }

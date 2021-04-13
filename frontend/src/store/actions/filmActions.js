@@ -24,12 +24,12 @@ export const getRandomFilm = (film) => ({
     film
 });
 
-export const addToBlacklistFilms = (film) => ({
+export const addToBlacklistFilms = (filmId) => ({
     type: ADD_TO_BLACKLIST_FILMS,
-    film
+    filmId
 });
 
-export const addToAlreadySeenFilms = (film) => ({
+export const addToAlreadySeenFilms = (filmId) => ({
     type: ADD_TO_ALREADY_SEEN_FILMS,
-    film
+    filmId
 });
