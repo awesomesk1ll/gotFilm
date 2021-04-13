@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'antd';
 
 import './FilmCardButton.scss';
 
 const FilmCardButton = (props) => {
     return (
-        <button onClick={props.eventAction} className="button">{props.children}</button>
+        <Button onClick={props.eventAction} className="button">{props.children}</Button>
     )
 };
 
