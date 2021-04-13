@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { Image } from 'antd';
+import Spinner from '../../components/Spinner';
 import ErrorFilmCard from './ErrorFilmCard';
 import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
 import Star from '../../components/icons/Star';
@@ -48,6 +49,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
                 <Image className="filmCard__poster__image" alt={ film.name }
                     preview={ { src: `${IMAGE_ENDPOINT}/film_big/${film.id}.jpg` } }
                     src={ `${IMAGE_ENDPOINT}/film_iphone/iphone360_${film.id}.jpg` }
+                    placeholder={ <Spinner /> }
                 />
             </div>
             <div className="filmCard__infoBlock theme">
