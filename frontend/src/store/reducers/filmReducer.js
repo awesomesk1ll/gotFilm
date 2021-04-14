@@ -1,17 +1,11 @@
 import update from 'react-addons-update';
-import { ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, LOAD_FILMS, GET_RANDOM_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE } from '../actions/filmActions';
+import { ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, LOAD_FILMS, GET_RANDOM_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, GET_BLACKLIST_FROM_LOCAL_STORAGE, GET_SEENLIST_FROM_LOCAL_STORAGE, CLEAR_LISTS } from '../actions/filmActions';
 
 const initStore = {
     films: [],
     film: null,
-    blacklistFilms: {
-        data: [],
-        list: {}
-    },
-    alreadySeenFilms: {
-        data: [],
-        list: {}
-    },
+    blacklistFilms: {},
+    alreadySeenFilms: {},
     nextTime: {
         data: {},
         list: {}
@@ -46,6 +40,20 @@ export default function filmReducer(store = initStore, action) {
                 },
                 error: {
                     $set: null
+                }
+            });
+        }
+        case GET_BLACKLIST_FROM_LOCAL_STORAGE: {
+            return update(store, {
+                blacklistFilms: {
+                    $set: {...action.blacklist}
+                }
+            });
+        }
+        case GET_SEENLIST_FROM_LOCAL_STORAGE: {
+            return update(store, {
+                alreadySeenFilms: {
+                    $set: {...action.seenList}
                 }
             });
         }
@@ -100,6 +108,22 @@ export default function filmReducer(store = initStore, action) {
                             ...store.alreadySeenFilms.list,
                             [action.filmId]: true
                         }
+                    }
+                }
+            });
+        }
+        case CLEAR_LISTS: {
+            return update(store, {
+                alreadySeenFilms: {
+                    $set: {
+                        data: [],
+                        list: {}
+                    }
+                },
+                blacklistFilms: {
+                    $set: {
+                        data: [],
+                        list: {}
                     }
                 }
             });

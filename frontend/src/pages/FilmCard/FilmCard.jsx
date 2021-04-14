@@ -75,8 +75,8 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
             </div>
             <div className="filmCard__footer theme">
                 <div className="filmCard__footer__buttonGroup">
-                    <FilmCardButton eventAction={ removeFilm }>уже смотрел</FilmCardButton>
-                    <FilmCardButton eventAction={ seenFilm }>не предлагать</FilmCardButton>
+                    <FilmCardButton eventAction={ seenFilm }>уже смотрел</FilmCardButton>
+                    <FilmCardButton eventAction={ removeFilm }>не предлагать</FilmCardButton>
                     <FilmCardButton eventAction={ changeFilm }>в другой раз</FilmCardButton>
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={ cardEndRef }></div>
