@@ -2,6 +2,8 @@ import React from 'react';
 import { List, Typography } from 'antd';
 import './Lists.scss';
 import Navigation from '../../components/Navigation';
+import { Link } from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
 
 const { Title } = Typography;
 const data = [
@@ -11,23 +13,40 @@ const data = [
     'Избранные',
 ];
 
-const Lists = (props) => {
+const Lists = ({ blackList }) => {
+    const a = () => console.log(blackList);
+    a();
+    const head = <div className="lists__header theme">
+        <Title className="lists__header--title" level={ 2 }>Списки фильмов</Title>
+    </div>;
     return (
-        <div className="lists--wrapper theme">
-            <div className="lists__header theme">
-                <Title className="lists__header--title" level={2}>Списки фильмов</Title>
-            </div>
+        <div className="lists-wrapper theme">
             <div className="lists__content">
                 <List
-                    className="lists__content--list"
+                    className="lists__titel"
                     size="large"
-                    dataSource={data}
-                    renderItem={item => <List.Item className="theme">{item}</List.Item>}
+                    header={ head }
+                    bordered
+                    dataSource={ data }
+                    renderItem={ item => (
+                        <Link to="/">
+                            <List.Item
+                                className="theme"
+                                extra={ <span>{ data.length }</span> }
+                            >
+                                { item }
+                            </List.Item>
+                        </Link>
+                    ) }
                 />
             </div>
-            <Navigation checked={'lists'} />
+            <Navigation checked={ 'lists' } />
         </div>
     )
 };
 
-export default Lists;
+const mapStateToProps = ({ filmReducer }) => ({
+    blackList: filmReducer.blacklistFilms
+});
+
+export default connect(mapStateToProps)(Lists);

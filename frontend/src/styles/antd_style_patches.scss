@@ -152,3 +152,10 @@ a:hover {
     border-color: $activeBtnLighter !important;
   }
 }
+
+/* ant list patches */
+.ant-list {
+  &-header {
+    padding: 0px !important;
+  }
+}
