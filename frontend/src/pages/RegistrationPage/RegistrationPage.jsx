@@ -1,6 +1,7 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import Title from "antd/lib/typography/Title";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import "./RegistrationPage.scss";
 
 const RegistrationPage = (props) => {
@@ -119,9 +120,9 @@ const RegistrationPage = (props) => {
         >
           <Checkbox className="theme">
             Я прочитал(а){" "}
-            <NavLink className="regForm__agreement" to="/agreement">
+            <Link className="regForm__agreement" to="/agreement">
               соглашение
-            </NavLink>
+            </Link>
           </Checkbox>
         </Form.Item>
 
@@ -133,11 +134,20 @@ const RegistrationPage = (props) => {
 
         <div className="regForm--switcher theme">
           или{" "}
-          <NavLink className="regForm__linkToLogin" to="/login">
+          <Link className="regForm__linkToLogin" to="/login">
             уже есть аккаунт
-          </NavLink>
+          </Link>
         </div>
       </Form>
+      <Link
+          type='secondary'
+          className='linkToSettings'
+          to='/settings'
+        >
+          <Button size='large' className='loginForm__button'>
+            Назад к настройкам
+          </Button>
+        </Link>
     </div>
   );
 };
