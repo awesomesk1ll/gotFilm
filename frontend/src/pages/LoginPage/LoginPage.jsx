@@ -1,9 +1,10 @@
-import React from 'react';
+import React from 'react'
 import { Form, Input, Button, Checkbox } from 'antd'
 import Title from 'antd/lib/typography/Title'
 import { Link } from 'react-router-dom'
 
 import './LoginPage.scss'
+import CustomLink from '../../components/CustomLink'
 
 const LoginForm = (props) => {
   const onFinish = (values) => {
@@ -70,24 +71,19 @@ const LoginForm = (props) => {
           </Button>
           <div className='loginForm--switcher theme'>
             или{' '}
-            <Link
-              className='loginForm__linkToRegistration'
-              to='/registration'
-            >
+            <Link className='loginForm__linkToRegistration' to='/registration'>
               зарегистрировать аккаунт
             </Link>
           </div>
         </Form.Item>
       </Form>
-      <Link
-          type='secondary'
-          className='linkToSettings'
-          to='/settings'
-        >
-          <Button size='large' className='loginForm__button'>
-            Назад к настройкам
-          </Button>
-        </Link>
+      <CustomLink
+        className='linkToSettings loginForm__button'
+        to='/settings'
+        tag={Button}
+      >
+        Назад к настройкам
+      </CustomLink>
     </div>
   )
 }

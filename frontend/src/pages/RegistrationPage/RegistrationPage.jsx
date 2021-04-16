@@ -1,6 +1,7 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import Title from "antd/lib/typography/Title";
 import { Link } from "react-router-dom";
+import CustomLink from "../../components/CustomLink";
 
 import "./RegistrationPage.scss";
 
@@ -139,15 +140,13 @@ const RegistrationPage = (props) => {
           </Link>
         </div>
       </Form>
-      <Link
-          type='secondary'
-          className='linkToSettings'
-          to='/settings'
-        >
-          <Button size='large' className='loginForm__button'>
-            Назад к настройкам
-          </Button>
-        </Link>
+      <CustomLink
+        className='linkToSettings loginForm__button'
+        to='/settings'
+        tag={Button}
+      >
+        Назад к настройкам
+      </CustomLink>
     </div>
   );
 };
