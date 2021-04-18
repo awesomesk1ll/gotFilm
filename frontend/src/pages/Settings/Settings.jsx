@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Button, Slider, Select, Switch } from 'antd';
+import { Typography, Button, Slider, Select, Switch} from 'antd';
 import Navigation from '../../components/Navigation';
 import { RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
-//import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
-
+import { Link } from 'react-router-dom';
 
 import { updateFilterRating, updateFilterYear, updateFilterCountry, updateFilterGenre, updateButtonState } from '../../store/actions/filmActions';
 
@@ -34,12 +33,9 @@ const Settings = (props) => {
                 <Title className="settings__header--title" level={2}>Настройки</Title>
             </div>
             <div className="settings__content">
-                <Button
-                  type="secondary"
-                  size="large"
-                  className="settings__content--login">
-                    Вход / Регистрация
-                </Button>
+                <Link type="secondary" className="settings__content--login" to='/login'>
+                    <Button size="large">Вход / Регистрация</Button>
+                </Link>
 
                 <div className="settings__content--row">
                     <Text className="theme">Темная версия оформления</Text>
