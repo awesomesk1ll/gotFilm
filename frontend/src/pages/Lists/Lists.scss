@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: column;
     background-color: $templateBackgroundColor;
+    overflow-y: scroll;
   }
   &__header {
     display: flex;
@@ -25,8 +26,10 @@
       text-transform: uppercase;
     }
   }
-  &__title {
-    color: $textColor; 
+  &__container {
     font: $generalFont;
+  }
+  &__films-counter {
+    color: $textColor;
   }
 }
