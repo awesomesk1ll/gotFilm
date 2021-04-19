@@ -26,7 +26,12 @@ const Settings = (props) => {
             (type === "genres") ? props.updateFilterGenre([]) : updateFilterCountry([]);
         }
     }
-
+    const handleReset = () => {
+      props.updateFilterRating([5, 10]);
+      props.updateFilterYear([1950, 2021]);
+      props.updateFilterGenre([]);
+      props.updateFilterCountry([]);
+    }
     return (
         <div className="settings--wrapper theme">
             <div className="settings__header theme">
@@ -58,8 +63,8 @@ const Settings = (props) => {
                             min={5}
                             max={10}
                             step={0.5}
-                            defaultValue={props.numberRate}
-                            onAfterChange={(value) => {props.updateFilterRating(value)}}
+                            value={props.numberRate}
+                            onChange={(value) => {props.updateFilterRating(value)}}
                     />
                 </div>
 
@@ -69,8 +74,8 @@ const Settings = (props) => {
                             marks={YEARS}
                             min={1950}
                             max={2021}
-                            defaultValue={props.numberYear}
-                            onAfterChange={(value) => {props.updateFilterYear(value)}}
+                            value={props.numberYear}
+                            onChange={(value) => {props.updateFilterYear(value)}}
                     />
                 </div>
 
@@ -102,7 +107,7 @@ const Settings = (props) => {
                     />
                 </div>
 
-                <Button type="secondary" size="large" className="settings__content--reset">
+                <Button type="secondary" size="large" className="settings__content--reset" onClick={handleReset}>
                     Сбросить настройки
                 </Button>
 
