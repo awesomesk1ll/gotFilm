@@ -20,8 +20,8 @@ const ListItem = (props) => {
                     <span className="list-item__rate">{ rate }</span>
                 </div>
                 <div className="list-item__buttons">
-                    <Bookmark />
-                    <TrashBin />
+                    <button><Bookmark /></button>
+                    <button><TrashBin /></button>
                 </div>
             </div>
         </div>

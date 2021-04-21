@@ -5,14 +5,26 @@ import Navigation from '../../components/Navigation';
 import { Link } from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
-import ListItem from '../../components/ListItem/ListItem';
+import FilmList from './FilmList';
 
 const { Title } = Typography;
 const data = [
-    'История предложений',
-    'Просмотренные фильмы',
-    'Отклоненные фильмы',
-    'Избранные',
+    {
+        id: 1,
+        titel: 'История предложений'
+    },
+    {
+        id: 2,
+        titel: 'Просмотренные фильмы'
+    },
+    {
+        id: 3,
+        titel: 'Отклоненные фильмы'
+    },
+    {
+        id: 4,
+        titel: 'Избранные'
+    }
 ];
 
 const Lists = ({ blackList, seenList, films }) => {
@@ -21,11 +33,12 @@ const Lists = ({ blackList, seenList, films }) => {
 
     const handleAddToListById = (listName, place) => {
         for (let i = 0; i < listName.data.length; i++) {
-            let a = films.find(item => item.id === listName.data[i].id);
-            place.push(a)
+            let addedFilms = films.find(item => item.id === listName.data[i].id);
+            place.push(addedFilms)
         }
         console.log(place);
     }
+
     useEffect(() => {
         handleAddToListById(blackList, blacklist);
         handleAddToListById(seenList, seenlist);
@@ -44,46 +57,27 @@ const Lists = ({ blackList, seenList, films }) => {
                 bordered
                 dataSource={ data }
                 renderItem={ item => (
-                    <Link to="/">
+                    <Link to={ `/lists/${item.id}` }>
                         <List.Item
                             className="theme"
-                            extra={ <span className="lists__films-counter">{ 'list.length' }</span> }
+                            extra={ <span className="lists__films-counter">{ blacklist.length }</span> }
                         >
-                            { item }
+                            { item.titel }
                         </List.Item>
                     </Link>
                 ) }
             />
-            <List
-                className="lists__container"
-                size="large"
-                header={ head }
-                bordered
-                dataSource={ blacklist }
-                renderItem={ item => (
-                    <List.Item >
-                        <ListItem
-                            key={ `item-${item.id}` }
-                            name={ item.name }
-                            secondName={ item.secondName }
-                            year={ item.year }
-                            genre={ item.genres }
-                            age={ item.age }
-                            rate={ item.rate }
-                        />
-                    </List.Item>
-                ) }
-            />
+            <FilmList name={ 'Отклоненные фильмы' } source={ blacklist } />
             <Navigation checked={ 'lists' } />
         </div>
     )
 };
 
+
 const mapStateToProps = ({ filmReducer }) => ({
     blackList: filmReducer.blacklistFilms,
     seenList: filmReducer.alreadySeenFilms,
-    films: filmReducer.films,
-    film: filmReducer.film
+    films: filmReducer.films
 });
 
 export default connect(mapStateToProps)(Lists);
