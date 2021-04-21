@@ -21,7 +21,17 @@
     &__genre {
         color: $textColor;
     }
+    &_actions-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
     &_rating {
         @include fontFrame(400, 17px, $activbtn);
+        margin-bottom: 5px;
+    }
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
     }
 }

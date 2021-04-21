@@ -13,12 +13,12 @@ import Lists from '../pages/Lists';
 const Router = (props) => {
     return (
         <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={LoginForm} />
-            <Route path="/registration" component={RegistrationForm} />
-            <Route path="/film" component={FilmCardContainer} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/lists" component={Lists} />
+            <Route exact path="/" component={ Home } />
+            <Route path="/login" component={ LoginForm } />
+            <Route path="/registration" component={ RegistrationForm } />
+            <Route path="/film" component={ FilmCardContainer } />
+            <Route path="/settings" component={ Settings } />
+            <Route path="/lists" component={ Lists } />
         </Switch>
     );
 };
