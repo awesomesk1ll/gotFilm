@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Typography, Button, Slider, Select, Switch} from 'antd';
 import Navigation from '../../components/Navigation';
 import { RATINGS, YEARS, GENRES, COUNTRIES } from './config';
@@ -6,8 +6,9 @@ import './Settings.scss';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-
+import Filter from '../../containers/Filter'
 import { updateFilterRating, updateFilterYear, updateFilterCountry, updateFilterGenre, updateButtonState } from '../../store/actions/filmActions';
+import { updateFilteredFilms } from '../../store/actions/filmActions';
 
 const { Title, Text } = Typography;
 
@@ -27,10 +28,10 @@ const Settings = (props) => {
         }
     }
     const handleReset = () => {
+      handleSelect("Все","genres");
+      handleSelect("Все","country");
       props.updateFilterRating([5, 10]);
       props.updateFilterYear([1950, 2021]);
-      props.updateFilterGenre([]);
-      props.updateFilterCountry([]);
     }
     return (
         <div className="settings--wrapper theme">
@@ -106,13 +107,16 @@ const Settings = (props) => {
                             maxTagCount={4}
                     />
                 </div>
-
+                <div>
+                Найдено {props.idFilmsFiltered.length} фильмов
+                </div>
                 <Button type="secondary" size="large" className="settings__content--reset" onClick={handleReset}>
                     Сбросить настройки
                 </Button>
 
             </div>
             <Navigation checked={ 'settings' } />
+            <Filter />
         </div>
     )
 };
@@ -126,6 +130,6 @@ const mapStateToProps = ({ filmReducer }) => ({
     selectedCountries: filmReducer.countryFilter
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ updateFilterRating, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ updateFilterRating, updateFilteredFilms, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

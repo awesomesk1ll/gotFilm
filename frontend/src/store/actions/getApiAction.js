@@ -10,7 +10,7 @@ export const fetchFilms = () => {
             .then(response => {
                 let randomIndex = ~~(Math.random() * response.data.length);
                 dispatch(loadFilms(response.data));
-                dispatch(getRandomFilm(randomIndex));
+                dispatch(getRandomFilm(response.data[randomIndex].id));
             })
             .catch(err => {
                 dispatch(loadFilmsFailure(err.message));

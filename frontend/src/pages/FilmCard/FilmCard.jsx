@@ -13,7 +13,6 @@ const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
 
 const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
     const cardEndRef = useRef(null);
-    
     const handleScrollToBottom = useCallback(() => {
         cardEndRef.current.scrollIntoView({ behavior: "smooth" });
     }, []);
@@ -88,7 +87,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
 
 FilmCard.propTypes = {
     error: PropTypes.string,
-    film: PropTypes.object,
+    film: PropTypes.object.isRequired,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,
     changeFilm: PropTypes.func

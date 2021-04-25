@@ -8,7 +8,7 @@ import FilmCard from '../pages/FilmCard';
 import { addToBlacklistFilms, addToAlreadySeenFilms } from '../store/actions/filmActions';
 import { changeFilm } from '../store/actions/changeFilmAction';
 
-const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, error }) => {
+const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, error, idFilmsFiltered }) => {
     const handleChangeFilm = useCallback(() => {
         changeFilm();
     }, [changeFilm]);
@@ -24,6 +24,7 @@ const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, c
     }, [film, addToAlreadySeenFilms, handleChangeFilm]);
 
     return (
+        idFilmsFiltered.length == 0 ? <div>Нет результатов</div> :
         !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} />
     )
 };

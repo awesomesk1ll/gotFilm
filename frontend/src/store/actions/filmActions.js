@@ -25,9 +25,9 @@ export const loadFilmsFailure = (error) => ({
     error
 });
 
-export const getRandomFilm = (film) => ({
+export const getRandomFilm = (filmId) => ({
     type: GET_RANDOM_FILM,
-    film
+    filmId
 });
 
 export const addToBlacklistFilms = (filmId) => ({
@@ -40,9 +40,9 @@ export const addToAlreadySeenFilms = (filmId) => ({
     filmId
 });
 
-export const updateFilteredFilms = (film) => ({
+export const updateFilteredFilms = (filmId) => ({
     type: UPDATE_FILTERED_FILMS,
-    film
+    filmId
 });
 
 export const updateFilterRating = (value) => ({

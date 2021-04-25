@@ -2,15 +2,15 @@ import { getRandomFilm } from './filmActions';
 
 export const changeFilm = () => {
     return (dispatch, getState) => {
-        const { films, blacklistFilms, alreadySeenFilms } = getState().filmReducer;
-        let film, randomIndex;
+        const { idFilmsFiltered, blacklistFilms, alreadySeenFilms } = getState().filmReducer;
+        let filmId, randomIndex;
         do {
-            randomIndex = ~~(Math.random() * films.length);
-            film = films[randomIndex];
+            randomIndex = ~~(Math.random() * idFilmsFiltered.length);
+            filmId = idFilmsFiltered[randomIndex];
         } while (
-            blacklistFilms.list[film.id]||
-            alreadySeenFilms.list[film.id]
+            blacklistFilms.list[filmId]||
+            alreadySeenFilms.list[filmId]
         )
-        dispatch(getRandomFilm(randomIndex));
+        dispatch(getRandomFilm(filmId));
     }
 };

@@ -58,7 +58,7 @@ export default function filmReducer(store = initStore, action) {
         case GET_RANDOM_FILM: {
             return update(store, {
                 film: {
-                    $set: { ...store.films[action.film] }
+                    $set: { ...store.films.find((ele) => ele.id == action.filmId) }
                 },
                 isLoading: {
                     $set: false
@@ -113,7 +113,7 @@ export default function filmReducer(store = initStore, action) {
         case UPDATE_FILTERED_FILMS: {
             return update(store, {
                 idFilmsFiltered: {
-                    $set: action.film
+                    $set: action.filmId
                 }
             });
         }
@@ -150,7 +150,7 @@ export default function filmReducer(store = initStore, action) {
                 buttonState: {
                     $set: action.value
                 }
-            })
+            });
         }
         default:
             return store;
