@@ -13,20 +13,20 @@ const FilmCardContainer = ({ film, alreadySeenFilms, blacklistFilms, addToBlackl
         changeFilm();
     }, [changeFilm]);
 
-    const handleRemoveFilmToBlacklist = useCallback(() => {
+    const handleMoveFilmToBlacklist = useCallback(() => {
         addToBlacklistFilms(film.id);
         localStorage.setItem('blacklist', JSON.stringify(blacklistFilms));
         handleChangeFilm();
     }, [film, blacklistFilms, addToBlacklistFilms, handleChangeFilm]);
 
-    const handleRemoveFilmToAlreadySeen = useCallback(() => {
+    const handleMoveFilmToAlreadySeen = useCallback(() => {
         addToAlreadySeenFilms(film.id);
         localStorage.setItem('seenList', JSON.stringify(alreadySeenFilms));
         handleChangeFilm();
     }, [film, alreadySeenFilms, addToAlreadySeenFilms, handleChangeFilm]);
 
     return (
-        !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} />
+        !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleMoveFilmToBlacklist} seenFilm={handleMoveFilmToAlreadySeen} />
     )
 };
 

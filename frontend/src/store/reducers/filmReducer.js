@@ -4,12 +4,9 @@ import { ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, LOAD_FILMS, GET_RAND
 const initStore = {
     films: [],
     film: null,
-    blacklistFilms: {},
-    alreadySeenFilms: {},
-    nextTime: {
-        data: {},
-        list: {}
-    },
+    blacklistFilms: { data: [], list: {} },
+    alreadySeenFilms: { data: [], list: {} },
+    nextTime: { data: [], list: {} },
     isLoading: false,
     error: null
 }
@@ -46,14 +43,14 @@ export default function filmReducer(store = initStore, action) {
         case GET_BLACKLIST_FROM_LOCAL_STORAGE: {
             return update(store, {
                 blacklistFilms: {
-                    $set: {...action.blacklist}
+                    $set: { ...action.blacklist }
                 }
             });
         }
         case GET_SEENLIST_FROM_LOCAL_STORAGE: {
             return update(store, {
                 alreadySeenFilms: {
-                    $set: {...action.seenList}
+                    $set: { ...action.seenList }
                 }
             });
         }
