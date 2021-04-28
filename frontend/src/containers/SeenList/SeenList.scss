@@ -1,17 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @import '../../styles/variables.scss';
 
-.seenList__list {
-  overflow-y: auto;
-}
-
-.seenList__header {
-  width: 100%;
-  min-height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font: 600 24px 'Roboto', sans-serif;
-  text-transform: uppercase;
-  box-shadow: 0px 5px 10px -3px rgba(34, 60, 80, 0.2);
+.seenList {
+  &__list {
+    overflow-y: auto;
+  }
+  &__header {
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: 600 24px 'Roboto', sans-serif;
+    text-transform: uppercase;
+    box-shadow: 0px 5px 10px -3px rgba(34, 60, 80, 0.2);
+  }
+  &__placeholder::before {
+    content: $noFilmsText;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font: $generalFont;
+    font-size: 36px;
+    color: $textColor;
+    text-transform: uppercase;
+  }
 }
