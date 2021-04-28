@@ -8,18 +8,28 @@
 
 .list-item {
     width: 100%;
+    min-height: 80px;
     display: flex;
-    min-height: 80px; 
-    font: $generalFont;
-    &_about {
+    justify-content: space-between;
+    padding: 0 25px;
+    box-shadow: 0px 5px 10px -3px rgba(34, 60, 80, 0.2);
+    font: 400 18px 'Roboto', sans-serif;
+    &__about {
         width: 80%;
-        padding-right: 5px;
+        padding: 10px 0 5px;
+        box-sizing: border-box;
+    }
+    &__name {
+        margin-bottom: 10px;
     }
     &__second-name {
+        min-height: 21px;
         color: $textColor;
+        margin: 0;
     }
     &__genre {
         color: $textColor;
+        margin: 0;
     }
     &_actions-container{
         display: flex;
