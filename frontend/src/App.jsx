@@ -5,11 +5,9 @@ import { bindActionCreators } from 'redux';
 
 import Router from './containers/Router';
 import { fetchFilms } from './store/actions/getApiAction';
-import { getFromLocalStorage } from './store/actions/getFromLocalStorage';
 
-const App = ({ fetchFilms, getFromLocalStorage }) => {
+const App = ({ fetchFilms }) => {
   useEffect(() => {
-    getFromLocalStorage();
     fetchFilms();
   });
 
@@ -21,10 +19,9 @@ const App = ({ fetchFilms, getFromLocalStorage }) => {
 };
 
 App.propTypes = {
-  fetchFilms: PropTypes.func,
-  getFromLocalStorage: PropTypes.func
+  fetchFilms: PropTypes.func
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ fetchFilms, getFromLocalStorage }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchFilms }, dispatch);
 
 export default connect(null, mapDispatchToProps)(App);

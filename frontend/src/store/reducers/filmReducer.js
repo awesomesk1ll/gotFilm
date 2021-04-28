@@ -42,27 +42,6 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
-        case GET_BLACKLIST_FROM_LOCAL_STORAGE: {
-            return update(store, {
-                blacklistFilms: {
-                    $set: { ...action.blacklist }
-                }
-            });
-        }
-        case GET_SEENLIST_FROM_LOCAL_STORAGE: {
-            return update(store, {
-                alreadySeenFilms: {
-                    $set: { ...action.seenList }
-                }
-            });
-        }
-        case GET_HISTORY_FROM_LOCAL_STORAGE: {
-            return update(store, {
-                history: {
-                    $set: { ...action.history }
-                }
-            });
-        }
         case GET_RANDOM_FILM: {
             return update(store, {
                 film: {
