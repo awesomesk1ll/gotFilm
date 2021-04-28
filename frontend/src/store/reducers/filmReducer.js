@@ -7,6 +7,7 @@ const initStore = {
     blacklistFilms: { data: [], list: {} },
     alreadySeenFilms: { data: [], list: {} },
     nextTime: { data: [], list: {} },
+    favorite: { data: [], list: {} },
     isLoading: false,
     error: null
 }

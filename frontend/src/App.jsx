@@ -9,8 +9,6 @@ import { getFromLocalStorage } from './store/actions/getFromLocalStorage';
 
 const App = ({ fetchFilms, getFromLocalStorage }) => {
   useEffect(() => {
-    console.log(localStorage.getItem('blacklist'));
-    console.log(localStorage.getItem('seenList'));
     getFromLocalStorage();
     fetchFilms();
   });
