@@ -1,9 +1,10 @@
 import update from 'react-addons-update';
-import { ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, LOAD_FILMS, GET_RANDOM_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, GET_BLACKLIST_FROM_LOCAL_STORAGE, GET_SEENLIST_FROM_LOCAL_STORAGE, CLEAR_LISTS } from '../actions/filmActions';
+import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, LOAD_FILMS, GET_RANDOM_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, GET_BLACKLIST_FROM_LOCAL_STORAGE, GET_HISTORY_FROM_LOCAL_STORAGE, GET_SEENLIST_FROM_LOCAL_STORAGE, CLEAR_LISTS } from '../actions/filmActions';
 
 const initStore = {
     films: [],
     film: null,
+    history: { data: [], list: {} },
     blacklistFilms: { data: [], list: {} },
     alreadySeenFilms: { data: [], list: {} },
     nextTime: { data: [], list: {} },
@@ -55,6 +56,13 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
+        case GET_HISTORY_FROM_LOCAL_STORAGE: {
+            return update(store, {
+                history: {
+                    $set: { ...action.history }
+                }
+            });
+        }
         case GET_RANDOM_FILM: {
             return update(store, {
                 film: {
@@ -65,6 +73,27 @@ export default function filmReducer(store = initStore, action) {
                 },
                 error: {
                     $set: null
+                }
+            });
+        }
+        case ADD_TO_HISTORY: {
+            return update(store, {
+                history: {
+                    $merge: {
+                        ...store.history,
+                        data: [
+                            ...store.history.data,
+                            {
+                                id: action.filmId,
+                                timestamp: Date.now(),
+                                status: 'ADDED'
+                            }
+                        ],
+                        list: {
+                            ...store.history.list,
+                            [action.filmId]: true
+                        }
+                    }
                 }
             });
         }
@@ -112,6 +141,12 @@ export default function filmReducer(store = initStore, action) {
         }
         case CLEAR_LISTS: {
             return update(store, {
+                history: {
+                    $set: {
+                        data: [],
+                        list: {}
+                    }
+                },
                 alreadySeenFilms: {
                     $set: {
                         data: [],

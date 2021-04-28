@@ -1,4 +1,4 @@
-import { getBlacklistFromLocalStorage, getSeenListFromLocalStorage } from './filmActions';
+import { getBlacklistFromLocalStorage, getSeenListFromLocalStorage, getHistoryFromLocalStorage } from './filmActions';
 
 export const getFromLocalStorage = () => {
     return dispatch => {
@@ -7,6 +7,9 @@ export const getFromLocalStorage = () => {
         }
         if (localStorage.seenList) {
             dispatch(getSeenListFromLocalStorage(JSON.parse(localStorage.seenList)));
+        }
+        if (localStorage.history) {
+            dispatch(getHistoryFromLocalStorage(JSON.parse(localStorage.history)));
         }
     }
 };

@@ -1,11 +1,13 @@
 export const LOAD_FILMS = '@@film/LOAD_FILMS';
 export const LOAD_FILMS_STARTED = '@@film/LOAD_FILMS_STARTED';
 export const LOAD_FILMS_FAILURE = '@@film/LOAD_FILMS_FAILURE';
+export const ADD_TO_HISTORY = '@@film/ADD_TO_HISTORY';
 export const ADD_TO_BLACKLIST_FILMS = '@@film/ADD_TO_BLACKLIST_FILMS';
 export const ADD_TO_ALREADY_SEEN_FILMS = '@@film/ADD_TO_ALREADY_SEEN_FILMS';
 export const GET_RANDOM_FILM = '@@film/GET_RANDOM_FILM';
 export const GET_BLACKLIST_FROM_LOCAL_STORAGE = '@@film/GET_BLACKLIST_FROM_LOCAL_STORAGE';
 export const GET_SEENLIST_FROM_LOCAL_STORAGE = '@@film/GET_SEENLIST_FROM_LOCAL_STORAGE';
+export const GET_HISTORY_FROM_LOCAL_STORAGE = '@@film/GET_HISTORY_FROM_LOCAL_STORAGE';
 export const CLEAR_LISTS = '@@film/CLEAR_LISTS';
 
 export const loadFilms = (films) => ({
@@ -27,6 +29,11 @@ export const getRandomFilm = (film) => ({
     film
 });
 
+export const addToHistory = (filmId) => ({
+    type: ADD_TO_HISTORY,
+    filmId
+});
+
 export const addToBlacklistFilms = (filmId) => ({
     type: ADD_TO_BLACKLIST_FILMS,
     filmId
@@ -44,6 +51,11 @@ export const getBlacklistFromLocalStorage = (blacklist) => ({
 
 export const getSeenListFromLocalStorage = (seenList) => ({
     type: GET_SEENLIST_FROM_LOCAL_STORAGE,
+    seenList
+});
+
+export const getHistoryFromLocalStorage = (seenList) => ({
+    type: GET_HISTORY_FROM_LOCAL_STORAGE,
     seenList
 });
 

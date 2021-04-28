@@ -8,6 +8,7 @@ import FilmCardContainer from './FilmCardContainer';
 import Settings from '../pages/Settings';
 import Lists from '../pages/Lists';
 import SeenList from '../containers/SeenList';
+import History from '../containers/History';
 import Blacklist from '../containers/Blacklist';
 
 const Router = (props) => {
@@ -19,6 +20,7 @@ const Router = (props) => {
             <Route path="/film" component={ FilmCardContainer } />
             <Route path="/settings" component={ Settings } />
             <Route path="/lists" component={ Lists } />
+            <Route path="/history" component={ History } />
             <Route path="/seenList" component={ SeenList } />
             <Route path="/blacklist" component={ Blacklist } />
         </Switch>
