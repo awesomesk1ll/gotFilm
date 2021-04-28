@@ -16,7 +16,7 @@ const SeenList = ({ films, alreadySeenFilms }) => {
         <div className="seenList--wrapper">
             <div className="seenList__header">Просмотренные</div>
             <div className="seenList__list">
-                { list}
+                { list.length ? list : (<div className="seenList__placeholder"/>) }
             </div>
             <Navigation checked={'lists'} />
         </div>

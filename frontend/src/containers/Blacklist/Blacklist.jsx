@@ -16,7 +16,7 @@ const Blacklist = ({ films, blacklistFilms }) => {
         <div className="blacklist--wrapper">
             <div className="blacklist__header">Отклоненные</div>
             <div className="blacklist__list"> 
-                { list }
+            { list.length ? list : (<div className="blacklist__placeholder"/>) }
             </div>
             <Navigation checked={'lists'} />
         </div>
