@@ -7,14 +7,14 @@ import './Lists.scss';
 import Navigation from '../../components/Navigation';
 import ListLink from '../../components/ListLink';
 
-const Lists = ({ blacklistFilms, alreadySeenFilms, history, favorite }) => {
+const Lists = ({ blacklist, alreadySeen, history, favorites }) => {
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header">Списки фильмов</div>
             <Link className="lists__link--color" to="/history"><ListLink listLength={history.data.length}>История предложений</ListLink></Link>
-            <Link className="lists__link--color" to="/seenList"><ListLink listLength={alreadySeenFilms.data.length}>Просмотренные фильмы</ListLink></Link>
-            <Link className="lists__link--color" to="/blacklist"><ListLink listLength={blacklistFilms.data.length}>Отклоненные фильмы</ListLink></Link>
-            <Link className="lists__link--color" to="/film"><ListLink listLength={favorite.data.length}>Избранные</ListLink></Link>
+            <Link className="lists__link--color" to="/seenList"><ListLink listLength={alreadySeen.data.length}>Просмотренные фильмы</ListLink></Link>
+            <Link className="lists__link--color" to="/blacklist"><ListLink listLength={blacklist.data.length}>Отклоненные фильмы</ListLink></Link>
+            <Link className="lists__link--color" to="/film"><ListLink listLength={favorites.data.length}>Избранные</ListLink></Link>
             <Navigation checked={'lists'} />
         </div>
     )
@@ -22,16 +22,16 @@ const Lists = ({ blacklistFilms, alreadySeenFilms, history, favorite }) => {
 
 Lists.propTypes = {
     history: PropTypes.object,
-    favorite: PropTypes.object,
-    blacklistFilms: PropTypes.object,
-    alreadySeenFilms: PropTypes.object
+    favorites: PropTypes.object,
+    blacklist: PropTypes.object,
+    alreadySeen: PropTypes.object
 };
 
 const mapStateToProps = ({ filmReducer }) => ({
     history: filmReducer.history,
-    favorite: filmReducer.favorite,
-    blacklistFilms: filmReducer.blacklistFilms,
-    alreadySeenFilms: filmReducer.alreadySeenFilms
+    favorites: filmReducer.favorites,
+    blacklist: filmReducer.blacklist,
+    alreadySeen: filmReducer.alreadySeen
 });
 
 export default connect(mapStateToProps)(Lists);
