@@ -14,8 +14,8 @@ const ListItem = (props) => {
                 <p className="list-item__second-name">{ secondName }</p>
                 <p className="list-item__genre">{ genre }<span className="list-item__age">{ age }+</span></p>
             </div>
-            <div className="list-item_actions-container">
-                <div className="list-item_rating">
+            <div className="list-item__actions-container">
+                <div className="list-item__rating">
                     <Star />
                     <span className="list-item__rate">{ rate }</span>
                 </div>
