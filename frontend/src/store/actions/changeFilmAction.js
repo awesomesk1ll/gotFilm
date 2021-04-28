@@ -1,4 +1,4 @@
-import { getRandomFilm } from './filmActions';
+import { getRandomFilm, addToHistory } from './filmActions';
 
 export const changeFilm = () => {
     return (dispatch, getState) => {
@@ -8,9 +8,9 @@ export const changeFilm = () => {
             randomIndex = ~~(Math.random() * films.length);
             film = films[randomIndex];
         } while (
-            blacklistFilms.list[film.id]||
-            alreadySeenFilms.list[film.id]
+            blacklistFilms.list[film.id] || alreadySeenFilms.list[film.id]
         )
+        dispatch(addToHistory(randomIndex));
         dispatch(getRandomFilm(randomIndex));
     }
 };
