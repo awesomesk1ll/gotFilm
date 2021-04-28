@@ -8,15 +8,15 @@ import './History.scss';
 
 
 const History = ({ films, history }) => {
-    let list = history.data.map(item => {
+    let list = films.length && history.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} />
-    });
+        return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} />
+    }).reverse();
     return (
         <div className="history--wrapper">
             <div className="history__header">История предложений</div>
             <div className="history__list">
-                { list.length ? list : (<div className="history__placeholder"/>) }
+                { list?.length ? list : (<div className="history__placeholder"/>) }
             </div>
             <Navigation checked={'lists'} />
         </div>
