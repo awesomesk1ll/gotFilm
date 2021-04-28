@@ -8,29 +8,33 @@ import FilmCard from '../pages/FilmCard';
 import { addToBlacklistFilms, addToAlreadySeenFilms } from '../store/actions/filmActions';
 import { changeFilm } from '../store/actions/changeFilmAction';
 
-const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, error }) => {
+const FilmCardContainer = ({ film, alreadySeenFilms, blacklistFilms, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, error }) => {
     const handleChangeFilm = useCallback(() => {
         changeFilm();
     }, [changeFilm]);
 
-    const handleRemoveFilmToBlacklist = useCallback(() => {
+    const handleMoveFilmToBlacklist = useCallback(() => {
         addToBlacklistFilms(film.id);
+        localStorage.setItem('blacklist', JSON.stringify(blacklistFilms));
         handleChangeFilm();
-    }, [film, addToBlacklistFilms, handleChangeFilm]);
+    }, [film, blacklistFilms, addToBlacklistFilms, handleChangeFilm]);
 
-    const handleRemoveFilmToAlreadySeen = useCallback(() => {
+    const handleMoveFilmToAlreadySeen = useCallback(() => {
         addToAlreadySeenFilms(film.id);
+        localStorage.setItem('seenList', JSON.stringify(alreadySeenFilms));
         handleChangeFilm();
-    }, [film, addToAlreadySeenFilms, handleChangeFilm]);
+    }, [film, alreadySeenFilms, addToAlreadySeenFilms, handleChangeFilm]);
 
     return (
-        !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} />
+        !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleMoveFilmToBlacklist} seenFilm={handleMoveFilmToAlreadySeen} />
     )
 };
 
 FilmCardContainer.propTypes = {
     error: PropTypes.string,
     film: PropTypes.object,
+    blacklistFilms: PropTypes.object,
+    alreadySeenFilms: PropTypes.object,
     addToBlacklistFilms: PropTypes.func,
     addToAlreadySeenFilms: PropTypes.func,
     changeFilm: PropTypes.func
@@ -38,7 +42,9 @@ FilmCardContainer.propTypes = {
 
 const mapStateToProps = ({ filmReducer }) => ({
     error: filmReducer.error,
-    film: filmReducer.film
+    film: filmReducer.film,
+    blacklistFilms: filmReducer.blacklistFilms,
+    alreadySeenFilms: filmReducer.alreadySeenFilms
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ changeFilm, addToBlacklistFilms, addToAlreadySeenFilms }, dispatch);

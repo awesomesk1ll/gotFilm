@@ -1,33 +1,37 @@
 import React from 'react';
-import { List, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import connect from 'react-redux/es/connect/connect';
+import { Link } from 'react-router-dom';
+
 import './Lists.scss';
 import Navigation from '../../components/Navigation';
+import ListLink from '../../components/ListLink';
 
-const { Title } = Typography;
-const data = [
-    'История предложений',
-    'Просмотренные фильмы',
-    'Отклоненные фильмы',
-    'Избранные',
-];
-
-const Lists = (props) => {
+const Lists = ({ blacklistFilms, alreadySeenFilms, nextTime, favorite }) => {
     return (
         <div className="lists--wrapper theme">
-            <div className="lists__header theme">
-                <Title className="lists__header--title" level={2}>Списки фильмов</Title>
-            </div>
-            <div className="lists__content">
-                <List
-                    className="lists__content--list"
-                    size="large"
-                    dataSource={data}
-                    renderItem={item => <List.Item className="theme">{item}</List.Item>}
-                />
-            </div>
+            <div className="lists__header">Списки фильмов</div>
+            <Link className="lists__link--color" to="/film"><ListLink listLength={nextTime.data.length}>История предложений</ListLink></Link>
+            <Link className="lists__link--color" to="/seenList"><ListLink listLength={alreadySeenFilms.data.length}>Просмотренные фильмы</ListLink></Link>
+            <Link className="lists__link--color" to="/blacklist"><ListLink listLength={blacklistFilms.data.length}>Отклоненные фильмы</ListLink></Link>
+            <Link className="lists__link--color" to="/film"><ListLink listLength={favorite.data.length}>Избранные</ListLink></Link>
             <Navigation checked={'lists'} />
         </div>
     )
 };
 
-export default Lists;
+Lists.propTypes = {
+    nextTime: PropTypes.object,
+    favorite: PropTypes.object,
+    blacklistFilms: PropTypes.object,
+    alreadySeenFilms: PropTypes.object
+};
+
+const mapStateToProps = ({ filmReducer }) => ({
+    nextTime: filmReducer.nextTime,
+    favorite: filmReducer.favorite,
+    blacklistFilms: filmReducer.blacklistFilms,
+    alreadySeenFilms: filmReducer.alreadySeenFilms
+});
+
+export default connect(mapStateToProps)(Lists);

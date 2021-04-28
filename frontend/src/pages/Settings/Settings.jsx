@@ -1,4 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import connect from 'react-redux/es/connect/connect';
+import { bindActionCreators } from 'redux';
+
+import { clearLists } from '../../store/actions/filmActions';
+
 import { Typography, Button, Slider, Select } from 'antd';
 import Navigation from '../../components/Navigation';
 import { RATINGS, YEARS, GENRES, COUNTRIES } from './config';
@@ -24,6 +30,12 @@ const Settings = (props) => {
         if (value === "Все") {
             (type === "genres") ? setSelectedGenres([]) : setSelectedCountries([])
         }
+    }
+
+    const handleClearSettings = () => {
+        props.clearLists();
+        localStorage.removeItem('blacklist');
+        localStorage.removeItem('seenList');
     }
 
     return (
@@ -85,7 +97,7 @@ const Settings = (props) => {
                     />
                 </div>
 
-                <Button type="secondary" size="large" className="settings__content--reset">
+                <Button type="secondary" size="large" className="settings__content--reset" onClick={handleClearSettings}>
                     Сбросить настройки
                 </Button>
 
@@ -95,4 +107,10 @@ const Settings = (props) => {
     )
 };
 
-export default Settings;
+Settings.propTypes = {
+    clearLists: PropTypes.func
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators({ clearLists }, dispatch);
+
+export default connect(null, mapDispatchToProps)(Settings);
