@@ -1,14 +1,16 @@
 import update from 'react-addons-update';
-import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN_FILMS, ADD_TO_BLACKLIST_FILMS, LOAD_FILMS, GET_RANDOM_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, GET_BLACKLIST_FROM_LOCAL_STORAGE, GET_HISTORY_FROM_LOCAL_STORAGE, GET_SEENLIST_FROM_LOCAL_STORAGE, CLEAR_LISTS } from '../actions/filmActions';
+import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS } from '../actions/filmActions';
+
+const prepareList = (listName) => localStorage.getItem(listName) ? JSON.parse(localStorage.getItem(listName)) : { data: [], list: {} }
 
 const initStore = {
     films: [],
     film: null,
-    history: { data: [], list: {} },
-    blacklistFilms: { data: [], list: {} },
-    alreadySeenFilms: { data: [], list: {} },
-    nextTime: { data: [], list: {} },
-    favorite: { data: [], list: {} },
+    history: prepareList('history'),
+    blacklist: prepareList('blacklist'),
+    alreadySeen: prepareList('alreadyseen'),
+    temporary: prepareList('temporary'),
+    favorites: prepareList('favorites'),
     isLoading: false,
     error: null
 }
@@ -42,28 +44,7 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
-        case GET_BLACKLIST_FROM_LOCAL_STORAGE: {
-            return update(store, {
-                blacklistFilms: {
-                    $set: { ...action.blacklist }
-                }
-            });
-        }
-        case GET_SEENLIST_FROM_LOCAL_STORAGE: {
-            return update(store, {
-                alreadySeenFilms: {
-                    $set: { ...action.seenList }
-                }
-            });
-        }
-        case GET_HISTORY_FROM_LOCAL_STORAGE: {
-            return update(store, {
-                history: {
-                    $set: { ...action.history }
-                }
-            });
-        }
-        case GET_RANDOM_FILM: {
+        case SELECT_FILM: {
             return update(store, {
                 film: {
                     $set: { ...store.films[action.film] }
@@ -97,13 +78,13 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
-        case ADD_TO_BLACKLIST_FILMS: {
+        case ADD_TO_BLACKLIST: {
             return update(store, {
-                blacklistFilms: {
+                blacklist: {
                     $merge: {
-                        ...store.blacklistFilms,
+                        ...store.blacklist,
                         data: [
-                            ...store.blacklistFilms.data,
+                            ...store.blacklist.data,
                             {
                                 id: action.filmId,
                                 timestamp: Date.now(),
@@ -111,20 +92,20 @@ export default function filmReducer(store = initStore, action) {
                             }
                         ],
                         list: {
-                            ...store.blacklistFilms.list,
+                            ...store.blacklist.list,
                             [action.filmId]: true
                         }
                     }
                 }
             });
         }
-        case ADD_TO_ALREADY_SEEN_FILMS: {
+        case ADD_TO_ALREADY_SEEN: {
             return update(store, {
-                alreadySeenFilms: {
+                alreadySeen: {
                     $merge: {
-                        ...store.alreadySeenFilms,
+                        ...store.alreadySeen,
                         data: [
-                            ...store.alreadySeenFilms.data,
+                            ...store.alreadySeen.data,
                             {
                                 id: action.filmId,
                                 timestamp: Date.now(),
@@ -132,7 +113,7 @@ export default function filmReducer(store = initStore, action) {
                             }
                         ],
                         list: {
-                            ...store.alreadySeenFilms.list,
+                            ...store.alreadySeen.list,
                             [action.filmId]: true
                         }
                     }
@@ -147,13 +128,13 @@ export default function filmReducer(store = initStore, action) {
                         list: {}
                     }
                 },
-                alreadySeenFilms: {
+                alreadySeen: {
                     $set: {
                         data: [],
                         list: {}
                     }
                 },
-                blacklistFilms: {
+                blacklist: {
                     $set: {
                         data: [],
                         list: {}
