@@ -22,7 +22,7 @@ const Favorites = ({ films, favorites, addToListAndSave, removeFromListAndSave }
     }).reverse();
     return (
         <div className="favorites--wrapper">
-            <div className="favorites__header">Отклоненные</div>
+            <div className="favorites__header">Избранные</div>
             <div className="favorites__list">
                 {list?.length ? list : (<div className="favorites__placeholder" />)}
             </div>

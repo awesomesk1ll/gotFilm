@@ -67,7 +67,8 @@ export default function filmReducer(store = initStore, action) {
                             {
                                 id: action.filmId,
                                 timestamp: Date.now(),
-                                status: 'ADDED'
+                                status: 'ADDED',
+                                favorite: false
                             }
                         ],
                         list: {
@@ -88,7 +89,8 @@ export default function filmReducer(store = initStore, action) {
                             {
                                 id: action.filmId,
                                 timestamp: Date.now(),
-                                status: 'ADDED'
+                                status: 'ADDED',
+                                favorite: false
                             }
                         ],
                         list: {
@@ -109,7 +111,8 @@ export default function filmReducer(store = initStore, action) {
                             {
                                 id: action.filmId,
                                 timestamp: Date.now(),
-                                status: 'ADDED'
+                                status: 'ADDED',
+                                favorite: false
                             }
                         ],
                         list: {
@@ -130,7 +133,8 @@ export default function filmReducer(store = initStore, action) {
                             {
                                 id: action.filmId,
                                 timestamp: Date.now(),
-                                status: 'ADDED'
+                                status: 'ADDED',
+                                favorite: true
                             }
                         ],
                         list: {

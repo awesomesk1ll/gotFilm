@@ -35,7 +35,7 @@ History.propTypes = {
     history: PropTypes.object,
     films: PropTypes.array,
     addToListAndSave: PropTypes.func,
-    removeFromListAndSave: PropTypes.func
+    removeFromListAndSave: PropTypes.func,
 };
 
 const mapStateToProps = ({ filmReducer }) => ({
