@@ -5,6 +5,10 @@ export const ADD_TO_HISTORY = '@@film/ADD_TO_HISTORY';
 export const ADD_TO_BLACKLIST = '@@film/ADD_TO_BLACKLIST';
 export const ADD_TO_ALREADY_SEEN = '@@film/ADD_TO_ALREADY_SEEN';
 export const ADD_TO_FAVORITES = '@@film/ADD_TO_FAVORITES';
+export const REMOVE_FROM_HISTORY = '@@film/REMOVE_FROM_HISTORY';
+export const REMOVE_FROM_ALREADY_SEEN = '@@film/REMOVE_FROM_ALREADY_SEEN';
+export const REMOVE_FROM_BLACKLIST = '@@film/REMOVE_FROM_BLACKLIST';
+export const REMOVE_FROM_FAVORITES = '@@film/REMOVE_FROM_FAVORITES';
 export const SELECT_FILM = '@@film/SELECT_FILM';
 export const CLEAR_LISTS = '@@film/CLEAR_LISTS';
 
@@ -44,6 +48,26 @@ export const addToAlreadySeen = (filmId) => ({
 
 export const addToFavorites = (filmId) => ({
     type: ADD_TO_FAVORITES,
+    filmId
+});
+
+export const removeFromHistory = (filmId) => ({
+    type: REMOVE_FROM_HISTORY,
+    filmId
+});
+
+export const removeFromAlreadySeen = (filmId) => ({
+    type: REMOVE_FROM_ALREADY_SEEN,
+    filmId
+});
+
+export const removeFromBlacklist = (filmId) => ({
+    type: REMOVE_FROM_BLACKLIST,
+    filmId
+});
+
+export const removeFromFavorites = (filmId) => ({
+    type: REMOVE_FROM_FAVORITES,
     filmId
 });
 

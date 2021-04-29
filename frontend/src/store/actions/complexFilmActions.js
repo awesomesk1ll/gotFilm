@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { loadFilms, loadFilmsStarted, loadFilmsFailure } from './filmActions';
-import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavorites } from './filmActions';
+import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavorites, removeFromAlreadySeen, removeFromBlacklist, removeFromFavorites, removeFromHistory } from './filmActions';
 
 /**
  * Сохраняет список в local storage
@@ -34,6 +34,31 @@ export const addToListAndSave = (filmId, listName = "history") => {
                 break;
             default:
                 dispatch(addToHistory(filmId));
+        }
+        dispatch(saveList(listName));
+    }
+};
+
+/**
+ * Удаляет фильм из списка, затем сохраняет список в local storage
+ * 
+ * @param {number} filmId - id удаляемого фильма.
+ * @param {string} [listName="history"] - имя списка для удаляемого фильма и сохранения.
+ */
+export const removeFromListAndSave = (filmId, listName = "history") => {
+    return (dispatch, getState) => {
+        switch (listName) {
+            case "blacklist":
+                dispatch(removeFromBlacklist(filmId));
+                break;
+            case "alreadySeen":
+                dispatch(removeFromAlreadySeen(filmId));
+                break;
+            case "favorites":
+                dispatch(removeFromFavorites(filmId));
+                break;
+            default:
+                dispatch(removeFromHistory(filmId));
         }
         dispatch(saveList(listName));
     }

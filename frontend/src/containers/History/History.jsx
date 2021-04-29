@@ -1,16 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
+import { bindActionCreators } from 'redux';
+import { addToListAndSave, removeFromListAndSave } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
 import Navigation from '../../components/Navigation';
 import './History.scss';
 
 
-const History = ({ films, history }) => {
+const History = ({ films, history, addToListAndSave, removeFromListAndSave }) => {
     let list = films.length && history.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} />
+        const handleAddToFavorites = () => {
+            addToListAndSave(film.id, "favorites");
+        };
+        const handleRemoveFromList = () => {
+            removeFromListAndSave(film.id, "history");
+        };
+        return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} />
     }).reverse();
     return (
         <div className="history--wrapper">
@@ -25,7 +33,9 @@ const History = ({ films, history }) => {
 
 History.propTypes = {
     history: PropTypes.object,
-    films: PropTypes.array
+    films: PropTypes.array,
+    addToListAndSave: PropTypes.func,
+    removeFromListAndSave: PropTypes.func
 };
 
 const mapStateToProps = ({ filmReducer }) => ({
@@ -33,4 +43,6 @@ const mapStateToProps = ({ filmReducer }) => ({
     history: filmReducer.history
 });
 
-export default connect(mapStateToProps)(History);
+const mapDispatchToProps = dispatch => bindActionCreators({ addToListAndSave, removeFromListAndSave }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(History);

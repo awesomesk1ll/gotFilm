@@ -2,26 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
-import { addToListAndSave } from '../../store/actions/complexFilmActions';
+import { addToListAndSave, removeFromListAndSave } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
 import Navigation from '../../components/Navigation';
 import './Favorites.scss';
 
 
-const Favorites = ({ films, favorites, addToListAndSave }) => {
+const Favorites = ({ films, favorites, addToListAndSave, removeFromListAndSave }) => {
     let list = films.length && favorites.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        const handleAddToFavorites = (filmId) => {
+        const handleAddToFavorites = () => {
             addToListAndSave(film.id, "favorites");
         };
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} />
+        const handleRemoveFromList = () => {
+            removeFromListAndSave(film.id, "favorites");
+        };
+        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} />
     }).reverse();
     return (
         <div className="favorites--wrapper">
             <div className="favorites__header">Отклоненные</div>
-            <div className="favorites__list"> 
-            { list?.length ? list : (<div className="favorites__placeholder"/>) }
+            <div className="favorites__list">
+                {list?.length ? list : (<div className="favorites__placeholder" />)}
             </div>
             <Navigation checked={'lists'} />
         </div>
@@ -31,7 +34,8 @@ const Favorites = ({ films, favorites, addToListAndSave }) => {
 Favorites.propTypes = {
     favorites: PropTypes.object,
     films: PropTypes.array,
-    addToListAndSave: PropTypes.func
+    addToListAndSave: PropTypes.func,
+    removeFromListAndSave: PropTypes.func
 };
 
 const mapStateToProps = ({ filmReducer }) => ({
@@ -39,6 +43,6 @@ const mapStateToProps = ({ filmReducer }) => ({
     favorites: filmReducer.favorites
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addToListAndSave }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addToListAndSave, removeFromListAndSave }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

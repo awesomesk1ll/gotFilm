@@ -5,7 +5,7 @@ import TrashBin from '../icons/TrashBin';
 
 import './ListItem.scss';
 
-const ListItem = ({ addToFavorites, name, secondName, year, rate, age, genre }) => {
+const ListItem = ({ removeFromList, addToFavorites, name, secondName, year, rate, age, genre }) => {
     return (
         <div className="list-item">
             <div className="list-item__about">
@@ -20,7 +20,7 @@ const ListItem = ({ addToFavorites, name, secondName, year, rate, age, genre }) 
                 </div>
                 <div className="list-item__buttons">
                     <button onClick={addToFavorites}><Bookmark /></button>
-                    <button><TrashBin /></button>
+                    <button onClick={removeFromList}><TrashBin /></button>
                 </div>
             </div>
         </div>
