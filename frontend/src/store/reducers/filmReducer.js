@@ -1,5 +1,5 @@
 import update from 'react-addons-update';
-import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS } from '../actions/filmActions';
+import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES } from '../actions/filmActions';
 
 const prepareList = (listName) => localStorage.getItem(listName) ? JSON.parse(localStorage.getItem(listName)) : { data: [], list: {} }
 
@@ -8,7 +8,7 @@ const initStore = {
     film: null,
     history: prepareList('history'),
     blacklist: prepareList('blacklist'),
-    alreadySeen: prepareList('alreadyseen'),
+    alreadySeen: prepareList('alreadySeen'),
     temporary: prepareList('temporary'),
     favorites: prepareList('favorites'),
     isLoading: false,
@@ -120,9 +120,36 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
+        case ADD_TO_FAVORITES: {
+            return update(store, {
+                favorites: {
+                    $merge: {
+                        ...store.favorites,
+                        data: [
+                            ...store.favorites.data,
+                            {
+                                id: action.filmId,
+                                timestamp: Date.now(),
+                                status: 'ADDED'
+                            }
+                        ],
+                        list: {
+                            ...store.favorites.list,
+                            [action.filmId]: true
+                        }
+                    }
+                }
+            });
+        }
         case CLEAR_LISTS: {
             return update(store, {
                 history: {
+                    $set: {
+                        data: [],
+                        list: {}
+                    }
+                },
+                favorites: {
                     $set: {
                         data: [],
                         list: {}

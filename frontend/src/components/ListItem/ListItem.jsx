@@ -5,8 +5,7 @@ import TrashBin from '../icons/TrashBin';
 
 import './ListItem.scss';
 
-const ListItem = (props) => {
-    const { name, secondName, year, rate, age, genre } = props;
+const ListItem = ({ addToFavorites, name, secondName, year, rate, age, genre }) => {
     return (
         <div className="list-item">
             <div className="list-item__about">
@@ -20,7 +19,7 @@ const ListItem = (props) => {
                     <span className="list-item__rate">{ rate }</span>
                 </div>
                 <div className="list-item__buttons">
-                    <button><Bookmark /></button>
+                    <button onClick={addToFavorites}><Bookmark /></button>
                     <button><TrashBin /></button>
                 </div>
             </div>

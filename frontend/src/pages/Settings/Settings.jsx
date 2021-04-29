@@ -35,7 +35,9 @@ const Settings = (props) => {
     const handleClearSettings = () => {
         props.clearLists();
         localStorage.removeItem('blacklist');
-        localStorage.removeItem('seenList');
+        localStorage.removeItem('alreadySeen');
+        localStorage.removeItem('history');
+        localStorage.removeItem('favorites');
     }
 
     return (

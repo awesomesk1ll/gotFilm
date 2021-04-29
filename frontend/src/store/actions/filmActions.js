@@ -4,6 +4,7 @@ export const LOAD_FILMS_FAILURE = '@@film/LOAD_FILMS_FAILURE';
 export const ADD_TO_HISTORY = '@@film/ADD_TO_HISTORY';
 export const ADD_TO_BLACKLIST = '@@film/ADD_TO_BLACKLIST';
 export const ADD_TO_ALREADY_SEEN = '@@film/ADD_TO_ALREADY_SEEN';
+export const ADD_TO_FAVORITES = '@@film/ADD_TO_FAVORITES';
 export const SELECT_FILM = '@@film/SELECT_FILM';
 export const CLEAR_LISTS = '@@film/CLEAR_LISTS';
 
@@ -38,6 +39,11 @@ export const addToBlacklist = (filmId) => ({
 
 export const addToAlreadySeen = (filmId) => ({
     type: ADD_TO_ALREADY_SEEN,
+    filmId
+});
+
+export const addToFavorites = (filmId) => ({
+    type: ADD_TO_FAVORITES,
     filmId
 });
 
