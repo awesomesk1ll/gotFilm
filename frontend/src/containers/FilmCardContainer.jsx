@@ -5,35 +5,33 @@ import { bindActionCreators } from 'redux';
 
 import Spinner from '../components/Spinner';
 import FilmCard from '../pages/FilmCard';
-import { addToBlacklistFilms, addToAlreadySeenFilms } from '../store/actions/filmActions';
-import { changeFilm } from '../store/actions/changeFilmAction';
+import { addToListAndSave, changeFilm } from '../store/actions/complexFilmActions';
 
-const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, error, idFilmsFiltered }) => {
+const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, changeFilm, error, idFilmsFiltered, addToListAndSave }) => {
     const handleChangeFilm = useCallback(() => {
         changeFilm();
     }, [changeFilm]);
 
-    const handleRemoveFilmToBlacklist = useCallback(() => {
-        addToBlacklistFilms(film.id);
+    const handleMoveFilmToBlacklist = useCallback(() => {
+        addToListAndSave(film.id, "blacklist");
         handleChangeFilm();
-    }, [film, addToBlacklistFilms, handleChangeFilm]);
+    }, [film, addToListAndSave,  handleChangeFilm]);
 
-    const handleRemoveFilmToAlreadySeen = useCallback(() => {
-        addToAlreadySeenFilms(film.id);
+    const handleMoveFilmToAlreadySeen = useCallback(() => {
+        addToListAndSave(film.id, "alreadySeen");
         handleChangeFilm();
-    }, [film, addToAlreadySeenFilms, handleChangeFilm]);
+    }, [film, addToListAndSave, handleChangeFilm]);
 
     return (
         idFilmsFiltered.length == 0 ? <div>Нет результатов</div> :
-        !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleRemoveFilmToBlacklist} seenFilm={handleRemoveFilmToAlreadySeen} />
+        !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleMoveFilmToBlacklist} seenFilm={handleMoveFilmToAlreadySeen} />
     )
 };
 
 FilmCardContainer.propTypes = {
     error: PropTypes.string,
     film: PropTypes.object,
-    addToBlacklistFilms: PropTypes.func,
-    addToAlreadySeenFilms: PropTypes.func,
+    addToListAndSave: PropTypes.func,
     changeFilm: PropTypes.func
 };
 
@@ -46,6 +44,6 @@ const mapStateToProps = ({ filmReducer }) => ({
     error: filmReducer.error
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ changeFilm, addToBlacklistFilms, addToAlreadySeenFilms }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addToListAndSave, changeFilm }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilmCardContainer);

@@ -4,7 +4,7 @@ import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 
 import Router from './containers/Router';
-import { fetchFilms } from './store/actions/getApiAction';
+import { fetchFilms } from './store/actions/complexFilmActions';
 
 const App = ({ fetchFilms }) => {
   useEffect(() => {

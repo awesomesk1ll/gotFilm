@@ -16,8 +16,7 @@ const ErrorFilmCard = ({ error }) => {
                     <p className="filmCard__infoBlock__secondTitle"></p>
                     <p className="filmCard__infoBlock__year"></p>
                 </div>
-                <p className="filmCard__infoBlock__genre"><span>{error}</span></p>
-                <hr className="filmCard__infoBlock--underline" />
+                <p className="filmCard__infoBlock__error"><span>{error}</span></p>
                 <input type="checkbox" name="hiddenDesc" id="hiddenDesc" className="inputDesc" />
                 <label htmlFor="hiddenDesc" className="filmCard__infoBlock__description--label">
                     <p className="filmCard__infoBlock__description"></p>

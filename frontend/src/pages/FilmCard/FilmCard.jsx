@@ -14,7 +14,7 @@ const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
 const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
     const cardEndRef = useRef(null);
     const handleScrollToBottom = useCallback(() => {
-        cardEndRef.current.scrollIntoView({ behavior: "smooth" });
+        cardEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, []);
 
     useEffect(() => {
@@ -35,8 +35,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
         }
     }, [film]);
 
-    let genresList = film.genres.map((item, i) => <span key={ i }>{ item }, </span>);
-    let countryList = film.countries.map((item, i) => i + 1 < film.countries.length ? <span key={ i }>{ item }, </span> : <span key={ i }>{ item }</span>);
+    const ageFormatted = film.age !== null && `, ${film.age}+`;
 
     return (
         error ? <ErrorFilmCard error={error}/> :
@@ -61,9 +60,9 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
                 </div>
                 <div className="filmCard__infoBlock--secondTitleWrapper">
                     <p className="filmCard__infoBlock__secondTitle">{ film.secondName }</p>
-                    <p className="filmCard__infoBlock__year">{ film.year }г. ({ countryList })</p>
+                    <p className="filmCard__infoBlock__year">{ film.year }г. ({ film.countries.join(', ') })</p>
                 </div>
-                <p className="filmCard__infoBlock__genre">{ genresList }<span>{ film.age }+</span></p>
+                <p className="filmCard__infoBlock__genre">{ film.genres.join(', ') }<span>{ ageFormatted }</span></p>
                 <hr className="filmCard__infoBlock--underline" />
                 <div className="filmCard__infoBlock--scrollableWrapper">
                     <input type="checkbox" name="hiddenDesc" id="hiddenDesc" className="inputDesc" />
@@ -74,8 +73,8 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
             </div>
             <div className="filmCard__footer theme">
                 <div className="filmCard__footer__buttonGroup">
-                    <FilmCardButton eventAction={ removeFilm }>уже смотрел</FilmCardButton>
-                    <FilmCardButton eventAction={ seenFilm }>не предлагать</FilmCardButton>
+                    <FilmCardButton eventAction={ seenFilm }>уже смотрел</FilmCardButton>
+                    <FilmCardButton eventAction={ removeFilm }>не предлагать</FilmCardButton>
                     <FilmCardButton eventAction={ changeFilm }>в другой раз</FilmCardButton>
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={ cardEndRef }></div>

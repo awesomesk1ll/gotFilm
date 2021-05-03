@@ -1,5 +1,9 @@
 import React from 'react';
 import { Typography, Button, Slider, Select, Switch} from 'antd';
+import PropTypes from 'prop-types';
+
+import { clearLists } from '../../store/actions/filmActions';
+
 import Navigation from '../../components/Navigation';
 import { RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
@@ -27,12 +31,13 @@ const Settings = (props) => {
             (type === "genres") ? props.updateFilterGenre([]) : updateFilterCountry([]);
         }
     }
-    const handleReset = () => {
-      handleSelect("Все","genres");
-      handleSelect("Все","country");
-      props.updateFilterRating([5, 10]);
-      props.updateFilterYear([1950, 2021]);
+
+    const handleClearSettings = () => {
+        props.clearLists();
+        localStorage.removeItem('blacklist');
+        localStorage.removeItem('seenList');
     }
+
     return (
         <div className="settings--wrapper theme">
             <div className="settings__header theme">
@@ -110,7 +115,8 @@ const Settings = (props) => {
                 <div>
                 Найдено {props.idFilmsFiltered.length} фильмов
                 </div>
-                <Button type="secondary" size="large" className="settings__content--reset" onClick={handleReset}>
+
+                <Button type="secondary" size="large" className="settings__content--reset" onClick={handleClearSettings}>
                     Сбросить настройки
                 </Button>
 
@@ -130,6 +136,9 @@ const mapStateToProps = ({ filmReducer }) => ({
     selectedCountries: filmReducer.countryFilter
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ updateFilterRating, updateFilteredFilms, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ updateFilterRating, updateFilteredFilms, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState, clearLists}, dispatch);
 
+Settings.propTypes = {
+    clearLists: PropTypes.func
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
