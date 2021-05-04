@@ -13,12 +13,17 @@ const Favorites = ({ films, favorites, addToListAndSave, removeFromListAndSave }
     let list = films.length && favorites.data.map(item => {
         let film = films.find(film => film.id === item.id);
         const handleAddToFavorites = () => {
-            addToListAndSave(film.id, "favorites");
+            let checkList = favorites.data.find(item => item.id === film.id);
+            if (!checkList) {
+                addToListAndSave(film.id, "favorites");
+            } else {
+                removeFromListAndSave(film.id, "favorites");
+            }
         };
         const handleRemoveFromList = () => {
             removeFromListAndSave(film.id, "favorites");
         };
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} />
+        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
         <div className="favorites--wrapper">

@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Star from '../icons/Star';
 import Bookmark from '../icons/Bookmark';
 import TrashBin from '../icons/TrashBin';
 
 import './ListItem.scss';
 
-const ListItem = ({ removeFromList, addToFavorites, name, secondName, year, rate, age, genre }) => {
+const ListItem = ({ removeFromList, addToFavorites, name, secondName, year, rate, age, genre, status }) => {
     return (
         <div className="list-item">
             <div className="list-item__about">
@@ -19,12 +20,24 @@ const ListItem = ({ removeFromList, addToFavorites, name, secondName, year, rate
                     <span className="list-item__rate">{ rate }</span>
                 </div>
                 <div className="list-item__buttons">
-                    <button onClick={addToFavorites}><Bookmark /></button>
-                    <button onClick={removeFromList}><TrashBin /></button>
+                    <button onClick={ addToFavorites }><Bookmark status={ status } /></button>
+                    <button onClick={ removeFromList }><TrashBin /></button>
                 </div>
             </div>
         </div>
     )
-}
+};
+
+ListItem.propTypes = {
+    removeFromList: PropTypes.func,
+    addToFavorites: PropTypes.func,
+    name: PropTypes.string,
+    secondName: PropTypes.string,
+    year: PropTypes.number,
+    rate: PropTypes.number,
+    age: PropTypes.number,
+    genre: PropTypes.array,
+    status: PropTypes.bool,
+};
 
 export default ListItem; 

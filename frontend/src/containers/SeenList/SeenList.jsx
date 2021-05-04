@@ -9,16 +9,21 @@ import Navigation from '../../components/Navigation';
 import './SeenList.scss';
 
 
-const SeenList = ({ films, alreadySeen, addToListAndSave, removeFromListAndSave }) => {
+const SeenList = ({ films, favorites, alreadySeen, addToListAndSave, removeFromListAndSave }) => {
     let list = films.length && alreadySeen.data.map(item => {
         let film = films.find(film => film.id === item.id);
         const handleAddToFavorites = () => {
-            addToListAndSave(film.id, "favorites");
+            let checkList = favorites.data.find(item => item.id === film.id);
+            if (!checkList) {
+                addToListAndSave(film.id, "favorites");
+            } else {
+                removeFromListAndSave(film.id, "favorites");
+            }
         };
         const handleRemoveFromList = () => {
             removeFromListAndSave(film.id, "alreadySeen");
         };
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} />
+        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
         <div className="seenList--wrapper">
@@ -33,6 +38,7 @@ const SeenList = ({ films, alreadySeen, addToListAndSave, removeFromListAndSave 
 
 SeenList.propTypes = {
     alreadySeen: PropTypes.object,
+    favorites: PropTypes.object,
     films: PropTypes.array,
     addToListAndSave: PropTypes.func,
     removeFromListAndSave: PropTypes.func
@@ -40,6 +46,7 @@ SeenList.propTypes = {
 
 const mapStateToProps = ({ filmReducer }) => ({
     films: filmReducer.films,
+    favorites: filmReducer.favorites,
     alreadySeen: filmReducer.alreadySeen
 });
 

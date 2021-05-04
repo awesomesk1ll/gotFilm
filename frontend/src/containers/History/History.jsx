@@ -9,16 +9,21 @@ import Navigation from '../../components/Navigation';
 import './History.scss';
 
 
-const History = ({ films, history, addToListAndSave, removeFromListAndSave }) => {
+const History = ({ films, favorites, history, addToListAndSave, removeFromListAndSave }) => {
     let list = films.length && history.data.map(item => {
         let film = films.find(film => film.id === item.id);
         const handleAddToFavorites = () => {
-            addToListAndSave(film.id, "favorites");
+            let checkList = favorites.data.find(item => item.id === film.id);
+            if (!checkList) {
+                addToListAndSave(film.id, "favorites");
+            } else {
+                removeFromListAndSave(film.id, "favorites");
+            }
         };
         const handleRemoveFromList = () => {
             removeFromListAndSave(film.id, "history");
         };
-        return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} />
+        return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
         <div className="history--wrapper">
@@ -33,6 +38,7 @@ const History = ({ films, history, addToListAndSave, removeFromListAndSave }) =>
 
 History.propTypes = {
     history: PropTypes.object,
+    favorites: PropTypes.object,
     films: PropTypes.array,
     addToListAndSave: PropTypes.func,
     removeFromListAndSave: PropTypes.func,
@@ -40,7 +46,8 @@ History.propTypes = {
 
 const mapStateToProps = ({ filmReducer }) => ({
     films: filmReducer.films,
-    history: filmReducer.history
+    history: filmReducer.history,
+    favorites: filmReducer.favorites
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ addToListAndSave, removeFromListAndSave }, dispatch);

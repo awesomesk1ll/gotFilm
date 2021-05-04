@@ -9,16 +9,21 @@ import Navigation from '../../components/Navigation';
 import './Blacklist.scss';
 
 
-const Blacklist = ({ films, blacklist, addToListAndSave, removeFromListAndSave }) => {
+const Blacklist = ({ films, favorites, blacklist, addToListAndSave, removeFromListAndSave }) => {
     let list = films.length && blacklist.data.map(item => {
         let film = films.find(film => film.id === item.id);
         const handleAddToFavorites = () => {
-            addToListAndSave(film.id, "favorites");
+            let checkList = favorites.data.find(item => item.id === film.id);
+            if (!checkList) {
+                addToListAndSave(film.id, "favorites");
+            } else {
+                removeFromListAndSave(film.id, "favorites");
+            }
         };
         const handleRemoveFromList = () => {
             removeFromListAndSave(film.id, "blacklist");
         };
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} />
+        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
         <div className="blacklist--wrapper">
@@ -33,6 +38,7 @@ const Blacklist = ({ films, blacklist, addToListAndSave, removeFromListAndSave }
 
 Blacklist.propTypes = {
     blacklist: PropTypes.object,
+    favorites: PropTypes.object,
     films: PropTypes.array,
     addToListAndSave: PropTypes.func,
     removeFromListAndSave: PropTypes.func
@@ -40,6 +46,7 @@ Blacklist.propTypes = {
 
 const mapStateToProps = ({ filmReducer }) => ({
     films: filmReducer.films,
+    favorites: filmReducer.favorites,
     blacklist: filmReducer.blacklist
 });
 
