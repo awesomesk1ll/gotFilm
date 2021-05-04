@@ -65,6 +65,23 @@ export const removeFromListAndSave = (filmId, listName = "history") => {
 };
 
 /**
+ * 
+ * @param {number} filmId - id фильма.
+ * @param {*} listName - имя списка для добавления/удаления фильма. По умолчанию - избранные фильмы.
+ */
+export const favoriteIconPush = (filmId, listName = "favorites") => {
+    return (dispatch, getState) => {
+        const { favorites } = getState().filmReducer;
+        let checkList = favorites.data.find(item => item.id === filmId);
+        if (!checkList) {
+            dispatch(addToListAndSave(filmId, listName));
+        } else {
+            dispatch(removeFromListAndSave(filmId, listName));
+        }
+    }
+};
+
+/**
  * Вычисляет случайный фильм отсутствующий в списках blacklist и alreadySeen, его добавляет в историю
  */
 export const changeFilm = () => {

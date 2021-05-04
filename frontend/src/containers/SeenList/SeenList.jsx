@@ -2,23 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
-import { addToListAndSave, removeFromListAndSave } from '../../store/actions/complexFilmActions';
+import { favoriteIconPush, removeFromListAndSave } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
 import Navigation from '../../components/Navigation';
 import './SeenList.scss';
 
 
-const SeenList = ({ films, favorites, alreadySeen, addToListAndSave, removeFromListAndSave }) => {
+const SeenList = ({ films, favorites, alreadySeen, favoriteIconPush, removeFromListAndSave }) => {
     let list = films.length && alreadySeen.data.map(item => {
         let film = films.find(film => film.id === item.id);
         const handleAddToFavorites = () => {
-            let checkList = favorites.data.find(item => item.id === film.id);
-            if (!checkList) {
-                addToListAndSave(film.id, "favorites");
-            } else {
-                removeFromListAndSave(film.id, "favorites");
-            }
+            favoriteIconPush(film.id);
         };
         const handleRemoveFromList = () => {
             removeFromListAndSave(film.id, "alreadySeen");
@@ -31,6 +26,7 @@ const SeenList = ({ films, favorites, alreadySeen, addToListAndSave, removeFromL
             <div className="seenList__list">
                 { list?.length ? list : (<div className="seenList__placeholder"/>) }
             </div>
+            <div className="seenList__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>
     )
@@ -40,7 +36,7 @@ SeenList.propTypes = {
     alreadySeen: PropTypes.object,
     favorites: PropTypes.object,
     films: PropTypes.array,
-    addToListAndSave: PropTypes.func,
+    favoriteIconPush: PropTypes.func,
     removeFromListAndSave: PropTypes.func
 };
 
@@ -50,6 +46,6 @@ const mapStateToProps = ({ filmReducer }) => ({
     alreadySeen: filmReducer.alreadySeen
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addToListAndSave, removeFromListAndSave }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ favoriteIconPush, removeFromListAndSave }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SeenList);
