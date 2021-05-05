@@ -12,13 +12,13 @@ body {
   &.dark .theme h5,
   &.dark .theme h6 {
     background-color: $templateBackgroundColorDarkNormal !important;
-    color: $textColorDarkBright !important
+    color: $textColorDarkBright !important;
   }
   &.dark .theme > svg {
     fill: $textColorDarkBright !important;
   }
   &.dark .theme > span {
-    color: $textColorDarkNormal !important
+    color: $textColorDarkNormal !important;
   }
   &.dark #root {
     background-color: $rootDarkColor !important;
