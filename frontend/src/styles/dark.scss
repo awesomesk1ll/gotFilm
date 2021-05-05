@@ -16,7 +16,8 @@ body {
     color: $textColorDarkNormal !important
   }
   &.dark #root {
-    background-color: $templateBackgroundColorDarkNormal !important;
+    background-color: $rootDarkColor !important;
+  }
   &.dark {
     --box-shadow-color: #{ $shadowColorDark };
   }
