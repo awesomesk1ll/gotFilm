@@ -34,20 +34,30 @@
     &__actions-container{
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
+        justify-content: space-evenly;
+        width: 70px;
     }
     &__rating {
+        display: flex;
+        & svg {
+            position: relative;
+            top: -2px;
+        }
         @include fontFrame(400, 17px, $activbtn);
         margin-bottom: 5px;
     }
+    &__rate {
+        flex-grow: 1;
+        text-align: center;
+    }
     &__buttons {
-        & button:first-child {
+        & .favorite {
             position: relative;
             top: 2px;
         }
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
+        padding: 0 3px;
         fill: $listsButtonColor;
     }
 } 

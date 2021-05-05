@@ -17,7 +17,7 @@ const ListItem = ({ removeFromList, addToFavorites, name, secondName, year, rate
             <div className="list-item__actions-container">
                 <div className="list-item__rating">
                     <Star />
-                    <span className="list-item__rate">{ rate }</span>
+                    <div className="list-item__rate">{ rate }</div>
                 </div>
                 <div className="list-item__buttons">
                     {!!addToFavorites && <button className="favorite" onClick={ addToFavorites }><Bookmark status={ status } /></button>}
