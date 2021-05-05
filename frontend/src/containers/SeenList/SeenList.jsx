@@ -22,7 +22,7 @@ const SeenList = ({ films, favorites, alreadySeen, favoriteIconPush, removeFromL
     }).reverse();
     return (
         <div className="seenList--wrapper">
-            <div className="seenList__header">Просмотренные</div>
+            <div className="seenList__header theme">Просмотренные</div>
             <div className="seenList__list">
                 { list?.length ? list : (<div className="seenList__placeholder"/>) }
             </div>

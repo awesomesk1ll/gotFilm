@@ -22,7 +22,7 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
     }).reverse();
     return (
         <div className="history--wrapper">
-            <div className="history__header">История предложений</div>
+            <div className="history__header theme">История предложений</div>
             <div className="history__list">
                 { list?.length ? list : (<div className="history__placeholder"/>) }
             </div>

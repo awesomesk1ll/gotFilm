@@ -22,7 +22,7 @@ const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromLi
     }).reverse();
     return (
         <div className="blacklist--wrapper">
-            <div className="blacklist__header">Отклоненные</div>
+            <div className="blacklist__header theme">Отклоненные</div>
             <div className="blacklist__list"> 
             { list?.length ? list : (<div className="blacklist__placeholder"/>) }
             </div>

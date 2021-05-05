@@ -10,7 +10,7 @@ const ListItem = ({ removeFromList, addToFavorites, name, secondName, year, rate
     return (
         <div className="list-item">
             <div className="list-item__about">
-                <p className="list-item__name">{ name }<span className="list-item__year"> ({ year })</span></p>
+                <p className="list-item__name theme">{ name }<span className="list-item__year"> ({ year })</span></p>
                 <p className="list-item__second-name">{ secondName }</p>
                 <p className="list-item__genre">{ genre }<span className="list-item__age">{ age && `${age}+` }</span></p>
             </div>

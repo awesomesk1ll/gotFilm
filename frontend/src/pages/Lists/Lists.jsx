@@ -10,7 +10,7 @@ import ListLink from '../../components/ListLink';
 const Lists = ({ blacklist, alreadySeen, history, favorites }) => {
     return (
         <div className="lists--wrapper theme">
-            <div className="lists__header">Списки фильмов</div>
+            <div className="lists__header theme">Списки фильмов</div>
             <Link className="lists__link--color" to="/history"><ListLink listLength={history.data.length}>История предложений</ListLink></Link>
             <Link className="lists__link--color" to="/seenList"><ListLink listLength={alreadySeen.data.length}>Просмотренные фильмы</ListLink></Link>
             <Link className="lists__link--color" to="/blacklist"><ListLink listLength={blacklist.data.length}>Отклоненные фильмы</ListLink></Link>
