@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { loadFilms, loadFilmsStarted, loadFilmsFailure, getRandomFilm } from './filmActions';
+import { loadFilms, loadFilmsStarted, loadFilmsFailure } from './filmActions';
 
 export const fetchFilms = () => {
     return dispatch => {
@@ -10,7 +10,7 @@ export const fetchFilms = () => {
             .then(response => {
                 let randomIndex = ~~(Math.random() * response.data.length);
                 dispatch(loadFilms(response.data));
-                dispatch(getRandomFilm(response.data[randomIndex].id));
+                //dispatch(getRandomFilm(response.data[randomIndex].id));
             })
             .catch(err => {
                 dispatch(loadFilmsFailure(err.message));

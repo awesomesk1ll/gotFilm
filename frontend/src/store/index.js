@@ -19,10 +19,6 @@ const composer = window.__REDUX_DEVTOOLS_EXTENSION__ ? compose(
 export const store = createStore(
     RootReducers(history),
     composer,
-<<<<<<< HEAD
 );
 
-export const persistor = persistStore(store);
-=======
-);
->>>>>>> 21c92b12350bdc12e9608725cf89f25da72e5906
+//export const persistor = persistStore(store);

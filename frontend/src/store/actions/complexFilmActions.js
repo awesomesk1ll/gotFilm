@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { loadFilms, loadFilmsStarted, loadFilmsFailure } from './filmActions';
+import { loadFilms, loadFilmsStarted, loadFilmsFailure, getRandomFilm } from './filmActions';
 import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen } from './filmActions';
 
 /**
  * Сохраняет список в local storage
- * 
+ *
  * @param {string} listName - имя списка для сохранения.
  */
  export const saveList = (listName) => {
@@ -16,7 +16,7 @@ import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen } from './fi
 
 /**
  * Добавляет фильм в список, затем сохраняет список в local storage
- * 
+ *
  * @param {number} filmId - id добавляемого фильма.
  * @param {string} [listName="history"] - имя списка для добавляемого фильма и сохранения.
  */
@@ -58,16 +58,29 @@ export const addToListAndSave = (filmId, listName = "history") => {
  * Загружает фильмы и запускает выбор одного из них
  */
 export const fetchFilms = () => {
-    return dispatch => {
-        dispatch(loadFilmsStarted());
+  return dispatch => {
+      dispatch(loadFilmsStarted());
 
-        axios.get("./films.json")
-                .then(response => {
-                    dispatch(loadFilms(response.data));
-                    dispatch(changeFilm());
-                })
-                .catch(err => {
-                    dispatch(loadFilmsFailure(err.message));
-                });
-    }
+      axios.get("./films.json")
+          .then(response => {
+              let randomIndex = ~~(Math.random() * response.data.length);
+              dispatch(loadFilms(response.data));
+              dispatch(getRandomFilm(response.data[randomIndex].id));
+          })
+          .catch(err => {
+              dispatch(loadFilmsFailure(err.message));
+          });
+  }
+    // return dispatch => {
+    //     dispatch(loadFilmsStarted());
+    //
+    //     axios.get("./films.json")
+    //             .then(response => {
+    //                 dispatch(loadFilms(response.data));
+    //                 dispatch(changeFilm());
+    //             })
+    //             .catch(err => {
+    //                 dispatch(loadFilmsFailure(err.message));
+    //             });
+    // }
 };

@@ -51,10 +51,11 @@ const Settings = (props) => {
                 <div className="settings__content--row">
                     <Text className="theme">Темная версия оформления</Text>
                     <Switch
+                        checked={props.buttonState}
                         onClick={
                             (checked) => {
                                 props.updateButtonState(checked);
-                                document.body.classList.toggle("dark", checked);
+                                //document.body.classList.toggle("dark", checked);
                             }
                         }
                     />
@@ -133,7 +134,8 @@ const mapStateToProps = ({ filmReducer }) => ({
     numberRate: filmReducer.ratingFilter,
     numberYear: filmReducer.yearFilter,
     selectedGenres: filmReducer.genreFilter,
-    selectedCountries: filmReducer.countryFilter
+    selectedCountries: filmReducer.countryFilter,
+    buttonState: filmReducer.buttonState
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ updateFilterRating, updateFilteredFilms, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState, clearLists}, dispatch);

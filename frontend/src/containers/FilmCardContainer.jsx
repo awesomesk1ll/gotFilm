@@ -21,11 +21,14 @@ const FilmCardContainer = ({ film, addToBlacklistFilms, addToAlreadySeenFilms, c
         addToListAndSave(film.id, "alreadySeen");
         handleChangeFilm();
     }, [film, addToListAndSave, handleChangeFilm]);
+    if (typeof(film) == 'undefined' || film == null) {
+      return(<div>film empty<Spinner /></div>);
+    } else if ( idFilmsFiltered.length == 0) {
+      return(<div>no result<Spinner /></div>);
+    } else {
+      return(<FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleMoveFilmToBlacklist} seenFilm={handleMoveFilmToAlreadySeen} />);
+    }
 
-    return (
-        idFilmsFiltered.length == 0 ? <div>Нет результатов</div> :
-        !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleMoveFilmToBlacklist} seenFilm={handleMoveFilmToAlreadySeen} />
-    )
 };
 
 FilmCardContainer.propTypes = {

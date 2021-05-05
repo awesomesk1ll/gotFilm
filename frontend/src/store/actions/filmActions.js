@@ -1,7 +1,6 @@
 export const LOAD_FILMS = '@@film/LOAD_FILMS';
 export const LOAD_FILMS_STARTED = '@@film/LOAD_FILMS_STARTED';
 export const LOAD_FILMS_FAILURE = '@@film/LOAD_FILMS_FAILURE';
-<<<<<<< HEAD
 export const ADD_TO_BLACKLIST_FILMS = '@@film/ADD_TO_BLACKLIST_FILMS';
 export const ADD_TO_ALREADY_SEEN_FILMS = '@@film/ADD_TO_ALREADY_SEEN_FILMS';
 export const GET_RANDOM_FILM = '@@film/GET_RANDOM_FILM';
@@ -11,13 +10,11 @@ export const UPDATE_FILTER_YEAR = '@@film/UPDATE_FILTER_YEAR';
 export const UPDATE_FILTER_GENRE = '@@film/UPDATE_FILTER_GENRE';
 export const UPDATE_FILTER_COUNTRY = '@@film/UPDATE_FILTER_COUNTRY';
 export const UPDATE_BUTTON_STATE = '@@film/UPDATE_BUTTON_STATE';
-=======
 export const ADD_TO_HISTORY = '@@film/ADD_TO_HISTORY';
 export const ADD_TO_BLACKLIST = '@@film/ADD_TO_BLACKLIST';
 export const ADD_TO_ALREADY_SEEN = '@@film/ADD_TO_ALREADY_SEEN';
 export const SELECT_FILM = '@@film/SELECT_FILM';
 export const CLEAR_LISTS = '@@film/CLEAR_LISTS';
->>>>>>> 21c92b12350bdc12e9608725cf89f25da72e5906
 
 export const loadFilms = (films) => ({
     type: LOAD_FILMS,
@@ -33,15 +30,14 @@ export const loadFilmsFailure = (error) => ({
     error
 });
 
-<<<<<<< HEAD
 export const getRandomFilm = (filmId) => ({
     type: GET_RANDOM_FILM,
     filmId
-=======
+  });
+
 export const selectFilm = (film) => ({
     type: SELECT_FILM,
     film
->>>>>>> 21c92b12350bdc12e9608725cf89f25da72e5906
 });
 
 export const addToHistory = (filmId) => ({
@@ -54,7 +50,6 @@ export const addToBlacklist = (filmId) => ({
     filmId
 });
 
-<<<<<<< HEAD
 export const updateFilteredFilms = (filmId) => ({
     type: UPDATE_FILTERED_FILMS,
     filmId
@@ -81,7 +76,6 @@ export const updateButtonState = (value) => ({
     type: UPDATE_BUTTON_STATE,
     value
 });
-=======
 export const addToAlreadySeen = (filmId) => ({
     type: ADD_TO_ALREADY_SEEN,
     filmId
@@ -90,4 +84,3 @@ export const addToAlreadySeen = (filmId) => ({
 export const clearLists = () => ({
     type: CLEAR_LISTS
 });
->>>>>>> 21c92b12350bdc12e9608725cf89f25da72e5906
