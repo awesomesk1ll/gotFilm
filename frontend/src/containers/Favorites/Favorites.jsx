@@ -6,34 +6,33 @@ import { favoriteIconPush, removeFromListAndSave } from '../../store/actions/com
 
 import ListItem from '../../components/ListItem';
 import Navigation from '../../components/Navigation';
-import './Blacklist.scss';
+import './Favorites.scss';
 
 
-const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromListAndSave }) => {
-    let list = films.length && blacklist.data.map(item => {
+const Favorites = ({ films, favorites, favoriteIconPush, removeFromListAndSave }) => {
+    let list = films.length && favorites.data.map(item => {
         let film = films.find(film => film.id === item.id);
         const handleAddToFavorites = () => {
             favoriteIconPush(film.id);
         };
         const handleRemoveFromList = () => {
-            removeFromListAndSave(film.id, "blacklist");
+            removeFromListAndSave(film.id, "favorites");
         };
         return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
-        <div className="blacklist--wrapper">
-            <div className="blacklist__header">Отклоненные</div>
-            <div className="blacklist__list"> 
-            { list?.length ? list : (<div className="blacklist__placeholder"/>) }
+        <div className="favorites--wrapper">
+            <div className="favorites__header">Избранные</div>
+            <div className="favorites__list">
+                {list?.length ? list : (<div className="favorites__placeholder" />)}
             </div>
-            <div className="blacklist__emptyBlock"></div>
+            <div className="favorites__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>
     )
 };
 
-Blacklist.propTypes = {
-    blacklist: PropTypes.object,
+Favorites.propTypes = {
     favorites: PropTypes.object,
     films: PropTypes.array,
     favoriteIconPush: PropTypes.func,
@@ -42,10 +41,9 @@ Blacklist.propTypes = {
 
 const mapStateToProps = ({ filmReducer }) => ({
     films: filmReducer.films,
-    favorites: filmReducer.favorites,
-    blacklist: filmReducer.blacklist
+    favorites: filmReducer.favorites
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ favoriteIconPush, removeFromListAndSave }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Blacklist);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
