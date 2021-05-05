@@ -1,22 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @import '../../styles/variables.scss';
 
-.lists__header {
-  width: 100%;
-  min-height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font: 600 24px 'Roboto', sans-serif;
-  text-transform: uppercase;
-  box-shadow: 0px 5px 10px -3px rgba(34, 60, 80, 0.2);
-  background-color: #fff;
-}
-
-.lists__link--color {
-  color: rgb(112, 112, 112);
-}
-
-.lists--wrapper {
-  height: 100vh;
+.lists {
+  &--wrapper {
+    height: 100vh;
+  }
+  &__header {
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: 600 24px 'Roboto', sans-serif;
+    text-transform: uppercase;
+    box-shadow: 0px 5px 10px -3px var(--box-shadow-color);
+    background-color: #fff;
+  }
+  &__link--color {
+    color: rgb(112, 112, 112);
+  }
 }
