@@ -2,7 +2,12 @@
 @import '../../styles/variables.scss';
 
 .seenList {
+  &--wrapper {
+    height: 100%;
+  }
   &__list {
+    height: 86.5%;
+    position: relative;
     overflow-y: auto;
   }
   &__header {
@@ -27,5 +32,9 @@
     font-size: 36px;
     color: $textColor;
     text-transform: uppercase;
+  }
+  &__emptyBlock {
+    width: 100%;
+    height: 50px;
   }
 }

@@ -31,12 +31,13 @@
         color: $textColor;
         margin: 0;
     }
-    &_actions-container{
+    &__actions-container{
         display: flex;
         flex-direction: column;
         justify-content: space-around;
+        align-items: center;
     }
-    &_rating {
+    &__rating {
         @include fontFrame(400, 17px, $activbtn);
         margin-bottom: 5px;
     }

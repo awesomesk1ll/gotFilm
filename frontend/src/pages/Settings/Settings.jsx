@@ -35,13 +35,15 @@ const Settings = (props) => {
     const handleClearSettings = () => {
         props.clearLists();
         localStorage.removeItem('blacklist');
-        localStorage.removeItem('seenList');
+        localStorage.removeItem('alreadySeen');
+        localStorage.removeItem('history');
+        localStorage.removeItem('favorites');
     }
 
     return (
         <div className="settings--wrapper theme">
             <div className="settings__header theme">
-                <Title className="settings__header--title" level={2}>Настройки</Title>
+                <div className="settings__header--title" level={2}>Настройки</div>
             </div>
             <div className="settings__content">
                 <Link type="secondary" className="settings__content--login" to='/login'>

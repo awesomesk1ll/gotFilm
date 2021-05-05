@@ -15,7 +15,7 @@ const FilmCardContainer = ({ film, addToListAndSave, changeFilm, error }) => {
     const handleMoveFilmToBlacklist = useCallback(() => {
         addToListAndSave(film.id, "blacklist");
         handleChangeFilm();
-    }, [film, addToListAndSave,  handleChangeFilm]);
+    }, [film, addToListAndSave, handleChangeFilm]);
 
     const handleMoveFilmToAlreadySeen = useCallback(() => {
         addToListAndSave(film.id, "alreadySeen");
