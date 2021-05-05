@@ -1,9 +1,20 @@
 export const LOAD_FILMS = '@@film/LOAD_FILMS';
 export const LOAD_FILMS_STARTED = '@@film/LOAD_FILMS_STARTED';
 export const LOAD_FILMS_FAILURE = '@@film/LOAD_FILMS_FAILURE';
-export const BLACKLIST_FILM = '@@film/BLACKLIST_FILM';
-export const ALREADY_SEEN_FILM = '@@film/ALREADY_SEEN_FILM';
+export const ADD_TO_BLACKLIST_FILMS = '@@film/ADD_TO_BLACKLIST_FILMS';
+export const ADD_TO_ALREADY_SEEN_FILMS = '@@film/ADD_TO_ALREADY_SEEN_FILMS';
 export const GET_RANDOM_FILM = '@@film/GET_RANDOM_FILM';
+export const UPDATE_FILTERED_FILMS = '@@film/UPDATE_FILTERED_FILMS';
+export const UPDATE_FILTER_RATING = '@@film/UPDATE_FILTER_RATING';
+export const UPDATE_FILTER_YEAR = '@@film/UPDATE_FILTER_YEAR';
+export const UPDATE_FILTER_GENRE = '@@film/UPDATE_FILTER_GENRE';
+export const UPDATE_FILTER_COUNTRY = '@@film/UPDATE_FILTER_COUNTRY';
+export const UPDATE_BUTTON_STATE = '@@film/UPDATE_BUTTON_STATE';
+export const ADD_TO_HISTORY = '@@film/ADD_TO_HISTORY';
+export const ADD_TO_BLACKLIST = '@@film/ADD_TO_BLACKLIST';
+export const ADD_TO_ALREADY_SEEN = '@@film/ADD_TO_ALREADY_SEEN';
+export const SELECT_FILM = '@@film/SELECT_FILM';
+export const CLEAR_LISTS = '@@film/CLEAR_LISTS';
 
 export const loadFilms = (films) => ({
     type: LOAD_FILMS,
@@ -19,17 +30,57 @@ export const loadFilmsFailure = (error) => ({
     error
 });
 
-export const getRandomFilm = (film) => ({
+export const getRandomFilm = (filmId) => ({
     type: GET_RANDOM_FILM,
+    filmId
+  });
+
+export const selectFilm = (film) => ({
+    type: SELECT_FILM,
     film
 });
 
-export const blacklistFilm = (film) => ({
-    type: BLACKLIST_FILM,
-    film
+export const addToHistory = (filmId) => ({
+    type: ADD_TO_HISTORY,
+    filmId
 });
 
-export const alreadySeenFilm = (film) => ({
-    type: ALREADY_SEEN_FILM,
-    film
+export const addToBlacklist = (filmId) => ({
+    type: ADD_TO_BLACKLIST,
+    filmId
+});
+
+export const updateFilteredFilms = (filmId) => ({
+    type: UPDATE_FILTERED_FILMS,
+    filmId
+});
+
+export const updateFilterRating = (value) => ({
+    type: UPDATE_FILTER_RATING,
+    value
+});
+
+export const updateFilterYear = (value) => ({
+    type: UPDATE_FILTER_YEAR,
+    value
+});
+export const updateFilterGenre = (value) => ({
+    type: UPDATE_FILTER_GENRE,
+    value
+});
+export const updateFilterCountry = (value) => ({
+    type: UPDATE_FILTER_COUNTRY,
+    value
+});
+export const updateButtonState = (value) => ({
+    type: UPDATE_BUTTON_STATE,
+    value
+});
+export const addToAlreadySeen = (filmId) => ({
+    type: ADD_TO_ALREADY_SEEN,
+    filmId
+});
+
+export const clearLists = () => ({
+    type: CLEAR_LISTS
 });

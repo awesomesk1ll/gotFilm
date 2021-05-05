@@ -17,11 +17,11 @@
     background-color: #fff;
     height: $headerHeight;
     box-shadow: 0 3px 4px rgba(0,0,0, 0.2);
-  }
-  &__header--title {
-    letter-spacing: 0.5px;
-    margin: 0 !important;
-    text-transform: uppercase;
+    &--title {
+      letter-spacing: 0.5px;
+      margin: 0 !important;
+      text-transform: uppercase;
+    }
   }
   &__content {
     flex-grow: 1;
@@ -30,50 +30,56 @@
     align-items: center;
     justify-content: space-around;
     padding-bottom: $navigationHeight;
-  }
-  &__content--row {
-    span {
-      color: $textColor;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 500;
-    }
-    &:first-of-type {
-      padding-left: 0px;
+    &--row {
+      span {
+        color: $textColor;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
+      }
+      &:first-of-type {
+        padding-left: 0px;
+        display: flex;
+        justify-content: space-around;
+      }
+      padding-left: 6px;
+      width: 90%;
       display: flex;
-      justify-content: space-around;
+      align-items: center;
+      justify-content: space-between;
     }
-    padding-left: 6px;
-    width: 90%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  &__content--slider {
-    width: 78%;
-  }
-  &__content--select {
-    // отключаем возможность набора
-    .ant-select-selection-search input {
-      visibility: hidden;
+    &--slider {
+      width: 78%;
     }
-    width: 80%;
-  }
-  &__content--login {
-    width: 90%;
-    border-radius: 10px;
-    background-color: $activbtn;
-    color: white;
-    border: 2px solid $activbtn;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  &__content--reset {
-    width: 90%;
-    border-radius: 10px;
-    background-color: transparent;
-    color: $activbtn;
-    border: 2px solid $activbtn;
-    text-transform: uppercase;
-    font-weight: bold;
+    &--select {
+      // отключаем возможность набора
+      .ant-select-selection-search input {
+        visibility: hidden;
+      }
+      width: 80%;
+    }
+    &--login {
+      margin: 0 auto;
+      width: 90%;
+      padding: 5px;
+      & button {
+        width: 100%;
+        border-radius: 10px;
+        background-color: $activbtn;
+        color: white;
+        border: 2px solid $activbtn;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+      } 
+    }
+    &--reset {
+      width: 90%;
+      border-radius: 10px;
+      background-color: transparent;
+      color: $activbtn;
+      border: 2px solid $activbtn;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
   }
 }

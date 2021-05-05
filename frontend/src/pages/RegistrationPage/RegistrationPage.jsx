@@ -1,112 +1,153 @@
 import { Form, Input, Button, Checkbox } from "antd";
-import { NavLink } from "react-router-dom";
+import Title from "antd/lib/typography/Title";
+import { Link } from "react-router-dom";
+import CustomLink from "../../components/CustomLink";
+
 import "./RegistrationPage.scss";
 
 const RegistrationPage = (props) => {
   const onFinish = (values) => {
+    alert(
+      "Юзернейм, email, пароль, подтверждение пароля, статус чекбокса выведены в консоль."
+    );
     console.log("Received values of form: ", values);
   };
 
   return (
-    <Form
-      name="registration-form"
-      className="regForm"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-    >
-      <h1 className="regForm__title">Регистрация</h1>
-      <Form.Item
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Пожалуйста введите имя или ник!',
-          },
-        ]}
+    <div className="formWrapper theme">
+      <Form
+        name="registration-form"
+        className="regForm theme"
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
       >
-        <Input placeholder="Ваше имя" />
-      </Form.Item>
-
-      <Form.Item
-        name="email"
-        rules={[
-          {
-            type: "email",
-            required: true,
-            message: "Введённый почтвой адрес не корректен",
-          },
-          {
-            required: true,
-            message: "Пожалуйста введите свою почту",
-          },
-        ]}
-      >
-        <Input placeholder="Ваша почта" />
-      </Form.Item>
-
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста введите пароль!",
-          },
-        ]}
-        hasFeedback
-      >
-        <Input.Password placeholder="Ваш пароль" />
-      </Form.Item>
-
-      <Form.Item
-        name="confirm"
-        dependencies={["password"]}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста подтвердите введённый пароль!",
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-
-              return Promise.reject(new Error("Введённые пароли несовпадают!"));
+        <Title className="regForm__title" level={2}>
+          Регистрация
+        </Title>
+        <Form.Item
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: "Пожалуйста введите имя или ник!",
             },
-          }),
-        ]}
+          ]}
+        >
+          <label className="theme">
+            Имя пользователя
+            <Input placeholder="Ваше имя" />
+          </label>
+        </Form.Item>
+
+        <Form.Item
+          name="email"
+          rules={[
+            {
+              type: "email",
+              required: true,
+              message: "Введённый почтвой адрес не корректен",
+            },
+            {
+              required: true,
+              message: "Пожалуйста введите свою почту",
+            },
+          ]}
+        >
+          <label className="theme">
+            E-mail
+            <Input placeholder="Ваша почта" />
+          </label>
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Пожалуйста введите пароль!",
+            },
+          ]}
+          hasFeedback
+        >
+          <label className="theme">
+            Пароль
+            <Input.Password placeholder="Ваш пароль" />
+          </label>
+        </Form.Item>
+
+        <Form.Item
+          name="confirm"
+          dependencies={["password"]}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Пожалуйста подтвердите введённый пароль!",
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+
+                return Promise.reject(
+                  new Error("Введённые пароли несовпадают!")
+                );
+              },
+            }),
+          ]}
+        >
+          <label className="theme">
+            Подтверждение пароля
+            <Input.Password placeholder="Подтвердите свой пароль" />
+          </label>
+        </Form.Item>
+
+        <Form.Item
+          name="agreement"
+          valuePropName="checked"
+          rules={[
+            {
+              validator: (_, value) =>
+                value
+                  ? Promise.resolve()
+                  : Promise.reject(
+                      new Error("Для регистрации примите соглашение")
+                    ),
+            },
+          ]}
+        >
+          <Checkbox className="theme">
+            Я прочитал(а){" "}
+            <Link className="regForm__agreement" to="/agreement">
+              соглашение
+            </Link>
+          </Checkbox>
+        </Form.Item>
+
+        <Form.Item>
+          <Button htmlType="submit" className="regForm__button">
+            Зарегистрироваться
+          </Button>
+        </Form.Item>
+
+        <div className="regForm--switcher theme">
+          или{" "}
+          <Link className="regForm__linkToLogin" to="/login">
+            уже есть аккаунт
+          </Link>
+        </div>
+      </Form>
+      <CustomLink
+        className='linkToSettings loginForm__button'
+        to='/settings'
+        tag={Button}
       >
-        <Input.Password placeholder="Подтвердите свой пароль" />
-      </Form.Item>
-
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[
-          {
-            validator: (_, value) =>
-              value
-                ? Promise.resolve()
-                : Promise.reject(new Error("Для регистрации примите соглашение")),
-          },
-        ]}
-      >
-        <Checkbox>
-          Я прочитал(а) <NavLink to="/agreement">соглашение</NavLink>
-        </Checkbox>
-      </Form.Item>
-
-      <Form.Item>
-        <Button htmlType="submit" className="regForm__button">
-          Зарегистрироваться
-        </Button>
-      </Form.Item>
-
-      <NavLink to="/login">Уже есть аккаунт</NavLink>
-    </Form>
+        Назад к настройкам
+      </CustomLink>
+    </div>
   );
 };
 

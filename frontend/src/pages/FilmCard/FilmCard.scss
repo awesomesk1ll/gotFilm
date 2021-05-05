@@ -84,9 +84,14 @@
         text-align: right;
         margin: 0;
       }
-      &__genre {
+      &__genre, &__error {
         text-align: center;
         margin: 0 0 7px;
+      }
+      &__error {
+        color: darkred;
+        font-size: large;
+        font-weight: bold;
       }
       &--underline {
         width: 75%;
@@ -123,6 +128,9 @@
             justify-content: center;
             margin: 10px 0;
             padding: 0 15px;
+            & button {
+              background: transparent !important;
+            }
         }
         &__emptyBlock {
             width: 100%;

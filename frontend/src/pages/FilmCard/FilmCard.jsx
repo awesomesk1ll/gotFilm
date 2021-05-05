@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { Image } from 'antd';
+import Spinner from '../../components/Spinner';
 import ErrorFilmCard from './ErrorFilmCard';
 import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
 import Star from '../../components/icons/Star';
@@ -12,9 +13,8 @@ const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
 
 const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
     const cardEndRef = useRef(null);
-    
     const handleScrollToBottom = useCallback(() => {
-        cardEndRef.current.scrollIntoView({ behavior: "smooth" });
+        cardEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, []);
 
     useEffect(() => {
@@ -35,8 +35,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
         }
     }, [film]);
 
-    let genresList = film.genres.map((item, i) => <span key={ i }>{ item }, </span>);
-    let countryList = film.countries.map((item, i) => i + 1 < film.countries.length ? <span key={ i }>{ item }, </span> : <span key={ i }>{ item }</span>);
+    const ageFormatted = film.age !== null && `, ${film.age}+`;
 
     return (
         error ? <ErrorFilmCard error={error}/> :
@@ -48,6 +47,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
                 <Image className="filmCard__poster__image" alt={ film.name }
                     preview={ { src: `${IMAGE_ENDPOINT}/film_big/${film.id}.jpg` } }
                     src={ `${IMAGE_ENDPOINT}/film_iphone/iphone360_${film.id}.jpg` }
+                    placeholder={ <Spinner /> }
                 />
             </div>
             <div className="filmCard__infoBlock theme">
@@ -60,9 +60,9 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
                 </div>
                 <div className="filmCard__infoBlock--secondTitleWrapper">
                     <p className="filmCard__infoBlock__secondTitle">{ film.secondName }</p>
-                    <p className="filmCard__infoBlock__year">{ film.year }г. ({ countryList })</p>
+                    <p className="filmCard__infoBlock__year">{ film.year }г. ({ film.countries.join(', ') })</p>
                 </div>
-                <p className="filmCard__infoBlock__genre">{ genresList }<span>{ film.age }+</span></p>
+                <p className="filmCard__infoBlock__genre">{ film.genres.join(', ') }<span>{ ageFormatted }</span></p>
                 <hr className="filmCard__infoBlock--underline" />
                 <div className="filmCard__infoBlock--scrollableWrapper">
                     <input type="checkbox" name="hiddenDesc" id="hiddenDesc" className="inputDesc" />
@@ -73,8 +73,8 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
             </div>
             <div className="filmCard__footer theme">
                 <div className="filmCard__footer__buttonGroup">
-                    <FilmCardButton eventAction={ removeFilm }>уже смотрел</FilmCardButton>
-                    <FilmCardButton eventAction={ seenFilm }>не предлагать</FilmCardButton>
+                    <FilmCardButton eventAction={ seenFilm }>уже смотрел</FilmCardButton>
+                    <FilmCardButton eventAction={ removeFilm }>не предлагать</FilmCardButton>
                     <FilmCardButton eventAction={ changeFilm }>в другой раз</FilmCardButton>
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={ cardEndRef }></div>
@@ -86,7 +86,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
 
 FilmCard.propTypes = {
     error: PropTypes.string,
-    film: PropTypes.object,
+    film: PropTypes.object.isRequired,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,
     changeFilm: PropTypes.func
