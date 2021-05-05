@@ -1,17 +1,5 @@
 @import './variables.scss';
 
-/* TODO 
-  Запилить фиксы для бокс шедоу.
-  #el {
-      --box-shadow-color: palegoldenrod;
-      box-shadow: 1px 2px 3px var(--box-shadow-color);
-  }
-
-  #el:hover {
-      --box-shadow-color: goldenrod;
-  }
-*/
-
 /* Dark theme */
 body {
   &.dark .theme,
@@ -29,6 +17,8 @@ body {
   }
   &.dark #root {
     background-color: $templateBackgroundColorDarkNormal !important;
+  &.dark {
+    --box-shadow-color: #{ $shadowColorDark };
   }
 }
 

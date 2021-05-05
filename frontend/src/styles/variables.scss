@@ -1,7 +1,7 @@
 $activbtn: #DA952D;
 $activeBtnLighter: #E2AC5A;
 $activeBtnDarker: #B67A20;
-$box-shadow: 4px 3px 8px 3px rgba(34, 60, 80, 0.29);
+$shadowColor: rgba(58, 58, 58, 0.29);
 $border-radius: 5px;
 $generalFont: 400 16px 'Roboto', sans-serif;
 $textColor: rgb(112, 112, 112);
@@ -19,5 +19,6 @@ $templateBackgroundColorDarkNormal: #222;
 $templateBackgroundColorDarkBright: #333;
 $textColorDarkNormal: #ccc;
 $textColorDarkBright: #eee;
+$shadowColorDark: rgba(200, 200, 200, 0.29);
 //desktop version
 $desktopWidth: 40%;
