@@ -3,9 +3,6 @@
 @import './antd_style_patches.scss';
 @import './dark.scss';
 
-// media query with screen orientation no-support attention
-
-
 body {
   margin: 0;
   padding: 0;
@@ -45,7 +42,6 @@ input, button {
       bottom:10px;
       left:0;
       right:0;
-      border-radius:100px / 10px;
   }
   .App:after {
     right:10px;
