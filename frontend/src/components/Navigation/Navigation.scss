@@ -29,6 +29,9 @@
   }
   &__buttons {
     fill: $navigationButtonColor;
+    width: 100%;
+    display: flex;
+    justify-content: center;
     &.ant-radio-wrapper-checked {
       fill: $activbtn;
     }
