@@ -42,6 +42,10 @@
         margin-bottom: 5px;
     }
     &__buttons {
+        & button:first-child {
+            position: relative;
+            top: 2px;
+        }
         display: flex;
         justify-content: space-between;
         fill: $listsButtonColor;
