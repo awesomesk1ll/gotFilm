@@ -2,23 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
-import { favoriteIconPush, removeFromListAndSave } from '../../store/actions/complexFilmActions';
+import { removeFromListAndSave } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
 import Navigation from '../../components/Navigation';
 import './Favorites.scss';
 
 
-const Favorites = ({ films, favorites, favoriteIconPush, removeFromListAndSave }) => {
+const Favorites = ({ films, favorites, removeFromListAndSave }) => {
     let list = films.length && favorites.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        const handleAddToFavorites = () => {
-            favoriteIconPush(film.id);
-        };
         const handleRemoveFromList = () => {
             removeFromListAndSave(film.id, "favorites");
         };
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
+        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} removeFromList={handleRemoveFromList} />
     }).reverse();
     return (
         <div className="favorites--wrapper">
@@ -35,7 +32,6 @@ const Favorites = ({ films, favorites, favoriteIconPush, removeFromListAndSave }
 Favorites.propTypes = {
     favorites: PropTypes.object,
     films: PropTypes.array,
-    favoriteIconPush: PropTypes.func,
     removeFromListAndSave: PropTypes.func
 };
 
@@ -44,6 +40,6 @@ const mapStateToProps = ({ filmReducer }) => ({
     favorites: filmReducer.favorites
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ favoriteIconPush, removeFromListAndSave }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ removeFromListAndSave }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

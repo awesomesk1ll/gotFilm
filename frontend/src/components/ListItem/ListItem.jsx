@@ -20,7 +20,7 @@ const ListItem = ({ removeFromList, addToFavorites, name, secondName, year, rate
                     <span className="list-item__rate">{ rate }</span>
                 </div>
                 <div className="list-item__buttons">
-                    <button onClick={ addToFavorites }><Bookmark status={ status } /></button>
+                    {!!addToFavorites && <button className="favorite" onClick={ addToFavorites }><Bookmark status={ status } /></button>}
                     <button onClick={ removeFromList }><TrashBin /></button>
                 </div>
             </div>
@@ -30,14 +30,14 @@ const ListItem = ({ removeFromList, addToFavorites, name, secondName, year, rate
 
 ListItem.propTypes = {
     removeFromList: PropTypes.func,
-    addToFavorites: PropTypes.func,
+    addToFavorites: PropTypes.oneOfType([PropTypes.func, PropTypes.instanceOf(undefined)]),
     name: PropTypes.string,
     secondName: PropTypes.string,
     year: PropTypes.number,
     rate: PropTypes.number,
     age: PropTypes.number,
     genre: PropTypes.array,
-    status: PropTypes.bool,
+    status: PropTypes.oneOfType([PropTypes.bool, PropTypes.instanceOf(undefined)]),
 };
 
 export default ListItem; 
