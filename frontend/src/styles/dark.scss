@@ -27,6 +27,9 @@ body {
   &.dark .theme > span {
     color: $textColorDarkNormal !important
   }
+  &.dark #root {
+    background-color: $templateBackgroundColorDarkNormal !important;
+  }
 }
 
 /* Dark theme for antd */
