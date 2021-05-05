@@ -146,3 +146,20 @@
       max-height: 100%;
     }
   }
+
+  @media screen and (orientation: landscape) {
+    .filmCard {
+      &__poster {
+        &__background {
+          width: 55%;
+        }
+      }
+      &__infoBlock {
+        position: relative;
+        top: 0;
+      }
+      &__footer {
+        width: 55%;
+      }
+  }
+}
