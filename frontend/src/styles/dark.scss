@@ -1,5 +1,7 @@
 @import './variables.scss';
 
+// TODO переделать все цвета тёмной темы через CSS variables (как сделано --box-shadow-color ниже)
+
 /* Dark theme */
 body {
   &.dark .theme,
