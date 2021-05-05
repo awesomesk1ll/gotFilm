@@ -151,7 +151,7 @@
     .filmCard {
       &__poster {
         &__background {
-          width: 55%;
+          width: $desktopWidth;
         }
       }
       &__infoBlock {
@@ -159,7 +159,7 @@
         top: 0;
       }
       &__footer {
-        width: 55%;
+        width: $desktopWidth;
       }
   }
 }

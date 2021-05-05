@@ -49,3 +49,20 @@
     color: $activbtn;
   }
 }
+
+@media screen and (orientation: landscape) {
+  .formWrapper {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: $templateBackgroundColor;
+  }
+  .regForm {
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    border: none;
+    box-shadow: none;
+  }
+}

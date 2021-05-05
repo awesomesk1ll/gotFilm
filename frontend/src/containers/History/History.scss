@@ -43,7 +43,7 @@
 @media screen and (orientation: landscape) {
   .history {
     &__placeholder::before {
-      width: 55%;
+      width: $desktopWidth;
     }
   }
 }

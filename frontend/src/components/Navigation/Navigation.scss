@@ -41,7 +41,7 @@
 @media screen and (orientation: landscape) {
   .navigation {
     &__container {
-      width: 55%;
+      width: $desktopWidth;
     }
   }
 }
