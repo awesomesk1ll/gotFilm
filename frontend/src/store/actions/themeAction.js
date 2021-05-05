@@ -1,8 +1,8 @@
 export const CHANGE_THEME = '@@theme/CHANGE_THEME'
 
-export const changeTheme = (newTheme) => {
+export const changeTheme = (isLightTheme) => {
     return {
         type: CHANGE_THEME,
-        newTheme: 'dark'
+        isLightTheme: !isLightTheme
     }
 }

@@ -1,21 +1,35 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { Switch } from 'antd';
 import { changeTheme } from '../../store/actions/themeAction';
 
-const ThemeSwitch = (props) => {
+const ThemeSwitch = ({ isLightTheme }) => {
   // const onChange = (checked) => {
   //   document.body.classList.toggle('dark', checked);
   // }
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onChange = (checked) => {
-    const newTheme = document.body.classList.toggle('dark', checked)
-    dispatch(changeTheme(newTheme));
+    isLightTheme 
+      ? document.body.classList.add('dark', checked) 
+      : document.body.classList.remove('dark')
+    dispatch(changeTheme(isLightTheme));
   };
 
-  return <Switch onChange={onChange}></Switch>;
+  
+
+  return (
+      <Switch 
+        onChange={onChange} 
+      />
+    );
 };
 
-export default ThemeSwitch;
+const mapStateToProps = ({ themeReducer }) => {
+  return {
+    isLightTheme: themeReducer.isLightTheme,
+  };
+};
+
+export default connect(mapStateToProps, { changeTheme })(ThemeSwitch);

@@ -1,13 +1,13 @@
 import { CHANGE_THEME } from "../actions/themeAction";
 
 const initStore = {
-    class: null
+    isLightTheme: true
 }
 
 export default function themeReducer(store = initStore, action) {
     switch (action.type) {
         case CHANGE_THEME: 
-            return {...store, class: action.newTheme}
+            return {...store, isLightTheme: action.isLightTheme}
         default: return store;
     }
 }
