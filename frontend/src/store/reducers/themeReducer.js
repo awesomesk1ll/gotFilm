@@ -1,3 +1,4 @@
+import update from 'react-addons-update';
 import { CHANGE_THEME } from "../actions/themeAction";
 
 const initStore = {
@@ -7,7 +8,11 @@ const initStore = {
 export default function themeReducer(store = initStore, action) {
     switch (action.type) {
         case CHANGE_THEME: 
-            return {...store, isLightTheme: action.isLightTheme}
+        return update(store, {
+            isLightTheme: {
+                $set: action.isLightTheme
+            }
+        })
         default: return store;
     }
 }
