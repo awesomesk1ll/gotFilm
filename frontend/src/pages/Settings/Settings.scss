@@ -16,9 +16,9 @@
     justify-content: center;
     background-color: #fff;
     height: $headerHeight;
-    box-shadow: 0 3px 4px rgba(0,0,0, 0.2);
+    box-shadow: 0px 5px 10px -3px var(--box-shadow-color);
     &--title {
-      letter-spacing: 0.5px;
+      font: 600 24px 'Roboto', sans-serif;
       margin: 0 !important;
       text-transform: uppercase;
     }

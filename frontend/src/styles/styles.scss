@@ -3,27 +3,12 @@
 @import './antd_style_patches.scss';
 @import './dark.scss';
 
-// media query with screen orientation no-support attention
-@media screen and (orientation: landscape) {
-  body::before {
-    width: 100%;
-    position: absolute;
-    z-index: 5;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    color: white;
-    content: "Landscape режим пока не поддерживается.";
-    background-color: rgba(0,0,0, 0.5) !important;
-  }
-}
-
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
   transition: .2s all ease-in;
+  --box-shadow-color: #{ $shadowColor };
 }
 
 button {
@@ -40,4 +25,28 @@ input, button {
   height: 100%;
   width: 100%;
   position: fixed;
+}
+
+@media screen and (orientation: landscape) {
+  .App {
+    width: $desktopWidth;
+    margin: 0 auto;
+    position:relative;
+    box-shadow:0 1px 4px var(--box-shadow-color), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  }
+  .App:before, .App:after {
+    content:"";
+      position:absolute;
+      z-index:-1;
+      box-shadow:0 0 20px rgba(0,0,0,0.8);
+      top:10px;
+      bottom:10px;
+      left:0;
+      right:0;
+  }
+  .App:after {
+    right:10px;
+    left:auto;
+    transform:skew(8deg) rotate(3deg);
+  }
 }

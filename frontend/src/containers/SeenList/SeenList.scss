@@ -2,18 +2,25 @@
 @import '../../styles/variables.scss';
 
 .seenList {
+  &--wrapper {
+    height: 100vh;
+    overflow: hidden;
+  }
   &__list {
+    height: calc(100% - 100px);
+    position: relative;
     overflow-y: auto;
   }
   &__header {
     width: 100%;
-    min-height: 50px;
+    min-height: $headerHeight;
     display: flex;
     justify-content: center;
     align-items: center;
     font: 600 24px 'Roboto', sans-serif;
     text-transform: uppercase;
-    box-shadow: 0px 5px 10px -3px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 5px 10px -3px var(--box-shadow-color);
+    background-color: #fff;
   }
   &__placeholder::before {
     content: $noFilmsText;
@@ -27,5 +34,17 @@
     font-size: 36px;
     color: $textColor;
     text-transform: uppercase;
+  }
+  &__emptyBlock {
+    width: 100%;
+    height: $navigationHeight;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .seenList {
+    &__placeholder::before {
+      width: $desktopWidth;
+    }
   }
 }

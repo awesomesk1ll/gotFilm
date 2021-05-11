@@ -1,16 +1,6 @@
 @import './variables.scss';
 
-/* TODO 
-  Запилить фиксы для бокс шедоу.
-  #el {
-      --box-shadow-color: palegoldenrod;
-      box-shadow: 1px 2px 3px var(--box-shadow-color);
-  }
-
-  #el:hover {
-      --box-shadow-color: goldenrod;
-  }
-*/
+// TODO переделать все цвета тёмной темы через CSS variables (как сделано --box-shadow-color ниже)
 
 /* Dark theme */
 body {
@@ -22,10 +12,19 @@ body {
   &.dark .theme h5,
   &.dark .theme h6 {
     background-color: $templateBackgroundColorDarkNormal !important;
-    color: $textColorDarkBright !important
+    color: $textColorDarkBright !important;
+  }
+  &.dark .theme > svg {
+    fill: $textColorDarkBright !important;
   }
   &.dark .theme > span {
-    color: $textColorDarkNormal !important
+    color: $textColorDarkNormal !important;
+  }
+  &.dark #root {
+    background-color: $rootDarkColor !important;
+  }
+  &.dark {
+    --box-shadow-color: #{ $shadowColorDark };
   }
 }
 
