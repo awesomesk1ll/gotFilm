@@ -29,8 +29,19 @@
   }
   &__buttons {
     fill: $navigationButtonColor;
+    width: 100%;
+    display: flex;
+    justify-content: center;
     &.ant-radio-wrapper-checked {
       fill: $activbtn;
+    }
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .navigation {
+    &__container {
+      width: $desktopWidth;
     }
   }
 }

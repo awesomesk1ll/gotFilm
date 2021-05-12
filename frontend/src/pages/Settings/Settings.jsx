@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Button, Slider, Select, Switch} from 'antd';
 import PropTypes from 'prop-types';
 
@@ -11,12 +11,18 @@ import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import Filter from '../../containers/Filter'
-import { updateFilterRating, updateFilterYear, updateFilterCountry, updateFilterGenre, updateButtonState } from '../../store/actions/filmActions';
-import { updateFilteredFilms } from '../../store/actions/filmActions';
+import { updateFilterRating, updateFilterYear, updateFilterCountry, updateFilterGenre, updateButtonState} from '../../store/actions/filmActions';
+import { filtreFilm } from '../../store/actions/complexFilmActions';
+//import { updateFilteredFilms } from '../../store/actions/filmActions';
 
 const { Title, Text } = Typography;
 
 const Settings = (props) => {
+
+    const handleFiltreFilm = useEffect(() => {
+        filtreFilm();
+        console.log('fil');
+    }, [props.numberRate, props.numberYear, props.selectedGenres, props.selectedCountries]);
 
     const handleSelect = (value, type) => {
         if (value === "Все") {
@@ -35,13 +41,15 @@ const Settings = (props) => {
     const handleClearSettings = () => {
         props.clearLists();
         localStorage.removeItem('blacklist');
-        localStorage.removeItem('seenList');
+        localStorage.removeItem('alreadySeen');
+        localStorage.removeItem('history');
+        localStorage.removeItem('favorites');
     }
 
     return (
         <div className="settings--wrapper theme">
             <div className="settings__header theme">
-                <Title className="settings__header--title" level={2}>Настройки</Title>
+                <div className="settings__header--title" level={2}>Настройки</div>
             </div>
             <div className="settings__content">
                 <Link type="secondary" className="settings__content--login" to='/login'>
@@ -123,7 +131,6 @@ const Settings = (props) => {
 
             </div>
             <Navigation checked={ 'settings' } />
-            <Filter />
         </div>
     )
 };
@@ -138,7 +145,7 @@ const mapStateToProps = ({ filmReducer }) => ({
     buttonState: filmReducer.buttonState
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ updateFilterRating, updateFilteredFilms, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState, clearLists}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ updateFilterRating, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState, clearLists, filtreFilm}, dispatch);
 
 Settings.propTypes = {
     clearLists: PropTypes.func

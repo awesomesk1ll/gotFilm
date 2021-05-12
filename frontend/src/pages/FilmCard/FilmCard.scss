@@ -126,7 +126,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin: 10px 0;
+            margin: 10px 0 18px;
             padding: 0 15px;
             & button {
               background: transparent !important;
@@ -134,7 +134,7 @@
         }
         &__emptyBlock {
             width: 100%;
-            height: 46px;
+            height: 50px;
         }
       }
   }
@@ -146,3 +146,20 @@
       max-height: 100%;
     }
   }
+
+  @media screen and (orientation: landscape) {
+    .filmCard {
+      &__poster {
+        &__background {
+          width: $desktopWidth;
+        }
+      }
+      &__infoBlock {
+        position: relative;
+        top: 0;
+      }
+      &__footer {
+        width: $desktopWidth;
+      }
+  }
+}
