@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Switch } from 'antd';
 import { changeTheme } from '../../store/actions/themeAction';
 
@@ -18,6 +19,10 @@ const ThemeSwitch = ({ isLightTheme }) => {
       />
     );
 };
+
+ThemeSwitch.propTypes = {
+  isLightTheme: PropTypes.bool
+}
 
 const mapStateToProps = ({ themeReducer }) => ({
     isLightTheme: themeReducer.isLightTheme,
