@@ -21,7 +21,6 @@ const initStore = {
     history: prepareList('history'),
     blacklist: prepareList('blacklist'),
     alreadySeen: prepareList('alreadySeen'),
-    temporary: prepareList('temporary'),
     temporary: { data: [], list: {} },
     favorites: prepareList('favorites'),
     settings: prepareSettings(),

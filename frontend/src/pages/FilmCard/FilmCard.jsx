@@ -76,7 +76,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
                 <div className="filmCard__footer__buttonGroup">
                     <FilmCardButton eventAction={ seenFilm }>уже смотрел</FilmCardButton>
                     <FilmCardButton eventAction={ removeFilm }>не предлагать</FilmCardButton>
-                    <FilmCardButton eventAction={ changeFilm }>в другой раз</FilmCardButton>
+                    <FilmCardButton eventAction={ addToTemporary }>в другой раз</FilmCardButton>
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={ cardEndRef }></div>
             </div>
@@ -90,7 +90,7 @@ FilmCard.propTypes = {
     film: PropTypes.object,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,
-    changeFilm: PropTypes.func
+    addToTemporary: PropTypes.func
 };
 
 export default FilmCard;
