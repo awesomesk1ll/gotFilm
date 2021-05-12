@@ -1,13 +1,15 @@
 import axios from 'axios';
-import { loadFilms, loadFilmsStarted, loadFilmsFailure, getRandomFilm } from './filmActions';
-import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen } from './filmActions';
+import { loadFilms, loadFilmsStarted, loadFilmsFailure } from './filmActions';
+import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavorites, removeFromAlreadySeen, removeFromBlacklist, removeFromFavorites, removeFromHistory, updateFilteredFilms } from './filmActions';
+// import { loadFilms, loadFilmsStarted, loadFilmsFailure, getRandomFilm } from './filmActions';
+// import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen } from './filmActions';
 
 /**
  * Сохраняет список в local storage
  *
  * @param {string} listName - имя списка для сохранения.
  */
- export const saveList = (listName) => {
+export const saveList = (listName) => {
     return (dispatch, getState) => {
         const { [listName]: list } = getState().filmReducer;
         localStorage.setItem(listName, JSON.stringify(list));
@@ -29,6 +31,9 @@ export const addToListAndSave = (filmId, listName = "history") => {
             case "alreadySeen":
                 dispatch(addToAlreadySeen(filmId));
                 break;
+            case "favorites":
+                dispatch(addToFavorites(filmId));
+                break;
             default:
                 dispatch(addToHistory(filmId));
         }
@@ -37,23 +42,79 @@ export const addToListAndSave = (filmId, listName = "history") => {
 };
 
 /**
- * Вычисляет случайный фильм отсутствующий в списках blacklist и alreadySeen, его добавляет в историю
+ * Удаляет фильм из списка, затем сохраняет список в local storage
+ *
+ * @param {number} filmId - id удаляемого фильма.
+ * @param {string} [listName="history"] - имя списка для удаляемого фильма и сохранения.
  */
- export const changeFilm = () => {
+export const removeFromListAndSave = (filmId, listName = "history") => {
     return (dispatch, getState) => {
-        const { films, blacklist, alreadySeen, history } = getState().filmReducer;
-        let film, randomIndex;
-        do {
-            randomIndex = ~~(Math.random() * films.length);
-            film = films[randomIndex];
-        } while (
-            blacklist.list[film.id] || alreadySeen.list[film.id]
-        )
-        dispatch(selectFilm(randomIndex));
-        dispatch(addToListAndSave(film.id));
+        switch (listName) {
+            case "blacklist":
+                dispatch(removeFromBlacklist(filmId));
+                break;
+            case "alreadySeen":
+                dispatch(removeFromAlreadySeen(filmId));
+                break;
+            case "favorites":
+                dispatch(removeFromFavorites(filmId));
+                break;
+            default:
+                dispatch(removeFromHistory(filmId));
+        }
+        dispatch(saveList(listName));
     }
 };
 
+/**
+ *
+ * @param {number} filmId - id фильма.
+ * @param {*} listName - имя списка для добавления/удаления фильма. По умолчанию - избранные фильмы.
+ */
+export const favoriteIconPush = (filmId, listName = "favorites") => {
+    return (dispatch, getState) => {
+        const { favorites } = getState().filmReducer;
+        let checkList = favorites.data.find(item => item.id === filmId);
+        if (!checkList) {
+            dispatch(addToListAndSave(filmId, listName));
+        } else {
+            dispatch(removeFromListAndSave(filmId, listName));
+        }
+    }
+};
+
+/**
+ * Вычисляет случайный фильм отсутствующий в списках blacklist и alreadySeen, его добавляет в историю
+ */
+export const changeFilm = () => {
+    return (dispatch, getState) => {
+        const { films, idFilmsFiltered, blacklist, alreadySeen } = getState().filmReducer;
+        let filmID, randomIndex;
+        do {
+            randomIndex = ~~(Math.random() * idFilmsFiltered.length);
+            filmID = idFilmsFiltered[randomIndex];
+        } while (
+            blacklist.list[filmID] || alreadySeen.list[filmID]
+        )
+
+        dispatch(selectFilm(filmID));
+        dispatch(addToListAndSave(filmID));
+    }
+};
+/**
+ * Обновляет отфильтрованный список фильмов в соответствии с настройками
+ */
+export const filtreFilm = () => {
+    return (dispatch, getState) => {
+        const { films, countryFilter, genreFilter, yearFilter, ratingFilter } = getState().filmReducer;
+
+        let filteredFilms = films.filter(film => film.countries.filter(el => countryFilter.includes(el)).length > 0 );
+        filteredFilms = filteredFilms.filter(film => film.genres.filter(el => genreFilter.includes(el)).length > 0 );
+        filteredFilms = filteredFilms.filter(film => film.year >= yearFilter[0] && film.year <= yearFilter[1]);
+        filteredFilms = filteredFilms.filter(film => film.rate >= ratingFilter[0] && film.rate <= ratingFilter[1]);
+        dispatch(updateFilteredFilms(filteredFilms.map(film => film.id)));
+    }
+};
 /**
  * Загружает фильмы и запускает выбор одного из них
  */
@@ -61,26 +122,15 @@ export const fetchFilms = () => {
   return dispatch => {
       dispatch(loadFilmsStarted());
 
-      axios.get("./films.json")
-          .then(response => {
-              let randomIndex = ~~(Math.random() * response.data.length);
-              dispatch(loadFilms(response.data));
-              dispatch(getRandomFilm(response.data[randomIndex].id));
-          })
-          .catch(err => {
-              dispatch(loadFilmsFailure(err.message));
-          });
-  }
-    // return dispatch => {
-    //     dispatch(loadFilmsStarted());
-    //
-    //     axios.get("./films.json")
-    //             .then(response => {
-    //                 dispatch(loadFilms(response.data));
-    //                 dispatch(changeFilm());
-    //             })
-    //             .catch(err => {
-    //                 dispatch(loadFilmsFailure(err.message));
-    //             });
-    // }
+        axios.get("./films.json")
+            .then(response => {
+                dispatch(loadFilms(response.data));
+                dispatch(filtreFilm());
+                dispatch(changeFilm());
+            })
+            .catch(err => {
+                dispatch(loadFilmsFailure(err.message));
+            });
+
+    }
 };

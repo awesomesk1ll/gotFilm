@@ -13,7 +13,7 @@
   margin: 0 auto;
   padding: 20px;
   border-radius: $border-radius;
-  box-shadow: $box-shadow;
+  box-shadow: 4px 3px 8px 3px var(--box-shadow-color);
   & label,
   &__agreement,
   &--switcher {
@@ -47,5 +47,22 @@
   &__agreement,
   &__linkToLogin {
     color: $activbtn;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .formWrapper {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: $templateBackgroundColor;
+  }
+  .regForm {
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    border: none;
+    box-shadow: none;
   }
 }

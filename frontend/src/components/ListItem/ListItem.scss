@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-between;
     padding: 0 25px;
-    box-shadow: 0px 5px 10px -3px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 5px 10px -3px var(--box-shadow-color);
     font: 400 18px 'Roboto', sans-serif;
     &__about {
         width: 80%;
@@ -31,18 +31,33 @@
         color: $textColor;
         margin: 0;
     }
-    &_actions-container{
+    &__actions-container{
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-evenly;
+        width: 70px;
     }
-    &_rating {
+    &__rating {
+        display: flex;
+        & svg {
+            position: relative;
+            top: -2px;
+        }
         @include fontFrame(400, 17px, $activbtn);
         margin-bottom: 5px;
     }
+    &__rate {
+        flex-grow: 1;
+        text-align: center;
+    }
     &__buttons {
+        & .favorite {
+            position: relative;
+            top: 2px;
+        }
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
+        padding: 0 3px;
         fill: $listsButtonColor;
     }
 } 
