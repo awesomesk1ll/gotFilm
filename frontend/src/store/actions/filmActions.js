@@ -12,6 +12,8 @@ export const REMOVE_FROM_BLACKLIST = '@@film/REMOVE_FROM_BLACKLIST';
 export const REMOVE_FROM_TEMPORARY = '@@film/REMOVE_FROM_TEMPORARY';
 export const REMOVE_FROM_FAVORITES = '@@film/REMOVE_FROM_FAVORITES';
 export const SET_SETTINGS = '@@settings/SET_SETTINGS';
+export const SHOW_NOTIFICATION = '@@film/SHOW_NOTIFICATION';
+export const REMOVE_NOTIFICATION = '@@film/REMOVE_NOTIFICATION';
 export const SELECT_FILM = '@@film/SELECT_FILM';
 export const CLEAR_LISTS = '@@film/CLEAR_LISTS';
 
@@ -91,4 +93,15 @@ export const clearLists = () => ({
 export const setSettings = (settings) => ({
     type: SET_SETTINGS,
     settings
+});
+
+export const showNotification = (notifyType, message, description) => ({
+    type: SHOW_NOTIFICATION,
+    notifyType,
+    message,
+    description
+});
+
+export const removeNotification = () => ({
+    type: REMOVE_NOTIFICATION
 });

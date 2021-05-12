@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import Spinner from '../components/Spinner';
 import FilmCard from '../pages/FilmCard';
 import { addToListAndSave, changeFilm } from '../store/actions/complexFilmActions';
+import { addToTemporary, removeNotification } from '../store/actions/filmActions';
 
 const FilmCardContainer = ({ film, addToListAndSave, changeFilm, error }) => {
     const handleChangeFilm = useCallback(() => {

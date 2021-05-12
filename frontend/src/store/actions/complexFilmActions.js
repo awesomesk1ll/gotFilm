@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loadFilms, loadFilmsStarted, loadFilmsFailure } from './filmActions';
+import { loadFilms, loadFilmsStarted, loadFilmsFailure, showNotification } from './filmActions';
 import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavorites, removeFromAlreadySeen, removeFromBlacklist, removeFromFavorites, removeFromHistory } from './filmActions';
 import { setSettings } from './filmActions';
 
