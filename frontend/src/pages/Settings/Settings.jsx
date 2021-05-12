@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Button, Slider, Select, Switch } from 'antd';
+import { Typography, Button, Slider, Select } from 'antd';
 import PropTypes from 'prop-types';
 
 import { clearLists } from '../../store/actions/filmActions';
@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { updateFilterRating, updateFilterYear, updateFilterCountry, updateFilterGenre, updateButtonState } from '../../store/actions/filmActions';
 import { updateFilteredFilms } from '../../store/actions/filmActions';
+import ThemeSwitch from '../../components/ThemeSwitch'
 
 const { Title, Text } = Typography;
 
@@ -51,15 +52,7 @@ const Settings = ({ rate, year, genre, countries, idFilmsFiltered, buttonState, 
 
                 <div className="settings__content--row">
                     <Text className="theme">Темная версия оформления</Text>
-                    <Switch
-                        checked={ buttonState }
-                        onClick={
-                            (checked) => {
-                                updateButtonState(checked);
-                                //document.body.classList.toggle("dark", checked);
-                            }
-                        }
-                    />
+                    <ThemeSwitch />
                 </div>
 
                 <Title level={ 3 }>Настройки поиска</Title>
