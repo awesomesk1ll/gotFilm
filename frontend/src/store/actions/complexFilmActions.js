@@ -21,7 +21,7 @@ export const saveList = (listName) => {
  * 
  * @param {object} settings - новый объект настроек.
  */
- export const setSettingsAndSave = (settings) => {
+export const setSettingsAndSave = (settings) => {
     return (dispatch, getState) => {
         dispatch(setSettings(settings));
         dispatch(saveList('settings'));
