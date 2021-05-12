@@ -7,7 +7,7 @@ const prepareSettings = () => localStorage.getItem('settings')
                             : { 
                                 dark: false,
                                 filters: {
-                                    types: ['FILM'],
+                                    types: ['FILM', 'TV_SHOW'],
                                     genres: ['боевик','комедия', 'драма'],
                                     countries: ['Россия','США'],
                                     ratings: [7, 9],
