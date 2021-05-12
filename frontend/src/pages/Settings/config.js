@@ -1,3 +1,4 @@
+export const TYPES = [{value:'FILM', label:'Фильмы'},{value:'TV_SHOW', label:'Сериалы/Шоу'}];
 export const RATINGS = { 5: 'от 5', 10: 'до 10' };
 export const YEARS = { 1980: 'c 1980', 2021: 'по 2021' };
 export const GENRES = [{value:"Все"},{value:"документальный"},{value:"комедия"},{value:"короткометражка"},{value:"фэнтези"},{value:"мюзикл"},{value:"мелодрама"},{value:"мультфильм"},{value:"концерт"},{value:"музыка"},{value:"драма"},{value:"криминал"},{value:"фантастика"},{value:"биография"},{value:"ток-шоу"},{value:"боевик"},{value:"детский"},{value:"семейный"},{value:"история"},{value:"детектив"},{value:"игра"},{value:"военный"},{value:"приключения"},{value:"триллер"},{value:"реальное ТВ"},{value:"спорт"},{value:"ужасы"},{value:"аниме"},{value:"вестерн"},{value:"новости"},{value:"церемония"},{value:"фильм-нуар"},{value:"для взрослых"}];

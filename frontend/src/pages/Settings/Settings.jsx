@@ -1,22 +1,68 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 
 import { clearLists } from '../../store/actions/filmActions';
 
-import { Typography, Button, Slider, Select } from 'antd';
+import { setSettingsAndSave } from '../../store/actions/complexFilmActions';
+
+//import { setSettingsAndSave } from '../../store/actions/complexFilmActions';
+
+import { Typography, Button, Slider, Select, Switch } from 'antd';
 import Navigation from '../../components/Navigation';
-import { RATINGS, YEARS, GENRES, COUNTRIES } from './config';
+import { TYPES, RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
-import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch';
+//import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch';
 import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
-const Settings = (props) => {
-    const [selectedGenres, setSelectedGenres] = React.useState(['боевик','комедия']);
-    const [selectedCountries, setSelectedCountries] = React.useState(['Россия','США']);
+const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
+    const [selectedTypes, setSelectedTypes] = React.useState(settings.filters.types);
+    const [selectedRatings, setSelectedRatings] = React.useState(settings.filters.ratings);
+    const [selectedYears, setSelectedYears] = React.useState(settings.filters.years);
+    const [selectedGenres, setSelectedGenres] = React.useState(settings.filters.genres);
+    const [selectedCountries, setSelectedCountries] = React.useState(settings.filters.countries);
+    const [darkMode, setDarkMode] = React.useState(settings.dark);
+
+    const setSettings = useCallback((value, type) => {
+        // меняем локальное состояние компонента
+        switch (type) {
+            case 'types':
+                setSelectedTypes(value);
+                break;
+            case 'ratings':
+                setSelectedRatings(value);
+                break;
+            case 'years':
+                setSelectedYears(value);
+                break;
+            case 'genres':
+                setSelectedGenres(value);
+                break;
+            case 'countries':
+                setSelectedCountries(value);
+                break;
+            case 'mode':
+                setDarkMode(value);
+                document.body.classList.toggle("dark", value);
+                break;
+        }
+
+        // отправляем новое состояние в store
+        setSettingsAndSave({ 
+            dark: (type === 'mode') ? value : darkMode,
+            filters: {
+                types: (type === 'types') ? value : selectedTypes,
+                ratings: (type === 'ratings') ? value : selectedRatings,
+                years: (type === 'years') ? value : selectedYears,
+                genres: (type === 'genres') ? value : selectedGenres,
+                countries: (type === 'countries') ? value : selectedCountries
+            }
+        });
+    }, [setSettingsAndSave]);
+   
 
     const handleSelect = (value, type) => {
         if (value === "Все") {
@@ -30,14 +76,14 @@ const Settings = (props) => {
         if (value === "Все") {
             (type === "genres") ? setSelectedGenres([]) : setSelectedCountries([])
         }
+        if (type === "types" && selectedTypes.length === 1) {
+            setSelectedTypes(TYPES.map(type => type.value))
+        }
     }
 
     const handleClearSettings = () => {
-        props.clearLists();
-        localStorage.removeItem('blacklist');
-        localStorage.removeItem('alreadySeen');
-        localStorage.removeItem('history');
-        localStorage.removeItem('favorites');
+        clearLists();
+        ['blacklist', 'alreadySeen', 'history', 'favorites'].forEach(list => {localStorage.removeItem(list)});
     }
 
     return (
@@ -52,22 +98,36 @@ const Settings = (props) => {
 
                 <div className="settings__content--row">
                     <Text className="theme">Темная версия оформления</Text>
-                    <ThemeSwitch/>
+                    <Switch onChange={(val) => {setSettings(val, "mode")}} defaultChecked={darkMode} />
                 </div>
 
                 <Title level={3}>Настройки поиска</Title>
 
+                <div className="settings__content--row">
+                    <Text className="theme">Тип</Text>
+                    <Select className="settings__content--select"
+                            mode="multiple"
+                            showArrow
+                            value={selectedTypes}
+                            onChange={(val) => {setSettings(val, "types")}}
+                            onDeselect={(val) => {handleDeSelect(val, "types")}}
+                            options={TYPES}
+                    />
+                </div>
+
                 <div className="settings__content--row theme">
                     <Text className="theme">Рейтинг</Text>
                     <Slider className="settings__content--slider" range
-                            marks={RATINGS} min={5} max={10} step={0.5} defaultValue={[7, 9]}
+                            marks={RATINGS} min={5} max={10} step={0.5} defaultValue={selectedRatings}
+                            onChange={(val) => {setSettings(val, "ratings")}}
                     />
                 </div>
 
                 <div className="settings__content--row">
                     <Text className="theme">Годы</Text>
                     <Slider className="settings__content--slider" range
-                            marks={YEARS} min={1980} max={2021} defaultValue={[1990, 2020]}
+                            marks={YEARS} min={1980} max={2021} defaultValue={selectedYears}
+                            onChange={(val) => {setSettings(val, "years")}}
                     />
                 </div>
 
@@ -79,7 +139,7 @@ const Settings = (props) => {
                             value={selectedGenres}
                             onSelect={(val) => {handleSelect(val, "genres")}}
                             onDeselect={(val) => {handleDeSelect(val, "genres")}}
-                            onChange={setSelectedGenres}
+                            onChange={(val) => {setSettings(val, "genres")}}
                             options={GENRES}
                             maxTagCount={3}
                     />
@@ -93,7 +153,7 @@ const Settings = (props) => {
                             value={selectedCountries}
                             onSelect={(val) => {handleSelect(val, "countries")}}
                             onDeselect={(val) => {handleDeSelect(val, "countries")}}
-                            onChange={setSelectedCountries}
+                            onChange={(val) => {setSettings(val, "countries")}}
                             options={COUNTRIES}
                             maxTagCount={4}
                     />
@@ -109,10 +169,16 @@ const Settings = (props) => {
     )
 };
 
+const mapStateToProps = ({ filmReducer }) => ({
+    settings: filmReducer.settings,
+});
+
 Settings.propTypes = {
-    clearLists: PropTypes.func
+    clearLists: PropTypes.func,
+    setSettingsAndSave: PropTypes.func,
+    settings: PropTypes.object
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ clearLists }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ clearLists, setSettingsAndSave }, dispatch);
 
-export default connect(null, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
