@@ -18,7 +18,7 @@ const Favorites = ({ films, favorites, removeFromListAndSave }) => {
         return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} removeFromList={handleRemoveFromList} />
     }).reverse();
     return (
-        <div className="favorites--wrapper">
+        <div className="favorites--wrapper theme">
             <div className="favorites__header theme">Избранные</div>
             <div className="favorites__list">
                 {list?.length ? list : (<div className="favorites__placeholder" />)}

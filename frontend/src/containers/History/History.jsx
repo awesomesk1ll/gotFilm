@@ -21,7 +21,7 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
         return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
-        <div className="history--wrapper">
+        <div className="history--wrapper theme">
             <div className="history__header theme">История предложений</div>
             <div className="history__list">
                 { list?.length ? list : (<div className="history__placeholder"/>) }

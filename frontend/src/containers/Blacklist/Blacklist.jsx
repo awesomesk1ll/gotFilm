@@ -21,7 +21,7 @@ const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromLi
         return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
-        <div className="blacklist--wrapper">
+        <div className="blacklist--wrapper theme">
             <div className="blacklist__header theme">Отклоненные</div>
             <div className="blacklist__list"> 
             { list?.length ? list : (<div className="blacklist__placeholder"/>) }

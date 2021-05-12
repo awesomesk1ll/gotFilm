@@ -21,7 +21,7 @@ const SeenList = ({ films, favorites, alreadySeen, favoriteIconPush, removeFromL
         return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
-        <div className="seenList--wrapper">
+        <div className="seenList--wrapper theme">
             <div className="seenList__header theme">Просмотренные</div>
             <div className="seenList__list">
                 { list?.length ? list : (<div className="seenList__placeholder"/>) }
