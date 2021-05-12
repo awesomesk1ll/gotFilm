@@ -46,10 +46,10 @@ const Home = (props) => {
               opacity: 0,
               type: 'set',
             },
-            { scale: 1.2, opacity: 1, duration: 600 },
-            { scale: 0.9, duration: 500 },
-            { scale: 1.05, duration: 300 },
-            { scale: 1, duration: 200 },
+            { scale: 1.2, opacity: 1, duration: 500 },
+            { scale: 0.9, duration: 400 },
+            { scale: 1.05, duration: 200 },
+            { scale: 1, duration: 100 },
           ]
         };
       case 6:
