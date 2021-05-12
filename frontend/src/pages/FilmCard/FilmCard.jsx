@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { Image } from 'antd';
+import { Image, notification } from 'antd';
 import Spinner from '../../components/Spinner';
 import ErrorFilmCard from './ErrorFilmCard';
 import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
@@ -11,7 +11,7 @@ import Navigation from '../../components/Navigation/Navigation';
 
 const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
 
-const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
+const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, removeNotification }) => {
     const cardEndRef = useRef(null);
     
     const handleScrollToBottom = useCallback(() => {
@@ -25,6 +25,17 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
     useEffect(() => {
         handleScrollToBottom();
     }, [film, handleScrollToBottom]);
+
+    useEffect(() => {
+        if (notify.message && notify.description) {
+            notification[notify.type]({
+                duration: 10,
+                message: notify.message,
+                description: notify.description
+            });
+            removeNotification();
+        }
+    }, [notify, removeNotification]);
 
     const handleChangeFontSize = useCallback(() => {
         if (film.name.length > 15 && film.name.length < 30) {
@@ -87,6 +98,7 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
 
 FilmCard.propTypes = {
     error: PropTypes.string,
+    notify: PropTypes.object,
     film: PropTypes.object,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,

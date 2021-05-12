@@ -8,7 +8,7 @@ import FilmCard from '../pages/FilmCard';
 import { addToListAndSave, changeFilm } from '../store/actions/complexFilmActions';
 import { addToTemporary, removeNotification } from '../store/actions/filmActions';
 
-const FilmCardContainer = ({ film, addToListAndSave, changeFilm, error }) => {
+const FilmCardContainer = ({ film, addToListAndSave, addToTemporary, changeFilm, error, notification, removeNotification }) => {
     const handleChangeFilm = useCallback(() => {
         changeFilm();
     }, [changeFilm]);
@@ -23,23 +23,32 @@ const FilmCardContainer = ({ film, addToListAndSave, changeFilm, error }) => {
         handleChangeFilm();
     }, [film, addToListAndSave, handleChangeFilm]);
 
+    const handleMoveFilmToTemporary = useCallback(() => {
+        addToTemporary(film.id);
+        handleChangeFilm();
+    }, [film, addToTemporary, handleChangeFilm]);
+
     return (
-        !film ? <Spinner /> : <FilmCard error={error} film={film} changeFilm={handleChangeFilm} removeFilm={handleMoveFilmToBlacklist} seenFilm={handleMoveFilmToAlreadySeen} />
+        !film ? <Spinner /> : <FilmCard error={error} notify={notification} removeNotification={removeNotification} film={film} addToTemporary={handleMoveFilmToTemporary} removeFilm={handleMoveFilmToBlacklist} seenFilm={handleMoveFilmToAlreadySeen} />
     )
 };
 
 FilmCardContainer.propTypes = {
     error: PropTypes.string,
+    notification: PropTypes.object,
     film: PropTypes.object,
     addToListAndSave: PropTypes.func,
-    changeFilm: PropTypes.func
+    addToTemporary: PropTypes.func,
+    changeFilm: PropTypes.func,
+    removeNotification: PropTypes.func
 };
 
 const mapStateToProps = ({ filmReducer }) => ({
     error: filmReducer.error,
     film: filmReducer.film,
+    notification: filmReducer.notification
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addToListAndSave, changeFilm }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addToListAndSave, changeFilm, addToTemporary, removeNotification }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilmCardContainer);

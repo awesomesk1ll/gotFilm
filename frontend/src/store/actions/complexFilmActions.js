@@ -17,6 +17,36 @@ export const saveList = (listName) => {
 
 
 /**
+ * Отправляет уведомление для страницы фильмов при маленькой выборке
+ * 
+ * @param {number} count - количество фильмов в текущей выборке.
+ */
+ export const noFilmsNotification = (count) => {
+    const getFilmWords = () => {
+        const titles = [`остался ${count} фильм`, `осталось ${count} фильма`, `осталось ${count} фильмов`];
+        const cases = [2, 0, 1, 1, 1, 2];  
+        return titles[ (count % 100 > 4 && count % 100 < 20) ? 2 : cases[(count % 10 < 5) ? count % 10 : 5] ];  
+    }
+
+    return (dispatch) => {
+        if (!!count){
+            dispatch(showNotification(
+                'warning',
+                'Выборка фильмов заканчивается',
+                `В текущей выборке ${getFilmWords()}. Измените настройки поиска на более широкие.`,
+            ))
+        } else {
+            dispatch(showNotification(
+                'error',
+                'Выборка фильмов пуста',
+                'В текущей выборке не осталось фильмов. Поиск не доступен. Измените настройки поиска на более широкие.',
+            ))
+        }
+    }
+};
+
+
+/**
  * Заменяет текущие настройки и сохраняет их в localStorage
  * 
  * @param {object} settings - новый объект настроек.
@@ -25,6 +55,11 @@ export const setSettingsAndSave = (settings) => {
     return (dispatch, getState) => {
         dispatch(setSettings(settings));
         dispatch(saveList('settings'));
+        dispatch(showNotification(
+            'success',
+            'Настройки успешно сохранены',
+            'Выполнен новый поиск в соответствии с запросом.',
+        ));
     }
 };
 
@@ -96,11 +131,14 @@ export const favoriteIconPush = (filmId, listName = "favorites") => {
 };
 
 /**
- * Вычисляет случайный фильм отсутствующий в списках blacklist и alreadySeen, его добавляет в историю
+ * Рассчитывает с учётом фильтров следующий фильм для показа, 
+ * в случае успеха добавляет его в историю и показывает
+ * в случае неудачи показывает уведомление
  */
 export const changeFilm = () => {
     return (dispatch, getState) => {
-        const { films, blacklist, alreadySeen, settings } = getState().filmReducer;
+        let film, randomIndex = 0;
+        const { films, blacklist, alreadySeen, temporary, settings, film: current } = getState().filmReducer;
         const { types, ratings, years, genres, countries } = settings.filters;
         // фильтры
         const typesFilter = (film) => (types.length !== 1 || film.type === types[0]);
@@ -110,12 +148,28 @@ export const changeFilm = () => {
         const countriesFilter = (film) => film.countries.some(country => countries.includes(country));
         const blacklistFilter = (film) => !!!blacklist.list[film.id];
         const alreadySeenFilter = (film) => !!!alreadySeen.list[film.id];
-        const appendFilters = (film) => [typesFilter, ratingsFilter, yearsFilter, genresFilter, countriesFilter, blacklistFilter, alreadySeenFilter].every(filter => filter(film));
+        const temporaryFilter = (film) => !!!temporary.list[film.id];
+        const noCurrentFilter = (film) => !!!current || (film.id !== current.id);
+
+        console.log('current', current);
+        // фильтр всё в одном
+        const appendFilters = (film) => [
+            typesFilter, 
+            ratingsFilter, 
+            yearsFilter, 
+            genresFilter, 
+            countriesFilter, 
+            blacklistFilter, 
+            alreadySeenFilter,
+            temporaryFilter,
+            noCurrentFilter
+        ].every(filter => filter(film));
 
         // фильтрация и сортировка по ранкингу кинопоиска
         const filteredFilms = films.filter(film => appendFilters(film)).sort((a, b) => a.kpOrder - b.kpOrder);
 
-        let film, randomIndex = 0;
+        if (filteredFilms.length < 3) {dispatch(noFilmsNotification(filteredFilms.length));};
+        if (filteredFilms.length === 0) {return;};
 
         // случайный выбор фильма (если фильмов больше 4 то отсекаем вторую половину по ранкингу кинопоиска)
         randomIndex = ~~(Math.random() * ((filteredFilms.length > 4) ? filteredFilms.length * 0.5 : filteredFilms.length));
