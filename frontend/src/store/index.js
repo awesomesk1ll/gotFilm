@@ -20,5 +20,3 @@ export const store = createStore(
     RootReducers(history),
     composer,
 );
-
-//export const persistor = persistStore(store);
