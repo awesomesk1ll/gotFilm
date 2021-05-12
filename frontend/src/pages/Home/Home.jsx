@@ -16,14 +16,12 @@ const Home = (props) => {
           opacity: 0,
           y: -100,
         };
-      case 10:
       case 1:
         return {
           y: -60,
           x: -15,
           opacity: 0,
         };
-      case 9:
       case 2:
         return {
           y: -100,
@@ -35,7 +33,6 @@ const Home = (props) => {
           y: 100,
           opacity: 0,
         };
-      case 8:
       case 4:
         return {
           x: 60,
@@ -49,27 +46,17 @@ const Home = (props) => {
               opacity: 0,
               type: 'set',
             },
-            { scale: 1.2, opacity: 1, duration: 800 },
-            { scale: 0.9, duration: 600 },
-            { scale: 1.05, duration: 400 },
-            { scale: 1, duration: 300 },
-          ],
-          leave: {
-            opacity: 0, scale: 0,
-          },
+            { scale: 1.2, opacity: 1, duration: 600 },
+            { scale: 0.9, duration: 500 },
+            { scale: 1.05, duration: 300 },
+            { scale: 1, duration: 200 },
+          ]
         };
       case 6:
         return {
           scale: 0.8,
           x: 60,
           y: -20,
-          opacity: 0,
-        };
-      case 7:
-        return {
-          scale: 0.8,
-          x: 60,
-          y: 20,
           opacity: 0,
         };
       default:
