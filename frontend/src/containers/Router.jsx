@@ -5,12 +5,13 @@ import Home from "../pages/Home/Home"
 import LoginForm from '../pages/LoginPage';
 import RegistrationForm from "../pages/RegistrationPage";
 import FilmCardContainer from './FilmCardContainer';
-import Settings from '../pages/Settings';
+// import Settings from '../pages/Settings';
 import Lists from '../pages/Lists';
 import SeenList from '../containers/SeenList';
 import History from '../containers/History';
 import Blacklist from '../containers/Blacklist';
 import Favorites from '../containers/Favorites';
+import Filter from './Filter';
 
 const Router = (props) => {
     return (
@@ -19,7 +20,7 @@ const Router = (props) => {
             <Route path="/login" component={ LoginForm } />
             <Route path="/registration" component={ RegistrationForm } />
             <Route path="/film" component={ FilmCardContainer } />
-            <Route path="/settings" component={ Settings } />
+            <Route path="/settings" component={ Filter } />
             <Route path="/lists" component={ Lists } />
             <Route path="/history" component={ History } />
             <Route path="/seenList" component={ SeenList } />

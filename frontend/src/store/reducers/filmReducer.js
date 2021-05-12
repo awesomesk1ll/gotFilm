@@ -1,5 +1,5 @@
 import update from 'react-addons-update';
-import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY } from '../actions/filmActions';
+import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY, UPDATE_FILTERED_FILMS, UPDATE_FILTER_RATING, UPDATE_FILTER_YEAR, UPDATE_FILTER_GENRE, UPDATE_FILTER_COUNTRY, UPDATE_BUTTON_STATE } from '../actions/filmActions';
 
 const prepareList = (listName) => localStorage.getItem(listName) ? JSON.parse(localStorage.getItem(listName)) : { data: [], list: {} }
 
@@ -53,7 +53,7 @@ export default function filmReducer(store = initStore, action) {
         case SELECT_FILM: {
             return update(store, {
                 film: {
-                    $set: { ...store.films.find((ele) => ele.id == action.filmId) }
+                    $set: { ...store.films[action.film] }
                 },
                 isLoading: {
                     $set: false

@@ -82,17 +82,18 @@ export const favoriteIconPush = (filmId, listName = "favorites") => {
 };
 
 /**
- * Вычисляет случайный фильм отсутствующий в списках blacklist и alreadySeen, его добавляет в историю
+ * Вычисляет случайный фильм отсутствующий в списках blacklist и alreadySeen, проверяет, чтобы он был в списке отфильтрованых фильмов и его добавляет в историю
  */
 export const changeFilm = () => {
     return (dispatch, getState) => {
-        const { films, blacklist, alreadySeen } = getState().filmReducer;
-        let film, randomIndex;
+        const { films, blacklist, alreadySeen, idFilmsFiltered } = getState().filmReducer;
+        let film, randomIndex, checkedFilm;
         do {
             randomIndex = ~~(Math.random() * films.length);
             film = films[randomIndex];
+            checkedFilm = idFilmsFiltered.includes(film.id)
         } while (
-            blacklist.list[film.id] || alreadySeen.list[film.id]
+            !checkedFilm && (blacklist.list[film.id] || alreadySeen.list[film.id])
         )
         dispatch(selectFilm(randomIndex));
         dispatch(addToListAndSave(film.id));

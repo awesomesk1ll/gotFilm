@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Button, Slider, Select, Switch} from 'antd';
+import { Typography, Button, Slider, Select, Switch } from 'antd';
 import PropTypes from 'prop-types';
 
 import { clearLists } from '../../store/actions/filmActions';
@@ -10,30 +10,29 @@ import './Settings.scss';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import Filter from '../../containers/Filter'
 import { updateFilterRating, updateFilterYear, updateFilterCountry, updateFilterGenre, updateButtonState } from '../../store/actions/filmActions';
 import { updateFilteredFilms } from '../../store/actions/filmActions';
 
 const { Title, Text } = Typography;
 
-const Settings = (props) => {
+const Settings = ({ rate, year, genre, countries, idFilmsFiltered, buttonState, updateFilterRating, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState, clearLists }) => {
 
     const handleSelect = (value, type) => {
         if (value === "Все") {
             (type === "genres")
-                ? props.updateFilterGenre(GENRES.map(genre => genre.value))
-                : props.updateFilterCountry(COUNTRIES.map(country => country.value));
+                ? updateFilterGenre(GENRES.map(genre => genre.value))
+                : updateFilterCountry(COUNTRIES.map(country => country.value));
         }
     }
 
     const handleDeSelect = (value, type) => {
         if (value === "Все") {
-            (type === "genres") ? props.updateFilterGenre([]) : updateFilterCountry([]);
+            (type === "genres") ? updateFilterGenre([]) : updateFilterCountry([]);
         }
     }
 
     const handleClearSettings = () => {
-        props.clearLists();
+        clearLists();
         localStorage.removeItem('blacklist');
         localStorage.removeItem('alreadySeen');
         localStorage.removeItem('history');
@@ -43,7 +42,7 @@ const Settings = (props) => {
     return (
         <div className="settings--wrapper theme">
             <div className="settings__header theme">
-                <div className="settings__header--title" level={2}>Настройки</div>
+                <div className="settings__header--title" level={ 2 }>Настройки</div>
             </div>
             <div className="settings__content">
                 <Link type="secondary" className="settings__content--login" to='/login'>
@@ -53,94 +52,89 @@ const Settings = (props) => {
                 <div className="settings__content--row">
                     <Text className="theme">Темная версия оформления</Text>
                     <Switch
-                        checked={props.buttonState}
+                        checked={ buttonState }
                         onClick={
                             (checked) => {
-                                props.updateButtonState(checked);
+                                updateButtonState(checked);
                                 //document.body.classList.toggle("dark", checked);
                             }
                         }
                     />
                 </div>
 
-                <Title level={3}>Настройки поиска</Title>
+                <Title level={ 3 }>Настройки поиска</Title>
 
                 <div className="settings__content--row theme">
                     <Text className="theme">Рейтинг</Text>
                     <Slider className="settings__content--slider" range
-                            marks={RATINGS}
-                            min={5}
-                            max={10}
-                            step={0.5}
-                            value={props.numberRate}
-                            onChange={(value) => {props.updateFilterRating(value)}}
+                        marks={ RATINGS }
+                        min={ 5 }
+                        max={ 10 }
+                        step={ 0.5 }
+                        value={ rate }
+                        onChange={ (value) => { updateFilterRating(value) } }
                     />
                 </div>
 
                 <div className="settings__content--row">
                     <Text className="theme">Годы</Text>
                     <Slider className="settings__content--slider" range
-                            marks={YEARS}
-                            min={1950}
-                            max={2021}
-                            value={props.numberYear}
-                            onChange={(value) => {props.updateFilterYear(value)}}
+                        marks={ YEARS }
+                        min={ 1950 }
+                        max={ 2021 }
+                        value={ year }
+                        onChange={ (value) => { updateFilterYear(value) } }
                     />
                 </div>
 
                 <div className="settings__content--row">
                     <Text className="theme">Жанры</Text>
                     <Select className="settings__content--select"
-                            mode="multiple"
-                            showArrow
-                            value={props.selectedGenres}
-                            onSelect={(val) => {handleSelect(val, "genres")}}
-                            onDeselect={(val) => {handleDeSelect(val, "genres")}}
-                            onChange={(value) => {props.updateFilterGenre(value)}}
-                            options={GENRES}
-                            maxTagCount={3}
+                        mode="multiple"
+                        showArrow
+                        value={ genre }
+                        onSelect={ (val) => { handleSelect(val, "genres") } }
+                        onDeselect={ (val) => { handleDeSelect(val, "genres") } }
+                        onChange={ (value) => { updateFilterGenre(value) } }
+                        options={ GENRES }
+                        maxTagCount={ 3 }
                     />
                 </div>
 
                 <div className="settings__content--row">
                     <Text className="theme">Страны</Text>
                     <Select className="settings__content--select"
-                            mode="multiple"
-                            showArrow
-                            value={props.selectedCountries}
-                            onSelect={(val) => {handleSelect(val, "countries")}}
-                            onDeselect={(val) => {handleDeSelect(val, "countries")}}
-                            onChange={(value) => {props.updateFilterCountry(value)}}
-                            options={COUNTRIES}
-                            maxTagCount={4}
+                        mode="multiple"
+                        showArrow
+                        value={ countries }
+                        onSelect={ (val) => { handleSelect(val, "countries") } }
+                        onDeselect={ (val) => { handleDeSelect(val, "countries") } }
+                        onChange={ (value) => { updateFilterCountry(value) } }
+                        options={ COUNTRIES }
+                        maxTagCount={ 4 }
                     />
                 </div>
                 <div>
-                Найдено {props.idFilmsFiltered.length} фильмов
+                    Найдено { idFilmsFiltered.length } фильмов
                 </div>
 
-                <Button type="secondary" size="large" className="settings__content--reset" onClick={handleClearSettings}>
+                <Button type="secondary" size="large" className="settings__content--reset" onClick={ handleClearSettings }>
                     Сбросить настройки
                 </Button>
 
             </div>
             <Navigation checked={ 'settings' } />
-            <Filter />
+            {/* <Filter /> */ }
         </div>
     )
 };
 
 const mapStateToProps = ({ filmReducer }) => ({
     films: filmReducer.films,
-    idFilmsFiltered: filmReducer.idFilmsFiltered,
-    numberRate: filmReducer.ratingFilter,
-    numberYear: filmReducer.yearFilter,
-    selectedGenres: filmReducer.genreFilter,
-    selectedCountries: filmReducer.countryFilter,
-    buttonState: filmReducer.buttonState
+    idFilmsFiltered: filmReducer.idFilmsFiltered
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ updateFilterRating, updateFilteredFilms, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState, clearLists}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ updateFilterRating, updateFilteredFilms, updateFilterYear, updateFilterGenre, updateFilterCountry, updateButtonState, clearLists }, dispatch);
 
 Settings.propTypes = {
     clearLists: PropTypes.func
