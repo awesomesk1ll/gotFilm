@@ -151,7 +151,6 @@ export const changeFilm = () => {
         const temporaryFilter = (film) => !!!temporary.list[film.id];
         const noCurrentFilter = (film) => !!!current || (film.id !== current.id);
 
-        console.log('current', current);
         // фильтр всё в одном
         const appendFilters = (film) => [
             typesFilter, 
