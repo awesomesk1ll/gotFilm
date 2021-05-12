@@ -9,6 +9,7 @@ export const REMOVE_FROM_HISTORY = '@@film/REMOVE_FROM_HISTORY';
 export const REMOVE_FROM_ALREADY_SEEN = '@@film/REMOVE_FROM_ALREADY_SEEN';
 export const REMOVE_FROM_BLACKLIST = '@@film/REMOVE_FROM_BLACKLIST';
 export const REMOVE_FROM_FAVORITES = '@@film/REMOVE_FROM_FAVORITES';
+export const SET_SETTINGS = '@@settings/SET_SETTINGS';
 export const SELECT_FILM = '@@film/SELECT_FILM';
 export const CLEAR_LISTS = '@@film/CLEAR_LISTS';
 
@@ -73,4 +74,9 @@ export const removeFromFavorites = (filmId) => ({
 
 export const clearLists = () => ({
     type: CLEAR_LISTS
+});
+
+export const setSettings = (settings) => ({
+    type: SET_SETTINGS,
+    settings
 });

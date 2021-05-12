@@ -1,7 +1,19 @@
 import update from 'react-addons-update';
-import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY } from '../actions/filmActions';
+import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY, SET_SETTINGS } from '../actions/filmActions';
 
-const prepareList = (listName) => localStorage.getItem(listName) ? JSON.parse(localStorage.getItem(listName)) : { data: [], list: {} }
+const prepareList = (listName) => localStorage.getItem(listName) ? JSON.parse(localStorage.getItem(listName)) : { data: [], list: {} };
+const prepareSettings = () => localStorage.getItem('settings') 
+                            ? JSON.parse(localStorage.getItem('settings')) 
+                            : { 
+                                dark: false,
+                                filters: {
+                                    types: ['FILM'],
+                                    genres: ['боевик','комедия', 'драма'],
+                                    countries: ['Россия','США'],
+                                    ratings: [7, 9],
+                                    years: [1990, 2020]
+                                }
+                            };
 
 const initStore = {
     films: [],
@@ -11,6 +23,7 @@ const initStore = {
     alreadySeen: prepareList('alreadySeen'),
     temporary: prepareList('temporary'),
     favorites: prepareList('favorites'),
+    settings: prepareSettings(),
     isLoading: false,
     error: null
 }
@@ -205,6 +218,23 @@ export default function filmReducer(store = initStore, action) {
                     $set: {
                         data: [],
                         list: {}
+                    }
+                }
+            });
+        }
+        case SET_SETTINGS: {
+            return update(store, {
+                settings: {
+                    $set: {
+                        dark: action.settings.dark,
+                        filters: {
+                            //...store.settings.filters,
+                            types: [...action.settings.filters.types],
+                            ratings: [...action.settings.filters.ratings],
+                            years: [...action.settings.filters.years],
+                            genres: [...action.settings.filters.genres],
+                            countries: [...action.settings.filters.countries]
+                        }
                     }
                 }
             });
