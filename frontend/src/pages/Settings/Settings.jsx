@@ -13,7 +13,6 @@ import { Typography, Button, Slider, Select, Switch } from 'antd';
 import Navigation from '../../components/Navigation';
 import { TYPES, RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
-//import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch';
 import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
