@@ -259,7 +259,6 @@ export default function filmReducer(store = initStore, action) {
                     $set: {
                         dark: action.settings.dark,
                         filters: {
-                            //...store.settings.filters,
                             types: [...action.settings.filters.types],
                             ratings: [...action.settings.filters.ratings],
                             years: [...action.settings.filters.years],
