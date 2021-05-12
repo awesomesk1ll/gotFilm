@@ -3,11 +3,13 @@ export const LOAD_FILMS_STARTED = '@@film/LOAD_FILMS_STARTED';
 export const LOAD_FILMS_FAILURE = '@@film/LOAD_FILMS_FAILURE';
 export const ADD_TO_HISTORY = '@@film/ADD_TO_HISTORY';
 export const ADD_TO_BLACKLIST = '@@film/ADD_TO_BLACKLIST';
+export const ADD_TO_TEMPORARY = '@@film/ADD_TO_TEMPORARY';
 export const ADD_TO_ALREADY_SEEN = '@@film/ADD_TO_ALREADY_SEEN';
 export const ADD_TO_FAVORITES = '@@film/ADD_TO_FAVORITES';
 export const REMOVE_FROM_HISTORY = '@@film/REMOVE_FROM_HISTORY';
 export const REMOVE_FROM_ALREADY_SEEN = '@@film/REMOVE_FROM_ALREADY_SEEN';
 export const REMOVE_FROM_BLACKLIST = '@@film/REMOVE_FROM_BLACKLIST';
+export const REMOVE_FROM_TEMPORARY = '@@film/REMOVE_FROM_TEMPORARY';
 export const REMOVE_FROM_FAVORITES = '@@film/REMOVE_FROM_FAVORITES';
 export const SET_SETTINGS = '@@settings/SET_SETTINGS';
 export const SELECT_FILM = '@@film/SELECT_FILM';
@@ -42,6 +44,11 @@ export const addToBlacklist = (filmId) => ({
     filmId
 });
 
+export const addToTemporary = (filmId) => ({
+    type: ADD_TO_TEMPORARY,
+    filmId
+});
+
 export const addToAlreadySeen = (filmId) => ({
     type: ADD_TO_ALREADY_SEEN,
     filmId
@@ -64,6 +71,11 @@ export const removeFromAlreadySeen = (filmId) => ({
 
 export const removeFromBlacklist = (filmId) => ({
     type: REMOVE_FROM_BLACKLIST,
+    filmId
+});
+
+export const removeFromTemporary = (filmId) => ({
+    type: REMOVE_FROM_TEMPORARY,
     filmId
 });
 

@@ -22,6 +22,7 @@ const initStore = {
     blacklist: prepareList('blacklist'),
     alreadySeen: prepareList('alreadySeen'),
     temporary: prepareList('temporary'),
+    temporary: { data: [], list: {} },
     favorites: prepareList('favorites'),
     settings: prepareSettings(),
     isLoading: false,
@@ -112,6 +113,27 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
+        case ADD_TO_TEMPORARY: {
+            return update(store, {
+                temporary: {
+                    $merge: {
+                        ...store.temporary,
+                        data: [
+                            ...store.temporary.data,
+                            {
+                                id: action.filmId,
+                                timestamp: Date.now(),
+                                status: 'ADDED',
+                            }
+                        ],
+                        list: {
+                            ...store.temporary.list,
+                            [action.filmId]: true
+                        }
+                    }
+                }
+            });
+        }
         case ADD_TO_ALREADY_SEEN: {
             return update(store, {
                 alreadySeen: {
@@ -181,6 +203,16 @@ export default function filmReducer(store = initStore, action) {
             return update(store, {
                 blacklist: {
                     $set: {...store.blacklist}
+                }
+            });
+        }
+        case REMOVE_FROM_TEMPORARY: {
+            let deleteFilm = store.temporary.data.find(film => film.id === action.filmId);
+            store.temporary.data.splice(store.temporary.data.indexOf(deleteFilm), 1);
+            delete store.temporary.list[action.filmId];
+            return update(store, {
+                temporary: {
+                    $set: {...store.temporary}
                 }
             });
         }

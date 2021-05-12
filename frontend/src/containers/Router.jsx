@@ -10,6 +10,7 @@ import Lists from '../pages/Lists';
 import SeenList from '../containers/SeenList';
 import History from '../containers/History';
 import Blacklist from '../containers/Blacklist';
+import Temporary from '../containers/Temporary';
 import Favorites from '../containers/Favorites';
 
 const Router = (props) => {
@@ -24,6 +25,7 @@ const Router = (props) => {
             <Route path="/history" component={ History } />
             <Route path="/seenList" component={ SeenList } />
             <Route path="/blacklist" component={ Blacklist } />
+            <Route path="/temporary" component={ Temporary } />
             <Route path="/favorites" component={ Favorites } />
         </Switch>
     );
