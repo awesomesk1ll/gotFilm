@@ -102,29 +102,29 @@ export const changeFilm = () => {
     return (dispatch, getState) => {
         const { films, blacklist, alreadySeen, settings } = getState().filmReducer;
         const { types, ratings, years, genres, countries } = settings.filters;
+        // фильтры
         const typesFilter = (film) => (types.length !== 1 || film.type === types[0]);
         const ratingsFilter = (film) => (film.rate > ratings[0] && film.rate < ratings[1]);
         const yearsFilter = (film) => (film.year > years[0] && film.year < years[1]);
         const genresFilter = (film) => film.genres.some(genre => genres.includes(genre));
         const countriesFilter = (film) => film.countries.some(country => countries.includes(country));
-        const filteredFilms = films.filter(film => (
-            [typesFilter, ratingsFilter, yearsFilter, genresFilter, countriesFilter].every(filter => {
-                //console.log('filter is', filter, film, filter(film))
-                return filter(film)
-            })
-        ));
-            // TODO доделать фильтрацию (сейчас не работает так как надо, где-то ошибка в фильтрах вроде как)
+        const blacklistFilter = (film) => !!!blacklist.list[film.id];
+        const alreadySeenFilter = (film) => !!!alreadySeen.list[film.id];
+        const appendFilters = (film) => [typesFilter, ratingsFilter, yearsFilter, genresFilter, countriesFilter, blacklistFilter, alreadySeenFilter].every(filter => filter(film));
 
-        //console.log('films length', films.length);
-        //console.log('filtered films length', filteredFilms.length);
-        let film, randomIndex;
-        do {
-            randomIndex = ~~(Math.random() * films.length);
-            film = films[randomIndex];
-        } while (
-            blacklist.list[film.id] || alreadySeen.list[film.id]
-        )
-        dispatch(selectFilm(randomIndex));
+        // фильтрация и сортировка по ранкингу кинопоиска
+        const filteredFilms = films.filter(film => appendFilters(film)).sort((a, b) => a.kpOrder - b.kpOrder);
+
+        let film, randomIndex = 0;
+
+        // случайный выбор фильма (если фильмов больше 4 то отсекаем вторую половину по ранкингу кинопоиска)
+        randomIndex = ~~(Math.random() * ((filteredFilms.length > 4) ? filteredFilms.length * 0.5 : filteredFilms.length));
+        film = filteredFilms[randomIndex];
+
+        // выбор фильма по порядку в ранкинге кинопоиска
+        // film = filteredFilms[randomIndex++];
+        
+        dispatch(selectFilm(films.findIndex(elem => elem === film)));
         dispatch(addToListAndSave(film.id));
     }
 };

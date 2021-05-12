@@ -4,10 +4,7 @@ import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 
 import { clearLists } from '../../store/actions/filmActions';
-
 import { setSettingsAndSave } from '../../store/actions/complexFilmActions';
-
-//import { setSettingsAndSave } from '../../store/actions/complexFilmActions';
 
 import { Typography, Button, Slider, Select, Switch } from 'antd';
 import Navigation from '../../components/Navigation';
@@ -18,65 +15,42 @@ import { Link } from 'react-router-dom';
 const { Title, Text } = Typography;
 
 const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
-    const [selectedTypes, setSelectedTypes] = React.useState(settings.filters.types);
-    const [selectedRatings, setSelectedRatings] = React.useState(settings.filters.ratings);
-    const [selectedYears, setSelectedYears] = React.useState(settings.filters.years);
-    const [selectedGenres, setSelectedGenres] = React.useState(settings.filters.genres);
-    const [selectedCountries, setSelectedCountries] = React.useState(settings.filters.countries);
-    const [darkMode, setDarkMode] = React.useState(settings.dark);
 
     const setSettings = useCallback((value, type) => {
-        // меняем локальное состояние компонента
-        switch (type) {
-            case 'types':
-                setSelectedTypes(value);
-                break;
-            case 'ratings':
-                setSelectedRatings(value);
-                break;
-            case 'years':
-                setSelectedYears(value);
-                break;
-            case 'genres':
-                setSelectedGenres(value);
-                break;
-            case 'countries':
-                setSelectedCountries(value);
-                break;
-            case 'mode':
-                setDarkMode(value);
-                document.body.classList.toggle("dark", value);
-                break;
-        }
-
         // отправляем новое состояние в store
         setSettingsAndSave({ 
-            dark: (type === 'mode') ? value : darkMode,
+            dark: (type === 'mode') ? value : settings.dark,
             filters: {
-                types: (type === 'types') ? value : selectedTypes,
-                ratings: (type === 'ratings') ? value : selectedRatings,
-                years: (type === 'years') ? value : selectedYears,
-                genres: (type === 'genres') ? value : selectedGenres,
-                countries: (type === 'countries') ? value : selectedCountries
+                types: (type === 'types') ? value : settings.filters.types,
+                ratings: (type === 'ratings') ? value : settings.filters.ratings,
+                years: (type === 'years') ? value : settings.filters.years,
+                genres: (type === 'genres') ? value : settings.filters.genres,
+                countries: (type === 'countries') ? value : settings.filters.countries
             }
         });
-    }, [setSettingsAndSave]);
+    }, [settings, setSettingsAndSave]);
    
 
     const handleSelect = (value, type) => {
         if (value === "Все") {
-            (type === "genres")
-                ? setSelectedGenres(GENRES.map(genre => genre.value))
-                : setSelectedCountries(COUNTRIES.map(country => country.value));
+            switch (type) {
+                case 'genres':
+                    setSettings(GENRES.map(genre => genre.value), 'genres');
+                    break;
+                case 'countries':
+                    setSettings(COUNTRIES.map(country => country.value), 'countries');
+                    break;
+                default:
+            }
         }
     }
 
     const handleDeSelect = (value, type) => {
         if (value === "Все") {
-            (type === "genres") ? setSelectedGenres([]) : setSelectedCountries([])
+            (type === "genres") ? setSettings([], 'genres') : setSettings([], 'countries')
         }
-        if (type === "types" && selectedTypes.length === 1) {
-            setSelectedTypes(TYPES.map(type => type.value))
+        if (type === "types" && settings.filters.types.length === 1) {
+            setSettings(TYPES.map(type => type.value), 'types')
         }
     }
 
@@ -97,7 +71,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
 
                 <div className="settings__content--row">
                     <Text className="theme">Темная версия оформления</Text>
-                    <Switch onChange={(val) => {setSettings(val, "mode")}} defaultChecked={darkMode} />
+                    <Switch onChange={(val) => {setSettings(val, "mode")}} defaultChecked={settings.dark} />
                 </div>
 
                 <Title level={3}>Настройки поиска</Title>
@@ -107,7 +81,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
-                            value={selectedTypes}
+                            value={settings.filters.types}
                             onChange={(val) => {setSettings(val, "types")}}
                             onDeselect={(val) => {handleDeSelect(val, "types")}}
                             options={TYPES}
@@ -117,7 +91,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
                 <div className="settings__content--row theme">
                     <Text className="theme">Рейтинг</Text>
                     <Slider className="settings__content--slider" range
-                            marks={RATINGS} min={5} max={10} step={0.5} defaultValue={selectedRatings}
+                            marks={RATINGS} min={5} max={10} step={0.5} defaultValue={settings.filters.ratings}
                             onChange={(val) => {setSettings(val, "ratings")}}
                     />
                 </div>
@@ -125,7 +99,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
                 <div className="settings__content--row">
                     <Text className="theme">Годы</Text>
                     <Slider className="settings__content--slider" range
-                            marks={YEARS} min={1980} max={2021} defaultValue={selectedYears}
+                            marks={YEARS} min={1980} max={2021} defaultValue={settings.filters.years}
                             onChange={(val) => {setSettings(val, "years")}}
                     />
                 </div>
@@ -135,7 +109,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
-                            value={selectedGenres}
+                            value={settings.filters.genres}
                             onSelect={(val) => {handleSelect(val, "genres")}}
                             onDeselect={(val) => {handleDeSelect(val, "genres")}}
                             onChange={(val) => {setSettings(val, "genres")}}
@@ -149,7 +123,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
-                            value={selectedCountries}
+                            value={settings.filters.countries}
                             onSelect={(val) => {handleSelect(val, "countries")}}
                             onDeselect={(val) => {handleDeSelect(val, "countries")}}
                             onChange={(val) => {setSettings(val, "countries")}}
