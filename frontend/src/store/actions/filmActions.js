@@ -12,6 +12,7 @@ export const REMOVE_FROM_BLACKLIST = '@@film/REMOVE_FROM_BLACKLIST';
 export const REMOVE_FROM_TEMPORARY = '@@film/REMOVE_FROM_TEMPORARY';
 export const REMOVE_FROM_FAVORITES = '@@film/REMOVE_FROM_FAVORITES';
 export const SET_SETTINGS = '@@settings/SET_SETTINGS';
+export const CLEAR_SETTINGS = '@@settings/CLEAR_SETTINGS';
 export const SHOW_NOTIFICATION = '@@film/SHOW_NOTIFICATION';
 export const REMOVE_NOTIFICATION = '@@film/REMOVE_NOTIFICATION';
 export const SELECT_FILM = '@@film/SELECT_FILM';
@@ -88,6 +89,10 @@ export const removeFromFavorites = (filmId) => ({
 
 export const clearLists = () => ({
     type: CLEAR_LISTS
+});
+
+export const clearSettings = () => ({
+    type: CLEAR_SETTINGS
 });
 
 export const setSettings = (settings) => ({

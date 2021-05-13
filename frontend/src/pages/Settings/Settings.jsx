@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 
-import { clearLists } from '../../store/actions/filmActions';
+import { clearSettings } from '../../store/actions/filmActions';
 import { setSettingsAndSave } from '../../store/actions/complexFilmActions';
 
 import { Typography, Button, Slider, Select, Switch } from 'antd';
@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
-const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
+const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
 
     const setSettings = useCallback((value, type) => {
         // отправляем новое состояние в store
@@ -54,10 +54,10 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
         }
     }
 
-    const handleClearSettings = () => {
-        clearLists();
-        ['blacklist', 'alreadySeen', 'history', 'favorites'].forEach(list => {localStorage.removeItem(list)});
-    }
+    const handleClearSettings = useCallback(() => {
+        localStorage.removeItem('settings');
+        clearSettings();
+    }, [settings, clearSettings])
 
     return (
         <div className="settings--wrapper theme">
@@ -71,7 +71,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
 
                 <div className="settings__content--row">
                     <Text className="theme">Темная версия оформления</Text>
-                    <Switch onChange={(val) => {setSettings(val, "mode")}} defaultChecked={settings.dark} />
+                    <Switch onChange={(val) => {setSettings(val, "mode")}} value={settings.dark} checked={settings.dark} />
                 </div>
 
                 <Title level={3}>Настройки поиска</Title>
@@ -92,6 +92,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
                     <Text className="theme">Рейтинг</Text>
                     <Slider className="settings__content--slider" range
                             marks={RATINGS} min={5} max={10} step={0.5} defaultValue={settings.filters.ratings}
+                            value={settings.filters.ratings}
                             onChange={(val) => {setSettings(val, "ratings")}}
                     />
                 </div>
@@ -100,6 +101,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
                     <Text className="theme">Годы</Text>
                     <Slider className="settings__content--slider" range
                             marks={YEARS} min={1980} max={2021} defaultValue={settings.filters.years}
+                            value={settings.filters.years}
                             onChange={(val) => {setSettings(val, "years")}}
                     />
                 </div>
@@ -148,11 +150,11 @@ const mapStateToProps = ({ filmReducer }) => ({
 });
 
 Settings.propTypes = {
-    clearLists: PropTypes.func,
+    clearSettings: PropTypes.func,
     setSettingsAndSave: PropTypes.func,
     settings: PropTypes.object
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ clearLists, setSettingsAndSave }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ clearSettings, setSettingsAndSave }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
