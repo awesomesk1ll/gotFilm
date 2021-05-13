@@ -21,13 +21,14 @@
   }
   &__button__group {
     width: 100%;
-    position: fixed;
+    position: absolute;
     bottom: $navigationHeight * 2;
     display: flex;
     justify-content: center;
     & button {
-      border-radius: 20px;
+      font: 600 16px 'Roboto', sans-serif;
       background-color: transparent;
+      line-height: 50%;
     }
   }
 }
