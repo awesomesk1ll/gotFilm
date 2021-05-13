@@ -10,12 +10,12 @@ import './Lists.scss';
 
 
 const Favorites = ({ films, favorites, removeFromListAndSave }) => {
+    const handleRemoveFromList = (filmId) => {
+        removeFromListAndSave(filmId, "favorites");
+    };
     let list = films.length && favorites.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        const handleRemoveFromList = () => {
-            removeFromListAndSave(film.id, "favorites");
-        };
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} removeFromList={handleRemoveFromList} />
+        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} removeFromList={() => handleRemoveFromList(film.id)} />
     }).reverse();
     return (
         <div className="lists--wrapper theme">

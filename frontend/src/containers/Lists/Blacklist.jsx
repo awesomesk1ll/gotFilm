@@ -10,15 +10,16 @@ import './Lists.scss';
 
 
 const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromListAndSave }) => {
+    const handleAddToFavorites = (filmId) => {
+        favoriteIconPush(filmId);
+    };
+
+    const handleRemoveFromList = (filmId) => {
+        removeFromListAndSave(filmId, "blacklist");
+    };
     let list = films.length && blacklist.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        const handleAddToFavorites = () => {
-            favoriteIconPush(film.id);
-        };
-        const handleRemoveFromList = () => {
-            removeFromListAndSave(film.id, "blacklist");
-        };
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
+        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={() => handleAddToFavorites(film.id)} removeFromList={() => handleRemoveFromList(film.id)} status={favorites.list[film.id]} />
     }).reverse();
     return (
         <div className="lists--wrapper theme">
