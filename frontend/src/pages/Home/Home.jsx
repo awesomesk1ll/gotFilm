@@ -67,8 +67,8 @@ const Home = (props) => {
   }
 
   return (
-    <div className="main-page">
-      <h1 className="main-page__title theme"><Texty enter={anim}>gotfilm</Texty></h1>
+    <div className="main-page theme">
+      <h1 className="main-page__title"><Texty enter={anim}>gotfilm</Texty></h1>
       <Link className="main-page__icon" to="/film">
         <Search className="search-icon_home theme" />
       </Link>
