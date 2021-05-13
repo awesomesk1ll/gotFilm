@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { favoriteIconPush } from '../../store/actions/complexFilmActions';
 import { removeFromTemporary } from '../../store/actions/filmActions';
 
@@ -18,14 +19,27 @@ const Temporary = ({ films, favorites, temporary, favoriteIconPush, removeFromTe
         const handleRemoveFromList = () => {
             removeFromTemporary(film.id);
         };
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
+
+        return <CSSTransition key={film.id} timeout={400} classNames="lists__list--item">
+                    <ListItem   key={film.id} 
+                                name={film.name} 
+                                secondName={film.secondName} 
+                                year={film.year} 
+                                rate={film.rate} 
+                                age={film.age} 
+                                genre={film.genre} 
+                                addToFavorites={handleAddToFavorites} 
+                                removeFromList={handleRemoveFromList} 
+                                status={favorites.list[film.id]} 
+                    />
+                </CSSTransition>
     }).reverse();
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">В другой раз</div>
-            <div className="lists__list"> 
-            { list?.length ? list : (<div className="lists__placeholder"/>) }
-            </div>
+            <TransitionGroup className="lists__list">
+                { list?.length ? list : (<div className="lists__placeholder"/>) }
+            </TransitionGroup>
             <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>

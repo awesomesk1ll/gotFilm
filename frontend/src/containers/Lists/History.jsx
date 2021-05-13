@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { removeFromListAndSave, favoriteIconPush } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
@@ -18,14 +19,26 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
         const handleRemoveFromList = () => {
             removeFromListAndSave(film.id);
         };
-        return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
+        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={500} classNames="lists__list--item">
+                    <ListItem   key={`${film.id}${item.timestamp}`} 
+                                name={film.name} 
+                                secondName={film.secondName} 
+                                year={film.year} 
+                                rate={film.rate} 
+                                age={film.age} 
+                                genre={film.genre} 
+                                addToFavorites={handleAddToFavorites} 
+                                removeFromList={handleRemoveFromList} 
+                                status={favorites.list[film.id]} 
+                    />
+                </CSSTransition>
     });
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">История предложений</div>
-            <div className="lists__list">
+            <TransitionGroup className="lists__list">
                 { list?.length ? list : (<div className="lists__placeholder"/>) }
-            </div>
+            </TransitionGroup>
             <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>

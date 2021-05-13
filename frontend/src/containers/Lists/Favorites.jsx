@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { removeFromListAndSave } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
@@ -15,14 +16,24 @@ const Favorites = ({ films, favorites, removeFromListAndSave }) => {
         const handleRemoveFromList = () => {
             removeFromListAndSave(film.id, "favorites");
         };
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} removeFromList={handleRemoveFromList} />
+        return <CSSTransition key={film.id} timeout={500} classNames="lists__list--item">
+                    <ListItem   key={film.id} 
+                                name={film.name} 
+                                secondName={film.secondName} 
+                                year={film.year} 
+                                rate={film.rate} 
+                                age={film.age} 
+                                genre={film.genre} 
+                                removeFromList={handleRemoveFromList} 
+                    />
+                </CSSTransition>
     }).reverse();
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">Избранные</div>
-            <div className="lists__list">
+            <TransitionGroup className="lists__list">
                 {list?.length ? list : (<div className="lists__placeholder" />)}
-            </div>
+            </TransitionGroup>
             <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>
