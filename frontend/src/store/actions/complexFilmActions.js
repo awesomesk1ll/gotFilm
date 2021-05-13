@@ -114,18 +114,18 @@ export const removeFromListAndSave = (filmId, listName = "history") => {
 };
 
 /**
+ * Действие нажатия на кнопку закладки
  * 
  * @param {number} filmId - id фильма.
- * @param {*} listName - имя списка для добавления/удаления фильма. По умолчанию - избранные фильмы.
+ * @param {string} [listName="favorites"] - имя списка для добавления/удаления фильма. По умолчанию - избранные фильмы.
  */
 export const favoriteIconPush = (filmId, listName = "favorites") => {
     return (dispatch, getState) => {
-        const { favorites } = getState().filmReducer;
-        let checkList = favorites.data.find(item => item.id === filmId);
-        if (!checkList) {
-            dispatch(addToListAndSave(filmId, listName));
-        } else {
+        const { [listName]: list } = getState().filmReducer;
+        if (list.list[filmId]) {
             dispatch(removeFromListAndSave(filmId, listName));
+        } else {
+            dispatch(addToListAndSave(filmId, listName));
         }
     }
 };
