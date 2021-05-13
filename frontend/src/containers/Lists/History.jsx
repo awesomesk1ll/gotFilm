@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
@@ -10,15 +10,16 @@ import './Lists.scss';
 
 
 const History = ({ films, favorites, history, favoriteIconPush, removeFromListAndSave }) => {
+    const handleAddToFavorites = useCallback((filmId) => {
+        favoriteIconPush(filmId);
+    }, [favoriteIconPush]);
+
+    const handleRemoveFromList = useCallback((filmId) => {
+        removeFromListAndSave(filmId);
+    }, [removeFromListAndSave]);
     let list = films.length && history.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        const handleAddToFavorites = () => {
-            favoriteIconPush(film.id);
-        };
-        const handleRemoveFromList = () => {
-            removeFromListAndSave(film.id);
-        };
-        return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
+        return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={() => handleAddToFavorites(film.id)} removeFromList={() => handleRemoveFromList(film.id)} status={favorites.list[film.id]} />
     });
     return (
         <div className="lists--wrapper theme">
