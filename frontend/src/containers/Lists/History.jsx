@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
@@ -11,15 +11,18 @@ import './Lists.scss';
 
 
 const History = ({ films, favorites, history, favoriteIconPush, removeFromListAndSave }) => {
+    const handleAddToFavorites = useCallback((filmId) => {
+        favoriteIconPush(filmId);
+    }, [favoriteIconPush]);
+
+    const handleRemoveFromList = useCallback((filmId) => {
+        removeFromListAndSave(filmId);
+    }, [removeFromListAndSave]);
+
     let list = films.length && history.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        const handleAddToFavorites = () => {
-            favoriteIconPush(film.id);
-        };
-        const handleRemoveFromList = () => {
-            removeFromListAndSave(film.id);
-        };
-        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={500} classNames="lists__list--item">
+
+        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={300} classNames="lists__list--item">
                     <ListItem   key={`${film.id}${item.timestamp}`} 
                                 name={film.name} 
                                 secondName={film.secondName} 
@@ -27,12 +30,13 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
                                 rate={film.rate} 
                                 age={film.age} 
                                 genre={film.genre} 
-                                addToFavorites={handleAddToFavorites} 
-                                removeFromList={handleRemoveFromList} 
+                                addToFavorites={() => handleAddToFavorites(film.id)} 
+                                removeFromList={() => handleRemoveFromList(film.id)} 
                                 status={favorites.list[film.id]} 
                     />
                 </CSSTransition>
     });
+    
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">История предложений</div>

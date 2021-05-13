@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
@@ -11,15 +11,18 @@ import './Lists.scss';
 
 
 const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromListAndSave }) => {
+    const handleAddToFavorites = useCallback((filmId) => {
+        favoriteIconPush(filmId);
+    }, [favoriteIconPush]);
+
+    const handleRemoveFromList = useCallback((filmId) => {
+        removeFromListAndSave(filmId, "blacklist");
+    }, [removeFromListAndSave]);
+
     let list = films.length && blacklist.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        const handleAddToFavorites = () => {
-            favoriteIconPush(film.id);
-        };
-        const handleRemoveFromList = () => {
-            removeFromListAndSave(film.id, "blacklist");
-        };
-        return <CSSTransition key={film.id} timeout={500} classNames="lists__list--item">
+
+        return <CSSTransition key={film.id} timeout={300} classNames="lists__list--item">
                     <ListItem   key={film.id} 
                                 name={film.name} 
                                 secondName={film.secondName} 
@@ -27,12 +30,13 @@ const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromLi
                                 rate={film.rate} 
                                 age={film.age} 
                                 genre={film.genre} 
-                                addToFavorites={handleAddToFavorites} 
-                                removeFromList={handleRemoveFromList} 
-                                status={favorites.list[film.id]} 
+                                addToFavorites={() => handleAddToFavorites(film.id)} 
+                                removeFromList={() => handleRemoveFromList(film.id)} 
+                                status={favorites.list[film.id]}
                     />
                 </CSSTransition>
     }).reverse();
+    
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">Отклоненные</div>

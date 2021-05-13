@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import Search from '../icons/Search';
 import Settings from '../icons/Settings';
 import Hamburger from '../icons/Hamburger';
@@ -8,9 +9,9 @@ import { Radio } from 'antd';
 
 import './Navigation.scss';
 
-const Navigation = (props) => {
+const Navigation = ({ checked }) => {
     return (
-        <Radio.Group className="navigation__container" defaultValue={ props.checked } >
+        <Radio.Group className="navigation__container" defaultValue={ checked } >
 
             <CustomLink to='/lists'
                         value="lists"
@@ -42,6 +43,10 @@ const Navigation = (props) => {
 
         </Radio.Group>
     )
+}
+
+Navigation.propTypes = {
+    checked: PropTypes.bool
 }
 
 export default Navigation;

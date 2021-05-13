@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
@@ -11,16 +11,18 @@ import Navigation from '../../components/Navigation';
 import './Lists.scss';
 
 const Temporary = ({ films, favorites, temporary, favoriteIconPush, removeFromTemporary }) => {
+    const handleAddToFavorites = useCallback((filmId) => {
+        favoriteIconPush(filmId);
+    }, [favoriteIconPush]);
+
+    const handleRemoveFromList = useCallback((filmId) => {
+        removeFromTemporary(filmId);
+    }, [removeFromTemporary]);
+
     let list = films.length && temporary.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        const handleAddToFavorites = () => {
-            favoriteIconPush(film.id);
-        };
-        const handleRemoveFromList = () => {
-            removeFromTemporary(film.id);
-        };
 
-        return <CSSTransition key={film.id} timeout={400} classNames="lists__list--item">
+        return <CSSTransition key={film.id} timeout={300} classNames="lists__list--item">
                     <ListItem   key={film.id} 
                                 name={film.name} 
                                 secondName={film.secondName} 
@@ -28,12 +30,13 @@ const Temporary = ({ films, favorites, temporary, favoriteIconPush, removeFromTe
                                 rate={film.rate} 
                                 age={film.age} 
                                 genre={film.genre} 
-                                addToFavorites={handleAddToFavorites} 
-                                removeFromList={handleRemoveFromList} 
+                                addToFavorites={() => handleAddToFavorites(film.id)} 
+                                removeFromList={() => handleRemoveFromList(film.id)} 
                                 status={favorites.list[film.id]} 
                     />
                 </CSSTransition>
     }).reverse();
+ 
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">В другой раз</div>

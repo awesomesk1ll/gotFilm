@@ -4,9 +4,9 @@ import { Button } from 'antd';
 
 import './FilmCardButton.scss';
 
-const FilmCardButton = (props) => {
+const FilmCardButton = ({ children, eventAction }) => {
     return (
-        <Button onClick={props.eventAction} className="button">{props.children}</Button>
+        <Button onClick={eventAction} className="button">{children}</Button>
     )
 };
 

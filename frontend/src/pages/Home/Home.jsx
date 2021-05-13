@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Texty from 'rc-texty';
 import 'rc-texty/assets/index.css';
@@ -8,7 +8,7 @@ import Search from '../../components/icons/Search';
 import './Home.scss';
 
 const Home = (props) => {
-  const anim = (e) => {
+  const anim = useCallback((e) => {
     switch (e.index) {
       case 0:
         return {
@@ -64,7 +64,7 @@ const Home = (props) => {
           opacity: 0,
         };
     }
-  }
+  }, []);
 
   return (
     <div className="main-page theme">

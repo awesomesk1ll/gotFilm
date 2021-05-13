@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
@@ -11,12 +11,14 @@ import './Lists.scss';
 
 
 const Favorites = ({ films, favorites, removeFromListAndSave }) => {
+    const handleRemoveFromList = useCallback((filmId) => {
+        removeFromListAndSave(filmId, "favorites");
+    }, [removeFromListAndSave]);
+    
     let list = films.length && favorites.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        const handleRemoveFromList = () => {
-            removeFromListAndSave(film.id, "favorites");
-        };
-        return <CSSTransition key={film.id} timeout={500} classNames="lists__list--item">
+
+        return <CSSTransition key={film.id} timeout={300} classNames="lists__list--item">
                     <ListItem   key={film.id} 
                                 name={film.name} 
                                 secondName={film.secondName} 
@@ -24,10 +26,11 @@ const Favorites = ({ films, favorites, removeFromListAndSave }) => {
                                 rate={film.rate} 
                                 age={film.age} 
                                 genre={film.genre} 
-                                removeFromList={handleRemoveFromList} 
+                                removeFromList={() => handleRemoveFromList(film.id)} 
                     />
                 </CSSTransition>
     }).reverse();
+    
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">Избранные</div>

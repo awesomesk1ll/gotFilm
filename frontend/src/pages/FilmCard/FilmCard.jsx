@@ -52,9 +52,9 @@ const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, r
         }
     }, [film]);
 
-    const handleKpOpen = () => {
+    const handleKpOpen = useCallback(() => {
         window.open(getKPlink(film.id, film.type), "_blank");
-    }
+    }, [film]);
 
     const ageFormatted = film.age !== null && `, ${film.age}+`;
 
