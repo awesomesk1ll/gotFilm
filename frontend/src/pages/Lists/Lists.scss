@@ -4,6 +4,7 @@
 .lists {
   &--wrapper {
     height: 100vh;
+    background-color: $templateBackgroundColor;
   }
   &__header {
     width: 100%;
@@ -26,6 +27,7 @@
     display: flex;
     justify-content: center;
     & button {
+      width: 90%;
       font: 600 16px 'Roboto', sans-serif;
       background-color: transparent;
       line-height: 50%;
