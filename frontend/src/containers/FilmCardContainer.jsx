@@ -15,7 +15,7 @@ const FilmCardContainer = ({ film, addToListAndSave, addToTemporary, changeFilm,
 
     const handleAddToFavorites = useCallback(() => {
         favoriteIconPush(film.id);
-    }, [film, favorites.list, favoriteIconPush])
+    }, [film, favoriteIconPush])
 
     const handleMoveFilmToBlacklist = useCallback(() => {
         addToListAndSave(film.id, "blacklist");

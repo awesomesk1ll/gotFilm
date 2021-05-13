@@ -57,7 +57,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
     const handleClearSettings = useCallback(() => {
         localStorage.removeItem('settings');
         clearSettings();
-    }, [settings, clearSettings])
+    }, [clearSettings])
 
     return (
         <div className="settings--wrapper theme">

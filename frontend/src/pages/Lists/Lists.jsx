@@ -14,7 +14,7 @@ const Lists = ({ blacklist, temporary, alreadySeen, history, favorites, clearLis
     const handleClearButton = useCallback(() => {
         ['blacklist', 'alreadySeen', 'history', 'favorites'].forEach(list => {localStorage.removeItem(list)});
         clearLists()
-    }, [blacklist, temporary, alreadySeen, history, favorites, clearLists])
+    }, [clearLists])
 
 
     return (

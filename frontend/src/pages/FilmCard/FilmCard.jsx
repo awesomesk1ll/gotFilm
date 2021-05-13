@@ -12,7 +12,7 @@ import './FilmCard.scss';
 import Navigation from '../../components/Navigation/Navigation';
 
 
-const IMAGE_ENDPOINT = 'https://st.kp.y'+'a'+'ndex.net/images';
+const IMAGE_ENDPOINT = `https://st.kp.y${'a'}ndex.net/images`;
 const getKPlink = (id, type) => `https://www.kinop${'o'}isk.ru/${type === 'FILM' ? 'film' : 'series'}/${id}/`;
 
 
