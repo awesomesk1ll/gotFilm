@@ -124,13 +124,24 @@
         &__buttonGroup {
             width: 100%;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            justify-content: space-evenly;
             margin: 10px 0 18px;
             padding: 0 15px;
             & button {
               background: transparent !important;
             }
+            & .small__button {
+              fill: $listsButtonColor;
+              border: 1px dotted $activbtn;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 8px;
+            }
+            &:first-child {
+              margin-bottom: 10px;
+              justify-content: space-between;
+          } 
         }
         &__emptyBlock {
             width: 100%;

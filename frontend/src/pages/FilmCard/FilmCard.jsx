@@ -1,17 +1,22 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { Image } from 'antd';
+import { Image, notification } from 'antd';
 import Spinner from '../../components/Spinner';
 import ErrorFilmCard from './ErrorFilmCard';
 import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
 import Star from '../../components/icons/Star';
+import Bookmark from '../../components/icons/Bookmark';
+import Kp from '../../components/icons/Kp';
 import './FilmCard.scss';
 import Navigation from '../../components/Navigation/Navigation';
 
-const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
 
-const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
+const IMAGE_ENDPOINT = `https://st.kp.y${'a'}ndex.net/images`;
+const getKPlink = (id, type) => `https://www.kinop${'o'}isk.ru/${type === 'FILM' ? 'film' : 'series'}/${id}/`;
+
+
+const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, removeNotification, status, addToFavorites }) => {
     const cardEndRef = useRef(null);
     
     const handleScrollToBottom = useCallback(() => {
@@ -26,6 +31,17 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
         handleScrollToBottom();
     }, [film, handleScrollToBottom]);
 
+    useEffect(() => {
+        if (notify.message && notify.description) {
+            notification[notify.type]({
+                duration: 5,
+                message: notify.message,
+                description: notify.description
+            });
+            removeNotification();
+        }
+    }, [notify, removeNotification]);
+
     const handleChangeFontSize = useCallback(() => {
         if (film.name.length > 15 && film.name.length < 30) {
             return '20px';
@@ -35,6 +51,10 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
             return '25px';
         }
     }, [film]);
+
+    const handleKpOpen = () => {
+        window.open(getKPlink(film.id, film.type), "_blank");
+    }
 
     const ageFormatted = film.age !== null && `, ${film.age}+`;
 
@@ -76,7 +96,15 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
                 <div className="filmCard__footer__buttonGroup">
                     <FilmCardButton eventAction={ seenFilm }>уже смотрел</FilmCardButton>
                     <FilmCardButton eventAction={ removeFilm }>не предлагать</FilmCardButton>
-                    <FilmCardButton eventAction={ changeFilm }>в другой раз</FilmCardButton>
+                </div>
+                <div className="filmCard__footer__buttonGroup">
+                    <button className={`small__button${status ? ' active' : ''}`} onClick={ addToFavorites }>
+                        <Bookmark status={ status } />
+                    </button>
+                    <FilmCardButton eventAction={ addToTemporary }>в другой раз</FilmCardButton>
+                    <button className="small__button" onClick={ handleKpOpen }>
+                        <Kp className="theme" />
+                    </button>
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={ cardEndRef }></div>
             </div>
@@ -87,10 +115,12 @@ const FilmCard = ({ film, changeFilm, seenFilm, removeFilm, error }) => {
 
 FilmCard.propTypes = {
     error: PropTypes.string,
+    notify: PropTypes.object,
     film: PropTypes.object,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,
-    changeFilm: PropTypes.func
+    addToTemporary: PropTypes.func,
+    addToFavorites: PropTypes.func
 };
 
 export default FilmCard;

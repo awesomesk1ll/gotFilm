@@ -1,5 +1,5 @@
 import update from 'react-addons-update';
-import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY, SET_SETTINGS } from '../actions/filmActions';
+import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, ADD_TO_TEMPORARY, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_TEMPORARY, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY, SET_SETTINGS, CLEAR_SETTINGS, SHOW_NOTIFICATION, REMOVE_NOTIFICATION } from '../actions/filmActions';
 
 const prepareList = (listName) => localStorage.getItem(listName) ? JSON.parse(localStorage.getItem(listName)) : { data: [], list: {} };
 const prepareSettings = () => localStorage.getItem('settings') 
@@ -7,10 +7,10 @@ const prepareSettings = () => localStorage.getItem('settings')
                             : { 
                                 dark: false,
                                 filters: {
-                                    types: ['FILM'],
+                                    types: ['FILM', 'TV_SHOW'],
                                     genres: ['боевик','комедия', 'драма'],
                                     countries: ['Россия','США'],
-                                    ratings: [7, 9],
+                                    ratings: [7, 10],
                                     years: [1990, 2020]
                                 }
                             };
@@ -21,10 +21,11 @@ const initStore = {
     history: prepareList('history'),
     blacklist: prepareList('blacklist'),
     alreadySeen: prepareList('alreadySeen'),
-    temporary: prepareList('temporary'),
+    temporary: { data: [], list: {} },
     favorites: prepareList('favorites'),
     settings: prepareSettings(),
     isLoading: false,
+    notification: {message: '', description: ''},
     error: null
 }
 
@@ -112,6 +113,27 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
+        case ADD_TO_TEMPORARY: {
+            return update(store, {
+                temporary: {
+                    $merge: {
+                        ...store.temporary,
+                        data: [
+                            ...store.temporary.data,
+                            {
+                                id: action.filmId,
+                                timestamp: Date.now(),
+                                status: 'ADDED',
+                            }
+                        ],
+                        list: {
+                            ...store.temporary.list,
+                            [action.filmId]: true
+                        }
+                    }
+                }
+            });
+        }
         case ADD_TO_ALREADY_SEEN: {
             return update(store, {
                 alreadySeen: {
@@ -184,6 +206,16 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
+        case REMOVE_FROM_TEMPORARY: {
+            let deleteFilm = store.temporary.data.find(film => film.id === action.filmId);
+            store.temporary.data.splice(store.temporary.data.indexOf(deleteFilm), 1);
+            delete store.temporary.list[action.filmId];
+            return update(store, {
+                temporary: {
+                    $set: {...store.temporary}
+                }
+            });
+        }
         case REMOVE_FROM_FAVORITES: {
             let deleteFilm = store.favorites.data.find(film => film.id === action.filmId);
             store.favorites.data.splice(store.favorites.data.indexOf(deleteFilm), 1);
@@ -194,31 +226,40 @@ export default function filmReducer(store = initStore, action) {
                 }
             });
         }
+        case SHOW_NOTIFICATION: {
+            return update(store, {
+                notification: {
+                    $set: {
+                        message: action.message,
+                        description: action.description,
+                        type: action.notifyType
+                    }
+                }
+            });
+        }
+        case REMOVE_NOTIFICATION: {
+            return update(store, {
+                notification: {
+                    $set: {message: '', description: ''}
+                }
+            });
+        }
         case CLEAR_LISTS: {
             return update(store, {
                 history: {
-                    $set: {
-                        data: [],
-                        list: {}
-                    }
+                    $set: prepareList('history')
                 },
                 favorites: {
-                    $set: {
-                        data: [],
-                        list: {}
-                    }
+                    $set: prepareList('favorites')
                 },
                 alreadySeen: {
-                    $set: {
-                        data: [],
-                        list: {}
-                    }
+                    $set: prepareList('alreadySeen')
                 },
                 blacklist: {
-                    $set: {
-                        data: [],
-                        list: {}
-                    }
+                    $set: prepareList('blacklist')
+                },
+                temporary: {
+                    $set: prepareList('temporary')
                 }
             });
         }
@@ -228,7 +269,6 @@ export default function filmReducer(store = initStore, action) {
                     $set: {
                         dark: action.settings.dark,
                         filters: {
-                            //...store.settings.filters,
                             types: [...action.settings.filters.types],
                             ratings: [...action.settings.filters.ratings],
                             years: [...action.settings.filters.years],
@@ -236,6 +276,13 @@ export default function filmReducer(store = initStore, action) {
                             countries: [...action.settings.filters.countries]
                         }
                     }
+                }
+            });
+        }
+        case CLEAR_SETTINGS: {
+            return update(store, {
+                settings: {
+                    $set: prepareSettings()
                 }
             });
         }

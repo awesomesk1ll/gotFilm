@@ -6,10 +6,12 @@ import { bindActionCreators } from 'redux';
 import Router from './containers/Router';
 import { fetchFilms } from './store/actions/complexFilmActions';
 
-const App = ({ fetchFilms }) => {
+const App = ({ fetchFilms, settings }) => {
   useEffect(() => {
     fetchFilms();
   });
+
+  document.body.classList.toggle("dark", settings.dark);
 
   return (
     <div className="App">
@@ -19,9 +21,14 @@ const App = ({ fetchFilms }) => {
 };
 
 App.propTypes = {
-  fetchFilms: PropTypes.func
+  fetchFilms: PropTypes.func,
+  settings: PropTypes.object
 };
+
+const mapStateToProps = ({ filmReducer }) => ({
+  settings: filmReducer.settings
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({ fetchFilms }, dispatch);
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

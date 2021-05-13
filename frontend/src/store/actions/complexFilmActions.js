@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loadFilms, loadFilmsStarted, loadFilmsFailure } from './filmActions';
+import { loadFilms, loadFilmsStarted, loadFilmsFailure, showNotification } from './filmActions';
 import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavorites, removeFromAlreadySeen, removeFromBlacklist, removeFromFavorites, removeFromHistory } from './filmActions';
 import { setSettings } from './filmActions';
 
@@ -17,14 +17,49 @@ export const saveList = (listName) => {
 
 
 /**
+ * Отправляет уведомление для страницы фильмов при маленькой выборке
+ * 
+ * @param {number} count - количество фильмов в текущей выборке.
+ */
+ export const noFilmsNotification = (count) => {
+    const getFilmWords = () => {
+        const titles = [`остался ${count} фильм`, `осталось ${count} фильма`, `осталось ${count} фильмов`];
+        const cases = [2, 0, 1, 1, 1, 2];  
+        return titles[ (count % 100 > 4 && count % 100 < 20) ? 2 : cases[(count % 10 < 5) ? count % 10 : 5] ];  
+    }
+    count--;
+    return (dispatch) => {
+        if (count > 0){
+            dispatch(showNotification(
+                'warning',
+                'Выборка фильмов заканчивается',
+                `В текущей выборке ${getFilmWords()}. Измените настройки поиска на более широкие.`,
+            ))
+        } else {
+            dispatch(showNotification(
+                'error',
+                'Выборка фильмов пуста',
+                'В текущей выборке не осталось фильмов. Поиск недоступен. Измените настройки поиска на более широкие.',
+            ))
+        }
+    }
+};
+
+
+/**
  * Заменяет текущие настройки и сохраняет их в localStorage
  * 
  * @param {object} settings - новый объект настроек.
  */
- export const setSettingsAndSave = (settings) => {
+export const setSettingsAndSave = (settings) => {
     return (dispatch, getState) => {
         dispatch(setSettings(settings));
         dispatch(saveList('settings'));
+        dispatch(showNotification(
+            'success',
+            'Настройки успешно сохранены',
+            'Выполнен новый поиск в соответствии с запросом.',
+        ));
     }
 };
 
@@ -79,52 +114,81 @@ export const removeFromListAndSave = (filmId, listName = "history") => {
 };
 
 /**
+ * Действие нажатия на кнопку закладки
  * 
  * @param {number} filmId - id фильма.
- * @param {*} listName - имя списка для добавления/удаления фильма. По умолчанию - избранные фильмы.
+ * @param {string} [listName="favorites"] - имя списка для добавления/удаления фильма. По умолчанию - избранные фильмы.
  */
 export const favoriteIconPush = (filmId, listName = "favorites") => {
     return (dispatch, getState) => {
-        const { favorites } = getState().filmReducer;
-        let checkList = favorites.data.find(item => item.id === filmId);
-        if (!checkList) {
-            dispatch(addToListAndSave(filmId, listName));
-        } else {
+        const { [listName]: list } = getState().filmReducer;
+        if (list.list[filmId]) {
             dispatch(removeFromListAndSave(filmId, listName));
+        } else {
+            dispatch(addToListAndSave(filmId, listName));
         }
     }
 };
 
 /**
- * Вычисляет случайный фильм отсутствующий в списках blacklist и alreadySeen, его добавляет в историю
+ * Рассчитывает с учётом фильтров следующий фильм для показа, 
+ * в случае успеха добавляет его в историю и показывает
+ * в случае неудачи показывает уведомление
  */
 export const changeFilm = () => {
     return (dispatch, getState) => {
-        const { films, blacklist, alreadySeen, settings } = getState().filmReducer;
+        let film, randomIndex = 0;
+        const { films, blacklist, alreadySeen, temporary, settings, history, film: current } = getState().filmReducer;
         const { types, ratings, years, genres, countries } = settings.filters;
+        // фильтры
         const typesFilter = (film) => (types.length !== 1 || film.type === types[0]);
         const ratingsFilter = (film) => (film.rate > ratings[0] && film.rate < ratings[1]);
         const yearsFilter = (film) => (film.year > years[0] && film.year < years[1]);
         const genresFilter = (film) => film.genres.some(genre => genres.includes(genre));
         const countriesFilter = (film) => film.countries.some(country => countries.includes(country));
-        const filteredFilms = films.filter(film => (
-            [typesFilter, ratingsFilter, yearsFilter, genresFilter, countriesFilter].every(filter => {
-                //console.log('filter is', filter, film, filter(film))
-                return filter(film)
-            })
-        ));
-            // TODO доделать фильтрацию (сейчас не работает так как надо, где-то ошибка в фильтрах вроде как)
+        const blacklistFilter = (film) => !!!blacklist.list[film.id];
+        const alreadySeenFilter = (film) => !!!alreadySeen.list[film.id];
+        const temporaryFilter = (film) => !!!temporary.list[film.id];
+        const noCurrentFilter = (film) => !!!current || (film.id !== current.id);
 
-        //console.log('films length', films.length);
-        //console.log('filtered films length', filteredFilms.length);
-        let film, randomIndex;
-        do {
-            randomIndex = ~~(Math.random() * films.length);
-            film = films[randomIndex];
-        } while (
-            blacklist.list[film.id] || alreadySeen.list[film.id]
-        )
-        dispatch(selectFilm(randomIndex));
+        // фильтр всё в одном
+        const appendFilters = (film) => [
+            typesFilter, 
+            ratingsFilter, 
+            yearsFilter, 
+            genresFilter, 
+            countriesFilter, 
+            blacklistFilter, 
+            alreadySeenFilter,
+            temporaryFilter,
+            noCurrentFilter
+        ].every(filter => filter(film));
+
+        // фильтрация и сортировка по ранкингу кинопоиска
+        const filteredFilms = films.filter(film => appendFilters(film)).sort((a, b) => a.kpOrder - b.kpOrder);
+
+        if (current === null) {
+            if (history.data.length) {
+                const historyLast = history.data.reverse()[0];
+                return dispatch(selectFilm(films.findIndex(elem => elem.id === historyLast.id)));
+            } else if (!filteredFilms.length) {
+                dispatch(selectFilm(0));
+                return dispatch(loadFilmsFailure('Ошибка загрузки фильма. Попробуйте сбросить настройки.'));
+            }
+        }
+
+        if (filteredFilms.length - 1 < 4) {dispatch(noFilmsNotification(filteredFilms.length));};
+        // если следующих фильмов нет, то показали уведомление (выше) и больше ничего не делаем
+        if (current && filteredFilms.length === 0) {return;};
+
+        // случайный выбор фильма (если фильмов больше 4 то отсекаем вторую половину по ранкингу кинопоиска)
+        randomIndex = ~~(Math.random() * ((filteredFilms.length > 4) ? filteredFilms.length * 0.5 : filteredFilms.length));
+        film = filteredFilms[randomIndex];
+
+        // выбор фильма по порядку в ранкинге кинопоиска
+        // film = filteredFilms[randomIndex++];
+        
+        dispatch(selectFilm(films.findIndex(elem => elem === film)));
         dispatch(addToListAndSave(film.id));
     }
 };

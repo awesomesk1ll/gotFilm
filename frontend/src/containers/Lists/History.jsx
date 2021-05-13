@@ -6,7 +6,7 @@ import { removeFromListAndSave, favoriteIconPush } from '../../store/actions/com
 
 import ListItem from '../../components/ListItem';
 import Navigation from '../../components/Navigation';
-import './History.scss';
+import './Lists.scss';
 
 
 const History = ({ films, favorites, history, favoriteIconPush, removeFromListAndSave }) => {
@@ -19,14 +19,14 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
             removeFromListAndSave(film.id);
         };
         return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
-    }).reverse();
+    });
     return (
-        <div className="history--wrapper">
-            <div className="history__header theme">История предложений</div>
-            <div className="history__list">
-                { list?.length ? list : (<div className="history__placeholder"/>) }
+        <div className="lists--wrapper theme">
+            <div className="lists__header theme">История предложений</div>
+            <div className="lists__list">
+                { list?.length ? list : (<div className="lists__placeholder"/>) }
             </div>
-            <div className="history__emptyBlock"></div>
+            <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>
     )
