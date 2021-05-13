@@ -19,4 +19,15 @@
   &__link--color {
     color: rgb(112, 112, 112);
   }
+  &__button__group {
+    width: 100%;
+    position: fixed;
+    bottom: $navigationHeight * 2;
+    display: flex;
+    justify-content: center;
+    & button {
+      border-radius: 20px;
+      background-color: transparent;
+    }
+  }
 }

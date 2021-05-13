@@ -1,5 +1,4 @@
 import update from 'react-addons-update';
-import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, ADD_TO_TEMPORARY, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_TEMPORARY, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY, SET_SETTINGS, SHOW_NOTIFICATION, REMOVE_NOTIFICATION } from '../actions/filmActions';
 import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, ADD_TO_TEMPORARY, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_TEMPORARY, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY, SET_SETTINGS, CLEAR_SETTINGS, SHOW_NOTIFICATION, REMOVE_NOTIFICATION } from '../actions/filmActions';
 
 const prepareList = (listName) => localStorage.getItem(listName) ? JSON.parse(localStorage.getItem(listName)) : { data: [], list: {} };
@@ -248,28 +247,19 @@ export default function filmReducer(store = initStore, action) {
         case CLEAR_LISTS: {
             return update(store, {
                 history: {
-                    $set: {
-                        data: [],
-                        list: {}
-                    }
+                    $set: prepareList('history')
                 },
                 favorites: {
-                    $set: {
-                        data: [],
-                        list: {}
-                    }
+                    $set: prepareList('favorites')
                 },
                 alreadySeen: {
-                    $set: {
-                        data: [],
-                        list: {}
-                    }
+                    $set: prepareList('alreadySeen')
                 },
                 blacklist: {
-                    $set: {
-                        data: [],
-                        list: {}
-                    }
+                    $set: prepareList('blacklist')
+                },
+                temporary: {
+                    $set: prepareList('temporary')
                 }
             });
         }

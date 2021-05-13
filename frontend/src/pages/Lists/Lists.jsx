@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { Button } from 'antd';
 
 import './Lists.scss';
 import Navigation from '../../components/Navigation';
 import ListLink from '../../components/ListLink';
+import { clearLists } from '../../store/actions/filmActions';
 
-const Lists = ({ blacklist, temporary, alreadySeen, history, favorites }) => {
+const Lists = ({ blacklist, temporary, alreadySeen, history, favorites, clearLists }) => {
+    const handleClearButton = useCallback(() => {
+        ['blacklist', 'alreadySeen', 'history', 'favorites'].forEach(list => {localStorage.removeItem(list)});
+        clearLists()
+    }, [blacklist, temporary, alreadySeen, history, favorites, clearLists])
+
+
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">Списки фильмов</div>
@@ -16,6 +25,9 @@ const Lists = ({ blacklist, temporary, alreadySeen, history, favorites }) => {
             <Link className="lists__link--color theme" to="/blacklist"><ListLink listLength={blacklist.data.length}>Отклоненные фильмы</ListLink></Link>
             <Link className="lists__link--color theme" to="/temporary"><ListLink listLength={temporary.data.length}>В другой раз</ListLink></Link>
             <Link className="lists__link--color theme" to="/favorites"><ListLink listLength={favorites.data.length}>Избранные</ListLink></Link>
+            <div className="lists__button__group">
+                <Button className="button" onClick={handleClearButton}>Очистить списки</Button>
+            </div>
             <Navigation checked={'lists'} />
         </div>
     )
@@ -26,8 +38,11 @@ Lists.propTypes = {
     favorites: PropTypes.object,
     blacklist: PropTypes.object,
     temporary: PropTypes.object,
-    alreadySeen: PropTypes.object
+    alreadySeen: PropTypes.object,
+    clearLists: PropTypes.func,
 };
+
+const mapDispatchToProps = dispatch => bindActionCreators({ clearLists }, dispatch);
 
 const mapStateToProps = ({ filmReducer }) => ({
     history: filmReducer.history,
@@ -37,4 +52,4 @@ const mapStateToProps = ({ filmReducer }) => ({
     alreadySeen: filmReducer.alreadySeen
 });
 
-export default connect(mapStateToProps)(Lists);
+export default connect(mapStateToProps, mapDispatchToProps)(Lists);
