@@ -10,7 +10,7 @@ const prepareSettings = () => localStorage.getItem('settings')
                                     types: ['FILM', 'TV_SHOW'],
                                     genres: ['боевик','комедия', 'драма'],
                                     countries: ['Россия','США'],
-                                    ratings: [7, 9],
+                                    ratings: [7, 10],
                                     years: [1990, 2020]
                                 }
                             };
