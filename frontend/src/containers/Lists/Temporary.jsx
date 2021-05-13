@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
@@ -10,13 +10,14 @@ import Navigation from '../../components/Navigation';
 import './Lists.scss';
 
 const Temporary = ({ films, favorites, temporary, favoriteIconPush, removeFromTemporary }) => {
-    const handleAddToFavorites = (filmId) => {
+    const handleAddToFavorites = useCallback((filmId) => {
         favoriteIconPush(filmId);
-    };
+    }, [favoriteIconPush]);
 
-    const handleRemoveFromList = (filmId) => {
+    const handleRemoveFromList = useCallback((filmId) => {
         removeFromTemporary(filmId);
-    };
+    }, [removeFromTemporary]);
+
     let list = films.length && temporary.data.map(item => {
         let film = films.find(film => film.id === item.id);
         return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={() => handleAddToFavorites(film.id)} removeFromList={() => handleRemoveFromList(film.id)} status={favorites.list[film.id]} />

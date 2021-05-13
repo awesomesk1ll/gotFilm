@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
@@ -10,13 +10,14 @@ import './Lists.scss';
 
 
 const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromListAndSave }) => {
-    const handleAddToFavorites = (filmId) => {
+    const handleAddToFavorites = useCallback((filmId) => {
         favoriteIconPush(filmId);
-    };
+    }, [favoriteIconPush]);
 
-    const handleRemoveFromList = (filmId) => {
+    const handleRemoveFromList = useCallback((filmId) => {
         removeFromListAndSave(filmId, "blacklist");
-    };
+    }, [removeFromListAndSave]);
+
     let list = films.length && blacklist.data.map(item => {
         let film = films.find(film => film.id === item.id);
         return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={() => handleAddToFavorites(film.id)} removeFromList={() => handleRemoveFromList(film.id)} status={favorites.list[film.id]} />

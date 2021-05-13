@@ -31,7 +31,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
     }, [settings, setSettingsAndSave]);
    
 
-    const handleSelect = (value, type) => {
+    const handleSelect = useCallback((value, type) => {
         if (value === "Все") {
             switch (type) {
                 case 'genres':
@@ -43,21 +43,21 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
                 default:
             }
         }
-    }
+    }, [setSettings]);
 
-    const handleDeSelect = (value, type) => {
+    const handleDeSelect = useCallback((value, type) => {
         if (value === "Все") {
             (type === "genres") ? setSettings([], 'genres') : setSettings([], 'countries')
         }
         if (type === "types" && settings.filters.types.length === 1) {
             setSettings(TYPES.map(type => type.value), 'types')
         }
-    }
+    }, [setSettings, settings]);
 
     const handleClearSettings = useCallback(() => {
         localStorage.removeItem('settings');
         clearSettings();
-    }, [clearSettings])
+    }, [clearSettings]);
 
     return (
         <div className="settings--wrapper theme">

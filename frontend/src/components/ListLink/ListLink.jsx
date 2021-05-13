@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import './ListLink.scss';
 
-const ListLink = (props) => {
+const ListLink = ({ children, listLength }) => {
     return (
         <div className="listLink--wrapper">
-            <p className="listLink__title">{props.children}</p>
-            <p className="listLink__length">{props.listLength}</p>
+            <p className="listLink__title">{children}</p>
+            <p className="listLink__length">{listLength}</p>
         </div>
     )
 };

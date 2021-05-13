@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
 
 import './FilmCard.scss';
 
 const ErrorFilmCard = ({ error }) => {
-    const tryToRepair = () => {
+    const tryToRepair = useCallback(() => {
         localStorage.removeItem('settings');
         window.location.replace(window.location.href);
-    }
+    }, []);
 
     return (
         <div className="filmCard--wrapper">
