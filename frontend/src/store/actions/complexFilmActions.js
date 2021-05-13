@@ -138,7 +138,7 @@ export const favoriteIconPush = (filmId, listName = "favorites") => {
 export const changeFilm = () => {
     return (dispatch, getState) => {
         let film, randomIndex = 0;
-        const { films, blacklist, alreadySeen, temporary, settings, film: current } = getState().filmReducer;
+        const { films, blacklist, alreadySeen, temporary, settings, history, film: current, error } = getState().filmReducer;
         const { types, ratings, years, genres, countries } = settings.filters;
         // фильтры
         const typesFilter = (film) => (types.length !== 1 || film.type === types[0]);
@@ -167,8 +167,19 @@ export const changeFilm = () => {
         // фильтрация и сортировка по ранкингу кинопоиска
         const filteredFilms = films.filter(film => appendFilters(film)).sort((a, b) => a.kpOrder - b.kpOrder);
 
+        if (current === null) {
+            if (history.data.length) {
+                const historyLast = history.data.reverse()[0];
+                return dispatch(selectFilm(films.findIndex(elem => elem.id === historyLast.id)));
+            } else if (!filteredFilms.length) {
+                dispatch(selectFilm(0));
+                return dispatch(loadFilmsFailure('Ошибка загрузки фильма. Попробуйте очистить кэш приложения.'));
+            }
+        }
+
         if (filteredFilms.length - 1 < 4) {dispatch(noFilmsNotification(filteredFilms.length));};
-        if (filteredFilms.length === 0) {return;};
+        // если следующих фильмов нет, то показали уведомление (выше) и больше ничего не делаем
+        if (current && filteredFilms.length === 0) {return;};
 
         // случайный выбор фильма (если фильмов больше 4 то отсекаем вторую половину по ранкингу кинопоиска)
         randomIndex = ~~(Math.random() * ((filteredFilms.length > 4) ? filteredFilms.length * 0.5 : filteredFilms.length));
