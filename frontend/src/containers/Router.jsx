@@ -7,11 +7,7 @@ import RegistrationForm from "../pages/RegistrationPage";
 import FilmCardContainer from './FilmCardContainer';
 import Settings from '../pages/Settings';
 import Lists from '../pages/Lists';
-import SeenList from '../containers/SeenList';
-import History from '../containers/History';
-import Blacklist from '../containers/Blacklist';
-import Temporary from '../containers/Temporary';
-import Favorites from '../containers/Favorites';
+import {SeenList, History, Blacklist, Temporary, Favorites} from '../containers/Lists';
 
 const Router = (props) => {
     return (

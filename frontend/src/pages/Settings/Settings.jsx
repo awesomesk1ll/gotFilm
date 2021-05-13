@@ -135,6 +135,7 @@ const Settings = ({ settings, clearLists, setSettingsAndSave }) => {
                 <Button type="secondary" size="large" className="settings__content--reset" onClick={handleClearSettings}>
                     Сбросить настройки
                 </Button>
+
             </div>
             <div className="settings__empty">_</div>
             <Navigation checked={ 'settings' } />

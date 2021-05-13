@@ -7,7 +7,7 @@ import { removeFromTemporary } from '../../store/actions/filmActions';
 
 import ListItem from '../../components/ListItem';
 import Navigation from '../../components/Navigation';
-import './Temporary.scss';
+import './Lists.scss';
 
 const Temporary = ({ films, favorites, temporary, favoriteIconPush, removeFromTemporary }) => {
     let list = films.length && temporary.data.map(item => {
@@ -21,12 +21,12 @@ const Temporary = ({ films, favorites, temporary, favoriteIconPush, removeFromTe
         return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
-        <div className="temporary--wrapper theme">
-            <div className="temporary__header theme">В другой раз</div>
-            <div className="temporary__list"> 
-            { list?.length ? list : (<div className="temporary__placeholder"/>) }
+        <div className="lists--wrapper theme">
+            <div className="lists__header theme">В другой раз</div>
+            <div className="lists__list"> 
+            { list?.length ? list : (<div className="lists__placeholder"/>) }
             </div>
-            <div className="temporary__emptyBlock"></div>
+            <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>
     )

@@ -6,7 +6,7 @@ import { removeFromListAndSave } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
 import Navigation from '../../components/Navigation';
-import './Favorites.scss';
+import './Lists.scss';
 
 
 const Favorites = ({ films, favorites, removeFromListAndSave }) => {
@@ -18,12 +18,12 @@ const Favorites = ({ films, favorites, removeFromListAndSave }) => {
         return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} removeFromList={handleRemoveFromList} />
     }).reverse();
     return (
-        <div className="favorites--wrapper theme">
-            <div className="favorites__header theme">Избранные</div>
-            <div className="favorites__list">
-                {list?.length ? list : (<div className="favorites__placeholder" />)}
+        <div className="lists--wrapper theme">
+            <div className="lists__header theme">Избранные</div>
+            <div className="lists__list">
+                {list?.length ? list : (<div className="lists__placeholder" />)}
             </div>
-            <div className="favorites__emptyBlock"></div>
+            <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>
     )

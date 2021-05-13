@@ -6,7 +6,7 @@ import { favoriteIconPush, removeFromListAndSave } from '../../store/actions/com
 
 import ListItem from '../../components/ListItem';
 import Navigation from '../../components/Navigation';
-import './Blacklist.scss';
+import './Lists.scss';
 
 
 const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromListAndSave }) => {
@@ -21,12 +21,12 @@ const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromLi
         return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={handleAddToFavorites} removeFromList={handleRemoveFromList} status={favorites.list[film.id]} />
     }).reverse();
     return (
-        <div className="blacklist--wrapper theme">
-            <div className="blacklist__header theme">Отклоненные</div>
-            <div className="blacklist__list"> 
-            { list?.length ? list : (<div className="blacklist__placeholder"/>) }
+        <div className="lists--wrapper theme">
+            <div className="lists__header theme">Отклоненные</div>
+            <div className="lists__list"> 
+            { list?.length ? list : (<div className="lists__placeholder"/>) }
             </div>
-            <div className="blacklist__emptyBlock"></div>
+            <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>
     )
