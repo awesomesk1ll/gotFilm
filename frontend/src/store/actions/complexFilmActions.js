@@ -138,7 +138,7 @@ export const favoriteIconPush = (filmId, listName = "favorites") => {
 export const changeFilm = () => {
     return (dispatch, getState) => {
         let film, randomIndex = 0;
-        const { films, blacklist, alreadySeen, temporary, settings, history, film: current, error } = getState().filmReducer;
+        const { films, blacklist, alreadySeen, temporary, settings, history, film: current } = getState().filmReducer;
         const { types, ratings, years, genres, countries } = settings.filters;
         // фильтры
         const typesFilter = (film) => (types.length !== 1 || film.type === types[0]);
@@ -173,7 +173,7 @@ export const changeFilm = () => {
                 return dispatch(selectFilm(films.findIndex(elem => elem.id === historyLast.id)));
             } else if (!filteredFilms.length) {
                 dispatch(selectFilm(0));
-                return dispatch(loadFilmsFailure('Ошибка загрузки фильма. Попробуйте очистить кэш приложения.'));
+                return dispatch(loadFilmsFailure('Ошибка загрузки фильма. Попробуйте сбросить настройки.'));
             }
         }
 

@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'antd';
 
 import './FilmCard.scss';
 
 const ErrorFilmCard = ({ error }) => {
+    const tryToRepair = () => {
+        localStorage.removeItem('settings');
+        window.location.replace(window.location.href);
+    }
+
     return (
         <div className="filmCard--wrapper">
             <div className="filmCard__poster"></div>
@@ -24,6 +30,7 @@ const ErrorFilmCard = ({ error }) => {
             </div>
             <div className="filmCard__footer">
                 <div className="filmCard__footer__buttonGroup">
+                    <Button className="button" onClick={tryToRepair}>Сброс настроек</Button>
                 </div>
                 <div className="filmCard__footer__emptyBlock" ></div>
             </div>
