@@ -27,9 +27,9 @@ export const saveList = (listName) => {
         const cases = [2, 0, 1, 1, 1, 2];  
         return titles[ (count % 100 > 4 && count % 100 < 20) ? 2 : cases[(count % 10 < 5) ? count % 10 : 5] ];  
     }
-
+    count--;
     return (dispatch) => {
-        if (!!count){
+        if (count > 0){
             dispatch(showNotification(
                 'warning',
                 'Выборка фильмов заканчивается',
@@ -167,7 +167,7 @@ export const changeFilm = () => {
         // фильтрация и сортировка по ранкингу кинопоиска
         const filteredFilms = films.filter(film => appendFilters(film)).sort((a, b) => a.kpOrder - b.kpOrder);
 
-        if (filteredFilms.length < 3) {dispatch(noFilmsNotification(filteredFilms.length));};
+        if (filteredFilms.length - 1 < 4) {dispatch(noFilmsNotification(filteredFilms.length));};
         if (filteredFilms.length === 0) {return;};
 
         // случайный выбор фильма (если фильмов больше 4 то отсекаем вторую половину по ранкингу кинопоиска)
