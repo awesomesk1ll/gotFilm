@@ -6,12 +6,17 @@ import Spinner from '../../components/Spinner';
 import ErrorFilmCard from './ErrorFilmCard';
 import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
 import Star from '../../components/icons/Star';
+import Bookmark from '../../components/icons/Bookmark';
+import Kp from '../../components/icons/Kp';
 import './FilmCard.scss';
 import Navigation from '../../components/Navigation/Navigation';
 
-const IMAGE_ENDPOINT = 'https://st.kp.yandex.net/images';
 
-const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, removeNotification }) => {
+const IMAGE_ENDPOINT = 'https://st.kp.y'+'a'+'ndex.net/images';
+const getKPlink = (id, type) => `https://www.kinop${'o'}isk.ru/${type === 'FILM' ? 'film' : 'series'}/${id}/`;
+
+
+const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, removeNotification, status, addToFavorites }) => {
     const cardEndRef = useRef(null);
     
     const handleScrollToBottom = useCallback(() => {
@@ -46,6 +51,10 @@ const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, r
             return '25px';
         }
     }, [film]);
+
+    const handleKpOpen = () => {
+        window.open(getKPlink(film.id, film.type), "_blank");
+    }
 
     const ageFormatted = film.age !== null && `, ${film.age}+`;
 
@@ -87,7 +96,15 @@ const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, r
                 <div className="filmCard__footer__buttonGroup">
                     <FilmCardButton eventAction={ seenFilm }>уже смотрел</FilmCardButton>
                     <FilmCardButton eventAction={ removeFilm }>не предлагать</FilmCardButton>
+                </div>
+                <div className="filmCard__footer__buttonGroup">
+                    <button className={`small__button${status ? ' active' : ''}`} onClick={ addToFavorites }>
+                        <Bookmark status={ status } />
+                    </button>
                     <FilmCardButton eventAction={ addToTemporary }>в другой раз</FilmCardButton>
+                    <button className="small__button" onClick={ handleKpOpen }>
+                        <Kp className="theme" />
+                    </button>
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={ cardEndRef }></div>
             </div>
@@ -102,7 +119,8 @@ FilmCard.propTypes = {
     film: PropTypes.object,
     removeFilm: PropTypes.func,
     seenFilm: PropTypes.func,
-    addToTemporary: PropTypes.func
+    addToTemporary: PropTypes.func,
+    addToFavorites: PropTypes.func
 };
 
 export default FilmCard;
