@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loadFilms, loadFilmsStarted, loadFilmsFailure, showNotification } from './filmActions';
+import { loadFilms, loadFilmsStarted, loadFilmsFailure, setFilteredFilms, showNotification } from './filmActions';
 import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavorites, removeFromAlreadySeen, removeFromBlacklist, removeFromFavorites, removeFromHistory } from './filmActions';
 import { setSettings } from './filmActions';
 
@@ -47,19 +47,54 @@ export const saveList = (listName) => {
 
 
 /**
+ * Фильтрует фильмы в соответствии с настройками и записывает их в filteredFilms
+ */
+ export const createFilteredFilms = () => {
+    return (dispatch, getState) => {
+        const { films, settings } = getState().filmReducer;
+        const { types, ratings, years, genres, countries } = settings.filters;
+        // фильтры настроек
+        const typesFilter = (film) => (types.length !== 1 || film.type === types[0]);
+        const ratingsFilter = (film) => (film.rate > ratings[0] && film.rate < ratings[1]);
+        const yearsFilter = (film) => (film.year > years[0] && film.year < years[1]);
+        const genresFilter = (film) => film.genres.some(genre => genres.includes(genre));
+        const countriesFilter = (film) => film.countries.some(country => countries.includes(country));
+
+        // фильтр всё в одном
+        const appendFilters = (film) => [ typesFilter, ratingsFilter, yearsFilter, genresFilter, countriesFilter ].every(filter => filter(film));
+
+        // фильтрация и сортировка по ранкингу кинопоиска
+        const filteredFilms = films.filter(film => appendFilters(film)).sort((a, b) => a.kpOrder - b.kpOrder);
+        
+        dispatch(setFilteredFilms(filteredFilms));
+    }
+};
+
+
+/**
  * Заменяет текущие настройки и сохраняет их в localStorage
  * 
  * @param {object} settings - новый объект настроек.
  */
 export const setSettingsAndSave = (settings) => {
     return (dispatch, getState) => {
+        const { settings: storedSettings } = getState().filmReducer;
+        const { types: typesPrev, ratings: ratingsPrev, years: yearsPrev, genres: genresPrev, countries: countriesPrev } = storedSettings.filters;
+        const { types, ratings, years, genres, countries } = settings.filters;
+        const filtersPrev = [ ...typesPrev, ...ratingsPrev, ...yearsPrev, ...genresPrev, ...countriesPrev ];
+        const filters = [ ...types, ...ratings, ...years, ...genres, ...countries ];
+        const settingsChanged = filters.some((value, index) => value !== filtersPrev[index]);
+
         dispatch(setSettings(settings));
         dispatch(saveList('settings'));
-        dispatch(showNotification(
-            'success',
-            'Настройки успешно сохранены',
-            'Выполнен новый поиск в соответствии с запросом.',
-        ));
+        if (settingsChanged) {
+            dispatch(createFilteredFilms());
+            dispatch(showNotification(
+                'success',
+                'Настройки успешно сохранены',
+                'Новые настройки будут применены при последующем поиске.',
+            ));
+        };
     }
 };
 
@@ -138,14 +173,8 @@ export const favoriteIconPush = (filmId, listName = "favorites") => {
 export const changeFilm = () => {
     return (dispatch, getState) => {
         let film, randomIndex = 0;
-        const { films, blacklist, alreadySeen, temporary, settings, history, film: current } = getState().filmReducer;
-        const { types, ratings, years, genres, countries } = settings.filters;
-        // фильтры
-        const typesFilter = (film) => (types.length !== 1 || film.type === types[0]);
-        const ratingsFilter = (film) => (film.rate > ratings[0] && film.rate < ratings[1]);
-        const yearsFilter = (film) => (film.year > years[0] && film.year < years[1]);
-        const genresFilter = (film) => film.genres.some(genre => genres.includes(genre));
-        const countriesFilter = (film) => film.countries.some(country => countries.includes(country));
+        const { films, filteredFilms, blacklist, alreadySeen, temporary, history, film: current } = getState().filmReducer;
+        // фильтры списков и не текущий
         const blacklistFilter = (film) => !!!blacklist.list[film.id];
         const alreadySeenFilter = (film) => !!!alreadySeen.list[film.id];
         const temporaryFilter = (film) => !!!temporary.list[film.id];
@@ -153,42 +182,37 @@ export const changeFilm = () => {
 
         // фильтр всё в одном
         const appendFilters = (film) => [
-            typesFilter, 
-            ratingsFilter, 
-            yearsFilter, 
-            genresFilter, 
-            countriesFilter, 
             blacklistFilter, 
             alreadySeenFilter,
             temporaryFilter,
             noCurrentFilter
         ].every(filter => filter(film));
 
-        // фильтрация и сортировка по ранкингу кинопоиска
-        const filteredFilms = films.filter(film => appendFilters(film)).sort((a, b) => a.kpOrder - b.kpOrder);
+        // фильтрация итоговая
+        const preparedFilms = filteredFilms.filter(film => appendFilters(film));
 
         if (current === null) {
             if (history.data.length) {
                 const historyLast = history.data.reverse()[0];
                 return dispatch(selectFilm(films.findIndex(elem => elem.id === historyLast.id)));
-            } else if (!filteredFilms.length) {
+            } else if (!preparedFilms.length) {
                 dispatch(selectFilm(0));
                 return dispatch(loadFilmsFailure('Ошибка загрузки фильма. Попробуйте сбросить настройки.'));
             }
         }
 
-        if (filteredFilms.length - 1 < 4) {dispatch(noFilmsNotification(filteredFilms.length));};
+        if (preparedFilms.length - 1 < 4) {dispatch(noFilmsNotification(preparedFilms.length));};
         // если следующих фильмов нет, то показали уведомление (выше) и больше ничего не делаем
-        if (current && filteredFilms.length === 0) {return;};
+        if (current && preparedFilms.length === 0) {return;};
 
         // случайный выбор фильма (если фильмов больше 4 то отсекаем вторую половину по ранкингу кинопоиска)
-        randomIndex = ~~(Math.random() * ((filteredFilms.length > 4) ? filteredFilms.length * 0.5 : filteredFilms.length));
-        film = filteredFilms[randomIndex];
+        randomIndex = ~~(Math.random() * ((preparedFilms.length > 4) ? preparedFilms.length * 0.5 : preparedFilms.length));
+        film = preparedFilms[randomIndex];
 
         // выбор фильма по порядку в ранкинге кинопоиска
         // film = filteredFilms[randomIndex++];
         
-        dispatch(selectFilm(films.findIndex(elem => elem === film)));
+        dispatch(selectFilm(films.findIndex(elem => elem.id === film.id)));
         dispatch(addToListAndSave(film.id));
     }
 };
@@ -203,6 +227,7 @@ export const fetchFilms = () => {
         axios.get("./films.json")
             .then(response => {
                 dispatch(loadFilms(response.data));
+                dispatch(createFilteredFilms());
                 dispatch(changeFilm());
             })
             .catch(err => {
