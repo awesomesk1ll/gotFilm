@@ -8,7 +8,7 @@
 
 .list-item {
     width: 100%;
-    min-height: 80px;
+    min-height: $listItemHeight;
     display: flex;
     justify-content: space-between;
     padding: 0 25px;

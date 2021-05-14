@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { removeFromListAndSave, favoriteIconPush } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
@@ -17,16 +18,31 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
     const handleRemoveFromList = useCallback((filmId) => {
         removeFromListAndSave(filmId);
     }, [removeFromListAndSave]);
+
     let list = films.length && history.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        return <ListItem key={`${film.id}${item.timestamp}`} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={() => handleAddToFavorites(film.id)} removeFromList={() => handleRemoveFromList(film.id)} status={favorites.list[film.id]} />
+
+        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={300} classNames="lists__list--item">
+                    <ListItem   key={`${film.id}${item.timestamp}`} 
+                                name={film.name} 
+                                secondName={film.secondName} 
+                                year={film.year} 
+                                rate={film.rate} 
+                                age={film.age} 
+                                genre={film.genre} 
+                                addToFavorites={() => handleAddToFavorites(film.id)} 
+                                removeFromList={() => handleRemoveFromList(film.id)} 
+                                status={favorites.list[film.id]} 
+                    />
+                </CSSTransition>
     });
+
+    const transitionGroup = () => <TransitionGroup className="lists__list">{ list }</TransitionGroup>
+    
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">История предложений</div>
-            <div className="lists__list">
-                { list?.length ? list : (<div className="lists__placeholder"/>) }
-            </div>
+            { list?.length ? transitionGroup() : (<div className="lists__placeholder"/>) }
             <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>

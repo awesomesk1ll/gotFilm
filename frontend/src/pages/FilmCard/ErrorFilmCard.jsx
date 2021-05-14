@@ -29,7 +29,7 @@ const ErrorFilmCard = ({ error }) => {
                 </label>
             </div>
             <div className="filmCard__footer">
-                <div className="filmCard__footer__buttonGroup">
+                <div className="filmCard__footer__buttonGroup repair">
                     <Button className="button" onClick={tryToRepair}>Сброс настроек</Button>
                 </div>
                 <div className="filmCard__footer__emptyBlock" ></div>

@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { favoriteIconPush } from '../../store/actions/complexFilmActions';
 import { removeFromTemporary } from '../../store/actions/filmActions';
 
@@ -20,14 +21,28 @@ const Temporary = ({ films, favorites, temporary, favoriteIconPush, removeFromTe
 
     let list = films.length && temporary.data.map(item => {
         let film = films.find(film => film.id === item.id);
-        return <ListItem key={film.id} name={film.name} secondName={film.secondName} year={film.year} rate={film.rate} age={film.age} genre={film.genre} addToFavorites={() => handleAddToFavorites(film.id)} removeFromList={() => handleRemoveFromList(film.id)} status={favorites.list[film.id]} />
+
+        return <CSSTransition key={film.id} timeout={300} classNames="lists__list--item">
+                    <ListItem   key={film.id} 
+                                name={film.name} 
+                                secondName={film.secondName} 
+                                year={film.year} 
+                                rate={film.rate} 
+                                age={film.age} 
+                                genre={film.genre} 
+                                addToFavorites={() => handleAddToFavorites(film.id)} 
+                                removeFromList={() => handleRemoveFromList(film.id)} 
+                                status={favorites.list[film.id]} 
+                    />
+                </CSSTransition>
     }).reverse();
+
+    const transitionGroup = () => <TransitionGroup className="lists__list">{ list }</TransitionGroup>
+ 
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">В другой раз</div>
-            <div className="lists__list"> 
-            { list?.length ? list : (<div className="lists__placeholder"/>) }
-            </div>
+            { list?.length ? transitionGroup() : (<div className="lists__placeholder"/>) }
             <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>

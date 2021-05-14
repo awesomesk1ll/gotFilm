@@ -46,7 +46,7 @@ const Navigation = ({ checked }) => {
 }
 
 Navigation.propTypes = {
-    checked: PropTypes.bool
+    checked: PropTypes.string
 }
 
 export default Navigation;

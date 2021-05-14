@@ -2,19 +2,19 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
+import { Typography, Button, Slider, Select, Switch } from 'antd';
 
 import { clearSettings } from '../../store/actions/filmActions';
 import { setSettingsAndSave } from '../../store/actions/complexFilmActions';
 
-import { Typography, Button, Slider, Select, Switch } from 'antd';
 import Navigation from '../../components/Navigation';
 import { TYPES, RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
-import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
-const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
+const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, filteredFilmsCount }) => {
 
     const setSettings = useCallback((value, type) => {
         // отправляем новое состояние в store
@@ -100,7 +100,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
                 <div className="settings__content--row">
                     <Text className="theme">Годы</Text>
                     <Slider className="settings__content--slider" range
-                            marks={YEARS} min={1980} max={2021} defaultValue={settings.filters.years}
+                            marks={YEARS} min={1950} max={2021} defaultValue={settings.filters.years}
                             value={settings.filters.years}
                             onChange={(val) => {setSettings(val, "years")}}
                     />
@@ -134,6 +134,10 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
                     />
                 </div>
 
+                <Text className={`settings__content--counter${ filteredFilmsCount < 4 ? ' warning' : '' }`} code>
+                    Найдено фильмов: {filteredFilmsCount} из {filmsCount}
+                </Text>
+
                 <Button type="secondary" size="large" className="settings__content--reset" onClick={handleClearSettings}>
                     Сбросить настройки
                 </Button>
@@ -147,12 +151,16 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
 
 const mapStateToProps = ({ filmReducer }) => ({
     settings: filmReducer.settings,
+    filmsCount: filmReducer.films.length,
+    filteredFilmsCount: filmReducer.filteredFilms.length
 });
 
 Settings.propTypes = {
     clearSettings: PropTypes.func,
     setSettingsAndSave: PropTypes.func,
-    settings: PropTypes.object
+    settings: PropTypes.object,
+    filmsCount: PropTypes.number,
+    filteredFilmsCount: PropTypes.number
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({ clearSettings, setSettingsAndSave }, dispatch);
