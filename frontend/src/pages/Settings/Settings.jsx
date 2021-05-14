@@ -2,15 +2,15 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
+import { Typography, Button, Slider, Select, Switch } from 'antd';
 
 import { clearSettings } from '../../store/actions/filmActions';
 import { setSettingsAndSave } from '../../store/actions/complexFilmActions';
 
-import { Typography, Button, Slider, Select, Switch } from 'antd';
 import Navigation from '../../components/Navigation';
 import { TYPES, RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
-import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
