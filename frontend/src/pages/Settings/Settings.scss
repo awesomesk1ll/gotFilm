@@ -72,6 +72,16 @@
         text-align: center;
       } 
     }
+    &--counter {
+      font: 500 20px 'Roboto', sans-serif;
+      color: $activbtn;
+      code {
+        padding: 0.3em 1em 0.3em;
+      }
+      &.warning {
+        color: #ff4d4f;
+      }
+    }
     &--reset {
       width: 90%;
       border-radius: 10px;

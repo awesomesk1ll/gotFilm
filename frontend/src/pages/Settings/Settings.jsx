@@ -14,7 +14,7 @@ import './Settings.scss';
 
 const { Title, Text } = Typography;
 
-const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
+const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, filteredFilmsCount }) => {
 
     const setSettings = useCallback((value, type) => {
         // отправляем новое состояние в store
@@ -134,6 +134,10 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
                     />
                 </div>
 
+                <Text className={`settings__content--counter${ filteredFilmsCount < 4 ? ' warning' : '' }`} code>
+                    Найдено фильмов: {filteredFilmsCount} из {filmsCount}
+                </Text>
+
                 <Button type="secondary" size="large" className="settings__content--reset" onClick={handleClearSettings}>
                     Сбросить настройки
                 </Button>
@@ -147,12 +151,16 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
 
 const mapStateToProps = ({ filmReducer }) => ({
     settings: filmReducer.settings,
+    filmsCount: filmReducer.films.length,
+    filteredFilmsCount: filmReducer.filteredFilms.length
 });
 
 Settings.propTypes = {
     clearSettings: PropTypes.func,
     setSettingsAndSave: PropTypes.func,
-    settings: PropTypes.object
+    settings: PropTypes.object,
+    filmsCount: PropTypes.number,
+    filteredFilmsCount: PropTypes.number
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({ clearSettings, setSettingsAndSave }, dispatch);
