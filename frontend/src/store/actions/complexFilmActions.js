@@ -127,9 +127,10 @@ export const addToListAndSave = (filmId, listName = "history") => {
  * Удаляет фильм из списка, затем сохраняет список в local storage
  * 
  * @param {number} filmId - id удаляемого фильма.
- * @param {string} [listName="history"] - имя списка для удаляемого фильма и сохранения.
+ * @param {string} [listName="history"] - имя списка для удаляемого фильма и сохранения (опционально).
+ * @param {number} [timestamp=0] - таймштамп добавления в список, для списка history.
  */
-export const removeFromListAndSave = (filmId, listName = "history") => {
+export const removeFromListAndSave = (filmId, listName = "history", timestamp = 0) => {
     return (dispatch, getState) => {
         switch (listName) {
             case "blacklist":
@@ -142,7 +143,7 @@ export const removeFromListAndSave = (filmId, listName = "history") => {
                 dispatch(removeFromFavorites(filmId));
                 break;
             default:
-                dispatch(removeFromHistory(filmId));
+                dispatch(removeFromHistory(filmId, timestamp));
         }
         dispatch(saveList(listName));
     }

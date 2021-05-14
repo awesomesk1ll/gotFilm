@@ -63,9 +63,10 @@ export const addToFavorites = (filmId) => ({
     filmId
 });
 
-export const removeFromHistory = (filmId) => ({
+export const removeFromHistory = (filmId, timestamp) => ({
     type: REMOVE_FROM_HISTORY,
-    filmId
+    filmId,
+    timestamp
 });
 
 export const removeFromAlreadySeen = (filmId) => ({

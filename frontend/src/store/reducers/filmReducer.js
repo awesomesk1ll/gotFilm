@@ -178,9 +178,9 @@ export default function filmReducer(store = initStore, action) {
             });
         }
         case REMOVE_FROM_HISTORY: {
-            let deleteFilm = store.history.data.find(film => film.id === action.filmId);
+            let deleteFilm = store.history.data.find(film => (film.id === action.filmId && film.timestamp === action.timestamp));
             store.history.data.splice(store.history.data.indexOf(deleteFilm), 1);
-            delete store.history.list[action.filmId];
+            store.history.list[action.filmId] = store.history.data.some(film => film.id === action.filmId);
             return update(store, {
                 history: {
                     $set: {...store.history}

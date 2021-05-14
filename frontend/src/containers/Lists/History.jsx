@@ -15,8 +15,8 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
         favoriteIconPush(filmId);
     }, [favoriteIconPush]);
 
-    const handleRemoveFromList = useCallback((filmId) => {
-        removeFromListAndSave(filmId);
+    const handleRemoveFromList = useCallback((filmId, timestamp) => {
+        removeFromListAndSave(filmId, 'history', timestamp);
     }, [removeFromListAndSave]);
 
     let list = films.length && history.data.map(item => {
@@ -31,7 +31,7 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
                                 age={film.age} 
                                 genre={film.genre} 
                                 addToFavorites={() => handleAddToFavorites(film.id)} 
-                                removeFromList={() => handleRemoveFromList(film.id)} 
+                                removeFromList={() => handleRemoveFromList(film.id, item.timestamp)} 
                                 status={favorites.list[film.id]} 
                     />
                 </CSSTransition>
