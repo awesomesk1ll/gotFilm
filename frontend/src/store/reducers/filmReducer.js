@@ -1,5 +1,5 @@
 import update from 'react-addons-update';
-import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, ADD_TO_TEMPORARY, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_TEMPORARY, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY, SET_SETTINGS, CLEAR_SETTINGS, SHOW_NOTIFICATION, REMOVE_NOTIFICATION } from '../actions/filmActions';
+import { ADD_TO_HISTORY, ADD_TO_ALREADY_SEEN, ADD_TO_BLACKLIST, ADD_TO_TEMPORARY, LOAD_FILMS, SELECT_FILM, LOAD_FILMS_STARTED, LOAD_FILMS_FAILURE, CLEAR_LISTS, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, REMOVE_FROM_BLACKLIST, REMOVE_FROM_TEMPORARY, REMOVE_FROM_ALREADY_SEEN, REMOVE_FROM_HISTORY, SET_SETTINGS, CLEAR_SETTINGS, SHOW_NOTIFICATION, REMOVE_NOTIFICATION, SET_FILTERED_FILMS } from '../actions/filmActions';
 
 const prepareList = (listName) => localStorage.getItem(listName) ? JSON.parse(localStorage.getItem(listName)) : { data: [], list: {} };
 const prepareSettings = () => localStorage.getItem('settings') 
@@ -17,6 +17,7 @@ const prepareSettings = () => localStorage.getItem('settings')
 
 const initStore = {
     films: [],
+    filteredFilms: [],
     film: null,
     history: prepareList('history'),
     blacklist: prepareList('blacklist'),
@@ -283,6 +284,13 @@ export default function filmReducer(store = initStore, action) {
             return update(store, {
                 settings: {
                     $set: prepareSettings()
+                }
+            });
+        }
+        case SET_FILTERED_FILMS: {
+            return update(store, {
+                filteredFilms: {
+                    $set: [...action.films]
                 }
             });
         }

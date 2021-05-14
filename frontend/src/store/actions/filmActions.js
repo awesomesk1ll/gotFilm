@@ -17,6 +17,7 @@ export const SHOW_NOTIFICATION = '@@film/SHOW_NOTIFICATION';
 export const REMOVE_NOTIFICATION = '@@film/REMOVE_NOTIFICATION';
 export const SELECT_FILM = '@@film/SELECT_FILM';
 export const CLEAR_LISTS = '@@film/CLEAR_LISTS';
+export const SET_FILTERED_FILMS = '@@film/SET_FILTERED_FILMS';
 
 export const loadFilms = (films) => ({
     type: LOAD_FILMS,
@@ -98,6 +99,11 @@ export const clearSettings = () => ({
 export const setSettings = (settings) => ({
     type: SET_SETTINGS,
     settings
+});
+
+export const setFilteredFilms = (films) => ({
+    type: SET_FILTERED_FILMS,
+    films
 });
 
 export const showNotification = (notifyType, message, description) => ({
