@@ -30,13 +30,13 @@ const Favorites = ({ films, favorites, removeFromListAndSave }) => {
                     />
                 </CSSTransition>
     }).reverse();
+
+    const transitionGroup = () => <TransitionGroup className="lists__list">{ list }</TransitionGroup>
     
     return (
         <div className="lists--wrapper theme">
             <div className="lists__header theme">Избранные</div>
-            <TransitionGroup className="lists__list">
-                {list?.length ? list : (<div className="lists__placeholder" />)}
-            </TransitionGroup>
+            { list?.length ? transitionGroup() : (<div className="lists__placeholder"/>) }
             <div className="lists__emptyBlock"></div>
             <Navigation checked={'lists'} />
         </div>
