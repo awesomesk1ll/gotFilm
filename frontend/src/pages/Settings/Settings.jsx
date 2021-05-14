@@ -100,7 +100,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave }) => {
                 <div className="settings__content--row">
                     <Text className="theme">Годы</Text>
                     <Slider className="settings__content--slider" range
-                            marks={YEARS} min={1980} max={2021} defaultValue={settings.filters.years}
+                            marks={YEARS} min={1950} max={2021} defaultValue={settings.filters.years}
                             value={settings.filters.years}
                             onChange={(val) => {setSettings(val, "years")}}
                     />
