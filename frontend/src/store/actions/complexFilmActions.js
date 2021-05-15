@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loadFilms, loadFilmsStarted, loadFilmsFailure, setFilteredFilms, showNotification } from './filmActions';
+import { loadFilms, loadFilmsStarted, loadFilmsFailure, addFilms, lazyLoadFilmsStarted, lazyLoadFilmsEnded, setFilteredFilms, showNotification } from './filmActions';
 import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavorites, removeFromAlreadySeen, removeFromBlacklist, removeFromFavorites, removeFromHistory } from './filmActions';
 import { setSettings } from './filmActions';
 
@@ -53,12 +53,14 @@ export const saveList = (listName) => {
     return (dispatch, getState) => {
         const { films, settings } = getState().filmReducer;
         const { types, ratings, years, genres, countries } = settings.filters;
+        const skipGenres = !genres.length || genres.includes('Все');
+        const skipCountries = !countries.length || countries.includes('Все');
         // фильтры настроек
         const typesFilter = (film) => (types.length !== 1 || film.type === types[0]);
-        const ratingsFilter = (film) => (film.rate > ratings[0] && film.rate < ratings[1]);
-        const yearsFilter = (film) => (film.year > years[0] && film.year < years[1]);
-        const genresFilter = (film) => film.genres.some(genre => genres.includes(genre));
-        const countriesFilter = (film) => film.countries.some(country => countries.includes(country));
+        const ratingsFilter = (film) => (film.rate >= ratings[0] && film.rate <= ratings[1]);
+        const yearsFilter = (film) => (film.year >= years[0] && film.year <= years[1]);
+        const genresFilter = (film) => skipGenres || film.genres.some(genre => genres.includes(genre));
+        const countriesFilter = (film) => skipCountries || film.countries.some(country => countries.includes(country));
 
         // фильтр всё в одном
         const appendFilters = (film) => [ typesFilter, ratingsFilter, yearsFilter, genresFilter, countriesFilter ].every(filter => filter(film));
@@ -234,17 +236,66 @@ export const changeFilm = () => {
  * Загружает фильмы и запускает выбор одного из них
  */
 export const fetchFilms = () => {
-    return dispatch => {
+    return (dispatch, getState) => {
+        const { film: current } = getState().filmReducer;
+        
         dispatch(loadFilmsStarted());
 
         axios.get("./films/0.json")
             .then(response => {
                 dispatch(loadFilms(response.data));
                 dispatch(createFilteredFilms());
-                dispatch(changeFilm());
+                if (current === null) dispatch(changeFilm());
+                dispatch(lazyLoadStart());
             })
             .catch(err => {
                 dispatch(loadFilmsFailure(err.message));
+            });
+    }
+};
+
+/**
+ * Начинает догрузку фильмов
+ */
+ export const lazyLoadStart = () => {
+    return (dispatch) => {
+        dispatch(lazyLoadFilmsStarted());
+        dispatch(showNotification(
+            'info',
+            'Началась фоновая загрузка фильмов',
+            'Загруженные фильмы станут доступны для поиска сразу после загрузки.',
+        ));
+        dispatch(lazyLoad());
+    }
+};
+
+/**
+ * Докачивает и дополняет базу фильмов
+ * 
+ * @param {number} [page=0] - Номер файла.
+ */
+ export const lazyLoad = (page = 0) => {
+    ++page;
+    return (dispatch, getState) => {
+        axios.get(`./films/${page}.json`)
+            .then(response => {
+                dispatch(addFilms(response.data));
+                if (page < 258) {
+                    dispatch(lazyLoad(page));
+                } else {
+                    dispatch(createFilteredFilms());
+                    dispatch(lazyLoadFilmsEnded());
+                    const count = getState().filmReducer.films.length;
+                    dispatch(showNotification(
+                        'success',
+                        'Фильмы успешно загружены',
+                        `Загружено фильмов: ${count}`,
+                    ));
+                }
+
+            })
+            .catch(err => {
+                console.log('Ошибка дополнения базы:', err);
             });
     }
 };

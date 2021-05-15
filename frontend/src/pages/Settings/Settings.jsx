@@ -14,7 +14,9 @@ import './Settings.scss';
 
 const { Title, Text } = Typography;
 
-const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, filteredFilmsCount }) => {
+const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, filteredFilmsCount, isLazyLoading }) => {
+    const [selectedRatings, setSelectedRatings] = React.useState(settings.filters.ratings);
+    const [selectedYears, setSelectedYears] = React.useState(settings.filters.years);
 
     const setSettings = useCallback((value, type) => {
         // отправляем новое состояние в store
@@ -92,8 +94,9 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Text className="theme">Рейтинг</Text>
                     <Slider className="settings__content--slider" range
                             marks={RATINGS} min={5} max={10} step={0.5} defaultValue={settings.filters.ratings}
-                            value={settings.filters.ratings}
-                            onChange={(val) => {setSettings(val, "ratings")}}
+                            value={selectedRatings}
+                            onChange={(val) => {setSelectedRatings(val);}}
+                            onAfterChange={(val) => {setSettings(val, "ratings")}}
                     />
                 </div>
 
@@ -101,8 +104,9 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Text className="theme">Годы</Text>
                     <Slider className="settings__content--slider" range
                             marks={YEARS} min={1950} max={2021} defaultValue={settings.filters.years}
-                            value={settings.filters.years}
-                            onChange={(val) => {setSettings(val, "years")}}
+                            value={selectedYears}
+                            onChange={(val) => {setSelectedYears(val);}}
+                            onAfterChange={(val) => {setSettings(val, "years")}}
                     />
                 </div>
 
@@ -134,8 +138,8 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     />
                 </div>
 
-                <Text className={`settings__content--counter${ filteredFilmsCount < 4 ? ' warning' : '' }`} code>
-                    Найдено фильмов: {filteredFilmsCount} из {filmsCount}
+                <Text className={`settings__content--counter${ (filteredFilmsCount < 4 || isLazyLoading) ? ' warning' : '' }`} code>
+                    {isLazyLoading ? `Загрузка фильмов: ${filmsCount}` : `Найдено фильмов: ${filteredFilmsCount} из ${filmsCount}`}
                 </Text>
 
                 <Button type="secondary" size="large" className="settings__content--reset" onClick={handleClearSettings}>
@@ -152,7 +156,8 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
 const mapStateToProps = ({ filmReducer }) => ({
     settings: filmReducer.settings,
     filmsCount: filmReducer.films.length,
-    filteredFilmsCount: filmReducer.filteredFilms.length
+    filteredFilmsCount: filmReducer.filteredFilms.length,
+    isLazyLoading: filmReducer.isLazyLoading
 });
 
 Settings.propTypes = {
@@ -160,7 +165,8 @@ Settings.propTypes = {
     setSettingsAndSave: PropTypes.func,
     settings: PropTypes.object,
     filmsCount: PropTypes.number,
-    filteredFilmsCount: PropTypes.number
+    filteredFilmsCount: PropTypes.number,
+    isLazyLoading: PropTypes.bool
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({ clearSettings, setSettingsAndSave }, dispatch);
