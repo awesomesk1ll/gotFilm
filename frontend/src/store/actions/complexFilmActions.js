@@ -280,7 +280,7 @@ export const fetchFilms = () => {
         axios.get(`./films/${page}.json`)
             .then(response => {
                 dispatch(addFilms(response.data));
-                if (page < 258) {
+                if (page < 243) {
                     dispatch(lazyLoad(page));
                 } else {
                     dispatch(createFilteredFilms());
