@@ -105,7 +105,7 @@ export const setSettingsAndSave = (settings) => {
  * @param {string} [listName="history"] - имя списка для добавляемого фильма и сохранения.
  */
 export const addToListAndSave = (filmId, listName = "history") => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         switch (listName) {
             case "blacklist":
                 dispatch(addToBlacklist(filmId));
@@ -131,7 +131,7 @@ export const addToListAndSave = (filmId, listName = "history") => {
  * @param {number} [timestamp=0] - таймштамп добавления в список, для списка history.
  */
 export const removeFromListAndSave = (filmId, listName = "history", timestamp = 0) => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         switch (listName) {
             case "blacklist":
                 dispatch(removeFromBlacklist(filmId));
