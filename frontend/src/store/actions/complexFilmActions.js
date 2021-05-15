@@ -167,6 +167,18 @@ export const favoriteIconPush = (filmId, listName = "favorites") => {
 };
 
 /**
+ * Запускает выбор фильма и сохраняет его в local storage
+ * 
+ * @param {number} index - index фильма в films.
+ */
+ export const loadFilm = (index) => {
+    return dispatch => {
+        dispatch(selectFilm(index));
+        dispatch(saveList('film'));
+    }
+};
+
+/**
  * Рассчитывает с учётом фильтров следующий фильм для показа, 
  * в случае успеха добавляет его в историю и показывает
  * в случае неудачи показывает уведомление
@@ -195,7 +207,7 @@ export const changeFilm = () => {
         if (current === null) {
             if (history.data.length) {
                 const historyLast = history.data.reverse()[0];
-                return dispatch(selectFilm(films.findIndex(elem => elem.id === historyLast.id)));
+                return dispatch(loadFilm(films.findIndex(elem => elem.id === historyLast.id)));
             } else if (!preparedFilms.length) {
                 dispatch(selectFilm(0));
                 return dispatch(loadFilmsFailure('Ошибка загрузки фильма. Попробуйте сбросить настройки.'));
@@ -213,7 +225,7 @@ export const changeFilm = () => {
         // выбор фильма по порядку в ранкинге кинопоиска
         // film = filteredFilms[randomIndex++];
         
-        dispatch(selectFilm(films.findIndex(elem => elem.id === film.id)));
+        dispatch(loadFilm(films.findIndex(elem => elem.id === film.id)));
         dispatch(addToListAndSave(film.id));
     }
 };

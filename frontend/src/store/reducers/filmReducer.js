@@ -18,7 +18,7 @@ const prepareSettings = () => localStorage.getItem('settings')
 const initStore = {
     films: [],
     filteredFilms: [],
-    film: null,
+    film: localStorage.getItem('film') ? JSON.parse(localStorage.getItem('film')) : null,
     history: prepareList('history'),
     blacklist: prepareList('blacklist'),
     alreadySeen: prepareList('alreadySeen'),
