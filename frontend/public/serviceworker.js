@@ -3,7 +3,7 @@ const dynamicAppCacheName = 'd-gf-app-rev0001';
 const filmsCacheName = 'gf-films-rev0001';
 const self = this;
 
-const staticFiles = ['index.html', 'icons/favicon.ico', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'];
+const staticFiles = ['/index.html', '/icons/favicon.ico', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'];
 
 const FILMS_ORIGINS = ['http://localhost:3000', 'https://gotfilm.tk'];
 
@@ -13,8 +13,9 @@ const getDynamicFiles = async () => {
 }
 const getFilesList = async () => {
   const dynamicFiles = await getDynamicFiles();
-  dynamicFiles.forEach(file => console.log('file', file));
-  return [...staticFiles, ...dynamicFiles.map(path => (path[0] === '/') ? path.slice(1) : path)];
+  const files = [...staticFiles, ...dynamicFiles].filter((value, index, arr) => arr.indexOf(value) === index);
+  
+  return files
 }
 
 // Install SW
