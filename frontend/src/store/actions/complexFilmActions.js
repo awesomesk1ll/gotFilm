@@ -225,7 +225,7 @@ export const fetchFilms = () => {
     return dispatch => {
         dispatch(loadFilmsStarted());
 
-        axios.get("./films.json")
+        axios.get("./films/0.json")
             .then(response => {
                 dispatch(loadFilms(response.data));
                 dispatch(createFilteredFilms());
