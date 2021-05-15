@@ -6,15 +6,18 @@ import { Link } from 'react-router-dom';
 import { Typography, Button, Slider, Select, Switch } from 'antd';
 
 import { clearSettings } from '../../store/actions/filmActions';
-import { setSettingsAndSave } from '../../store/actions/complexFilmActions';
+import { setSettingsAndSave, createFilteredFilms } from '../../store/actions/complexFilmActions';
 
 import Navigation from '../../components/Navigation';
 import { TYPES, RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
 
+const DEFAULT_RATING = [7, 10];
+const DEFAULT_YEARS = [1990, 2021];
+
 const { Title, Text } = Typography;
 
-const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, filteredFilmsCount, isLazyLoading }) => {
+const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, filteredFilmsCount, isLazyLoading, createFilteredFilms }) => {
     const [selectedRatings, setSelectedRatings] = React.useState(settings.filters.ratings);
     const [selectedYears, setSelectedYears] = React.useState(settings.filters.years);
 
@@ -59,7 +62,10 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
     const handleClearSettings = useCallback(() => {
         localStorage.removeItem('settings');
         clearSettings();
-    }, [clearSettings]);
+        createFilteredFilms();
+        setSelectedRatings(DEFAULT_RATING);
+        setSelectedYears(DEFAULT_YEARS);
+    }, [clearSettings, createFilteredFilms]);
 
     return (
         <div className="settings--wrapper theme">
@@ -163,12 +169,13 @@ const mapStateToProps = ({ filmReducer }) => ({
 Settings.propTypes = {
     clearSettings: PropTypes.func,
     setSettingsAndSave: PropTypes.func,
+    createFilteredFilms: PropTypes.func,
     settings: PropTypes.object,
     filmsCount: PropTypes.number,
     filteredFilmsCount: PropTypes.number,
     isLazyLoading: PropTypes.bool
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ clearSettings, setSettingsAndSave }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ clearSettings, setSettingsAndSave, createFilteredFilms }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
