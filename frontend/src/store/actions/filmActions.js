@@ -1,5 +1,8 @@
 export const LOAD_FILMS = '@@film/LOAD_FILMS';
+export const ADD_FILMS = '@@film/ADD_FILMS';
 export const LOAD_FILMS_STARTED = '@@film/LOAD_FILMS_STARTED';
+export const LAZY_LOAD_STARTED = '@@film/LAZY_LOAD_STARTED';
+export const LAZY_LOAD_ENDED = '@@film/LAZY_LOAD_ENDED';
 export const LOAD_FILMS_FAILURE = '@@film/LOAD_FILMS_FAILURE';
 export const ADD_TO_HISTORY = '@@film/ADD_TO_HISTORY';
 export const ADD_TO_BLACKLIST = '@@film/ADD_TO_BLACKLIST';
@@ -24,8 +27,21 @@ export const loadFilms = (films) => ({
     films
 });
 
+export const addFilms = (films) => ({
+    type: ADD_FILMS,
+    films
+});
+
 export const loadFilmsStarted = () => ({
     type: LOAD_FILMS_STARTED
+});
+
+export const lazyLoadFilmsStarted = () => ({
+    type: LAZY_LOAD_STARTED
+});
+
+export const lazyLoadFilmsEnded = () => ({
+    type: LAZY_LOAD_ENDED
 });
 
 export const loadFilmsFailure = (error) => ({
