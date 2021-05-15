@@ -22,7 +22,11 @@ const Temporary = ({ films, favorites, temporary, favoriteIconPush, removeFromTe
     let list = films.length && temporary.data.map(item => {
         let film = films.find(film => film.id === item.id);
 
-        return <CSSTransition key={film.id} timeout={300} classNames="lists__list--item">
+        if (!film) {
+            return <div key={item.id} className="lists__list--null">Фильм загружается</div>
+        }
+
+        return <CSSTransition key={film.id} timeout={300} className="lists__list--item">
                     <ListItem   key={film.id} 
                                 name={film.name} 
                                 secondName={film.secondName} 

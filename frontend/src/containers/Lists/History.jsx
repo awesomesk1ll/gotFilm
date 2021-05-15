@@ -19,10 +19,14 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
         removeFromListAndSave(filmId, 'history', timestamp);
     }, [removeFromListAndSave]);
 
-    let list = films.length && history.data.map(item => {
+    let list = films.length && history.data.map((item, index) => {
         let film = films.find(film => film.id === item.id);
 
-        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={300} classNames="lists__list--item">
+        if (!film) {
+            return <div key={`${item.id}${item.timestamp}`} className="lists__list--null">Фильм загружается</div>
+        }
+
+        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={300} className="lists__list--item">
                     <ListItem   key={`${film.id}${item.timestamp}`} 
                                 name={film.name} 
                                 secondName={film.secondName} 
