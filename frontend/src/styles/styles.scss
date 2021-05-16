@@ -27,6 +27,11 @@ input, button {
   position: fixed;
 }
 
+.container {
+  position: relative;
+  overflow: hidden;
+  background-color: $templateBackgroundColor;
+}
 @media screen and (orientation: landscape) {
   .App {
     width: $desktopWidth;
