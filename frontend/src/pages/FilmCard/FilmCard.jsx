@@ -108,7 +108,7 @@ const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, r
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={ cardEndRef }></div>
             </div>
-            <Navigation checked={ 'search' } />
+            <Navigation selection={ 'search' } />
         </div>
     )
 };

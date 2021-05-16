@@ -48,7 +48,7 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
             <div className="lists__header theme">История предложений</div>
             { list?.length ? transitionGroup() : (<div className="lists__placeholder"/>) }
             <div className="lists__emptyBlock"></div>
-            <Navigation checked={'lists'} />
+            <Navigation selection={'lists'} />
         </div>
     )
 };

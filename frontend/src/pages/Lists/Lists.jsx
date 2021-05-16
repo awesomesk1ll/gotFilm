@@ -28,7 +28,7 @@ const Lists = ({ blacklist, temporary, alreadySeen, history, favorites, clearLis
             <div className="lists__button__group">
                 <Button className="button" type="secondary" size="large" onClick={handleClearButton}>Очистить списки</Button>
             </div>
-            <Navigation checked={'lists'} />
+            <Navigation selection={'lists'} />
         </div>
     )
 };

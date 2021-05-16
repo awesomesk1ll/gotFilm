@@ -48,7 +48,7 @@ const SeenList = ({ films, favorites, alreadySeen, favoriteIconPush, removeFromL
             <div className="lists__header theme">Просмотренные</div>
             { list?.length ? transitionGroup() : (<div className="lists__placeholder"/>) }
             <div className="lists__emptyBlock"></div>
-            <Navigation checked={'lists'} />
+            <Navigation selection={'lists'} />
         </div>
     )
 };

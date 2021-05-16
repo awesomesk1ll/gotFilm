@@ -154,7 +154,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
 
             </div>
             <div className="settings__empty">_</div>
-            <Navigation checked={ 'settings' } />
+            <Navigation selection={ 'settings' } />
         </div>
     )
 };

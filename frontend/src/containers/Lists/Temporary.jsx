@@ -48,7 +48,7 @@ const Temporary = ({ films, favorites, temporary, favoriteIconPush, removeFromTe
             <div className="lists__header theme">В другой раз</div>
             { list?.length ? transitionGroup() : (<div className="lists__placeholder"/>) }
             <div className="lists__emptyBlock"></div>
-            <Navigation checked={'lists'} />
+            <Navigation selection={'lists'} />
         </div>
     )
 };

@@ -9,9 +9,9 @@ import { Radio } from 'antd';
 
 import './Navigation.scss';
 
-const Navigation = ({ checked }) => {
+const Navigation = ({ selection }) => {
     return (
-        <Radio.Group className="navigation__container" defaultValue={ checked } >
+        <Radio.Group className="navigation__container" defaultValue={ selection } value={ selection } >
 
             <CustomLink to='/lists'
                         value="lists"
@@ -46,7 +46,7 @@ const Navigation = ({ checked }) => {
 }
 
 Navigation.propTypes = {
-    checked: PropTypes.string
+    selection: PropTypes.string
 }
 
 export default Navigation;
