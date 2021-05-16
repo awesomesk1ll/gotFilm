@@ -118,7 +118,7 @@
         width: 100%;
         position: fixed;
         bottom: 0px;
-        height: 102px + $navigationHeight;
+        height: 118px + $navigationHeight;
         background-color: $templateBackgroundColor;
         flex: 0 0 auto;
         &__buttonGroup {
@@ -129,6 +129,7 @@
             padding: 0 15px;
             & button {
               background: transparent !important;
+              height: 40px;
             }
             & .small__button {
               fill: $listsButtonColor;
@@ -137,6 +138,10 @@
               justify-content: center;
               align-items: center;
               border-radius: 8px;
+              svg {
+                width: 26px;
+                height: 26px;
+              }
             }
             &:first-child {
               margin-bottom: 10px;
