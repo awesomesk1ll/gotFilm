@@ -126,7 +126,8 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                             onDeselect={(val) => {handleDeSelect(val, "genres")}}
                             onChange={(val) => {setSettings(val, "genres")}}
                             options={GENRES}
-                            maxTagCount={3}
+                            maxTagCount="responsive"
+                            placeholder='не задано'
                     />
                 </div>
 
@@ -140,7 +141,8 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                             onDeselect={(val) => {handleDeSelect(val, "countries")}}
                             onChange={(val) => {setSettings(val, "countries")}}
                             options={COUNTRIES}
-                            maxTagCount={4}
+                            maxTagCount="responsive"
+                            placeholder='не задано'
                     />
                 </div>
 
