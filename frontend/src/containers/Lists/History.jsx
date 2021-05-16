@@ -26,7 +26,7 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
             return <div key={`${item.id}${item.timestamp}`} className="lists__list--null">Фильм загружается</div>
         }
 
-        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={300} className="lists__list--item">
+        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={300} classNames="lists__list--item">
                     <ListItem   key={`${film.id}${item.timestamp}`} 
                                 name={film.name} 
                                 secondName={film.secondName} 

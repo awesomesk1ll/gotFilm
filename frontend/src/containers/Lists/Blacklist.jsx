@@ -26,7 +26,7 @@ const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromLi
             return <div key={item.id} className="lists__list--null">Фильм загружается</div>
         }
 
-        return <CSSTransition key={film.id} timeout={300} className="lists__list--item">
+        return <CSSTransition key={film.id} timeout={300} classNames="lists__list--item">
                     <ListItem   key={film.id} 
                                 name={film.name} 
                                 secondName={film.secondName} 
