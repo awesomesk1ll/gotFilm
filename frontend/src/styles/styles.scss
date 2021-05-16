@@ -32,6 +32,53 @@ input, button {
   overflow: hidden;
   background-color: $templateBackgroundColor;
 }
+
+.page {
+  position: relative;
+}
+
+// router animations
+.page-enter {
+  opacity: 0;
+}
+
+.page-enter-active {
+  opacity: 1;
+  transition: opacity 2000ms;
+}
+
+.page-exit {
+  width: 100%;
+  filter: blur(0px);
+  opacity: 1;
+}
+
+.page-exit-active {
+  filter: blur(100px);
+  opacity: 0;
+  transition: opacity 2000ms, filter 2000ms;
+}
+
+.page-exit,
+.page-exit-active {
+  position: absolute;
+  width: 100%;
+  // fix router animations
+  .filmCard {
+    &__poster__background {
+        width: 100% !important;
+    }
+    &__footer {
+      width: 100% !important;
+    }
+  }
+  .navigation {
+    &__container {
+      width: 100% !important;
+    }
+  }
+}
+
 @media screen and (orientation: landscape) {
   .App {
     width: $desktopWidth;

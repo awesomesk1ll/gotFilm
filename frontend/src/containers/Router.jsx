@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, BrowserRouter } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group'
 
 import Home from "../pages/Home/Home"
 import LoginForm from '../pages/LoginPage';
@@ -9,21 +10,35 @@ import Settings from '../pages/Settings';
 import Lists from '../pages/Lists';
 import {SeenList, History, Blacklist, Temporary, Favorites} from '../containers/Lists';
 
+const routes = [
+        { path: '/',             Component: Home                 , exact: true},
+        { path: "/login",        Component: LoginForm            },
+        { path: "/registration", Component: RegistrationForm     },
+        { path: "/film",         Component: FilmCardContainer    },
+        { path: "/settings",     Component: Settings             },
+        { path: "/lists",        Component: Lists                },
+        { path: "/history",      Component: History              },
+        { path: "/seenList",     Component: SeenList             },
+        { path: "/blacklist",    Component: Blacklist            },
+        { path: "/temporary",    Component: Temporary            },
+        { path: "/favorites",    Component: Favorites            }
+    ];
+
 const Router = (props) => {
     return (
-        <Switch>
-            <Route exact path="/" component={ Home } />
-            <Route path="/login" component={ LoginForm } />
-            <Route path="/registration" component={ RegistrationForm } />
-            <Route path="/film" component={ FilmCardContainer } />
-            <Route path="/settings" component={ Settings } />
-            <Route path="/lists" component={ Lists } />
-            <Route path="/history" component={ History } />
-            <Route path="/seenList" component={ SeenList } />
-            <Route path="/blacklist" component={ Blacklist } />
-            <Route path="/temporary" component={ Temporary } />
-            <Route path="/favorites" component={ Favorites } />
-        </Switch>
+        <BrowserRouter>
+            {routes.map(({ path, Component, exact = false }) => (
+                <Route key={ path } exact path={ path }>
+                    {({ match }) => (
+                        <CSSTransition in={match != null} timeout={2000} classNames="page" unmountOnExit>
+                            <div className="page">
+                                <Component />
+                            </div>
+                        </CSSTransition>
+                    )}
+                </Route>
+            ))}
+        </BrowserRouter>
     );
 };
 
