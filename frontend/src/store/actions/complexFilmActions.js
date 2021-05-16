@@ -4,14 +4,14 @@ import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavori
 import { setSettings } from './filmActions';
 
 /**
- * Сохраняет список в local storage
+ * Сохраняет что-то из redux в local storage
  * 
- * @param {string} listName - имя списка для сохранения.
+ * @param {string} someName - имя чего-то для сохранения.
  */
-export const saveList = (listName) => {
+export const saveFromRedux = (someName) => {
     return (dispatch, getState) => {
-        const { [listName]: list } = getState().filmReducer;
-        localStorage.setItem(listName, JSON.stringify(list));
+        const { [someName]: something } = getState().filmReducer;
+        localStorage.setItem(someName, JSON.stringify(something));
     }
 };
 
@@ -88,7 +88,7 @@ export const setSettingsAndSave = (settings) => {
         const settingsChanged = filters.some((value, index) => value !== filtersPrev[index]);
 
         dispatch(setSettings(settings));
-        dispatch(saveList('settings'));
+        dispatch(saveFromRedux('settings'));
         if (settingsChanged) {
             dispatch(createFilteredFilms());
             dispatch(showNotification(
@@ -121,7 +121,7 @@ export const addToListAndSave = (filmId, listName = "history") => {
             default:
                 dispatch(addToHistory(filmId));
         }
-        dispatch(saveList(listName));
+        dispatch(saveFromRedux(listName));
     }
 };
 
@@ -147,7 +147,7 @@ export const removeFromListAndSave = (filmId, listName = "history", timestamp = 
             default:
                 dispatch(removeFromHistory(filmId, timestamp));
         }
-        dispatch(saveList(listName));
+        dispatch(saveFromRedux(listName));
     }
 };
 
@@ -176,7 +176,7 @@ export const favoriteIconPush = (filmId, listName = "favorites") => {
  export const loadFilm = (index) => {
     return dispatch => {
         dispatch(selectFilm(index));
-        dispatch(saveList('film'));
+        dispatch(saveFromRedux('film'));
     }
 };
 
