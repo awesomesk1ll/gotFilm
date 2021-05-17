@@ -199,8 +199,8 @@ export default function filmReducer(store = initStore, action) {
             });
         }
         case REMOVE_FROM_HISTORY: {
-            let deleteFilm = store.history.data.find(film => (film.id === action.filmId && film.timestamp === action.timestamp));
-            store.history.data.splice(store.history.data.indexOf(deleteFilm), 1);
+            let deletedFilmIndex = store.history.data.findIndex(film => (film.id === action.filmId && film.timestamp === action.timestamp));
+            store.history.data.splice(deletedFilmIndex, 1);
             store.history.list[action.filmId] = store.history.data.some(film => film.id === action.filmId);
             return update(store, {
                 history: {
@@ -209,8 +209,8 @@ export default function filmReducer(store = initStore, action) {
             });
         }
         case REMOVE_FROM_ALREADY_SEEN: {
-            let deleteFilm = store.alreadySeen.data.find(film => film.id === action.filmId);
-            store.alreadySeen.data.splice(store.alreadySeen.data.indexOf(deleteFilm), 1);
+            let deletedFilmIndex = store.alreadySeen.data.findIndex(film => film.id === action.filmId);
+            store.alreadySeen.data.splice(deletedFilmIndex, 1);
             delete store.alreadySeen.list[action.filmId];
             return update(store, {
                 alreadySeen: {
@@ -219,8 +219,8 @@ export default function filmReducer(store = initStore, action) {
             });
         }
         case REMOVE_FROM_BLACKLIST: {
-            let deleteFilm = store.blacklist.data.find(film => film.id === action.filmId);
-            store.blacklist.data.splice(store.blacklist.data.indexOf(deleteFilm), 1);
+            let deletedFilmIndex = store.blacklist.data.findIndex(film => film.id === action.filmId);
+            store.blacklist.data.splice(deletedFilmIndex, 1);
             delete store.blacklist.list[action.filmId];
             return update(store, {
                 blacklist: {
@@ -229,8 +229,8 @@ export default function filmReducer(store = initStore, action) {
             });
         }
         case REMOVE_FROM_TEMPORARY: {
-            let deleteFilm = store.temporary.data.find(film => film.id === action.filmId);
-            store.temporary.data.splice(store.temporary.data.indexOf(deleteFilm), 1);
+            let deletedFilmIndex = store.temporary.data.findIndex(film => film.id === action.filmId);
+            store.temporary.data.splice(deletedFilmIndex, 1);
             delete store.temporary.list[action.filmId];
             return update(store, {
                 temporary: {
@@ -239,8 +239,8 @@ export default function filmReducer(store = initStore, action) {
             });
         }
         case REMOVE_FROM_FAVORITES: {
-            let deleteFilm = store.favorites.data.find(film => film.id === action.filmId);
-            store.favorites.data.splice(store.favorites.data.indexOf(deleteFilm), 1);
+            let deletedFilmIndex = store.favorites.data.findIndex(film => film.id === action.filmId);
+            store.favorites.data.splice(deletedFilmIndex, 1);
             delete store.favorites.list[action.filmId];
             return update(store, {
                 favorites: {
