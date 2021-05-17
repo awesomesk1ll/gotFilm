@@ -1,6 +1,6 @@
 {
-    "name": "gotfilm.tk - Быстрый поиск фильма для просмотра",
-    "short_name": "gotfilm.tk",
+    "name": "gotFilm.tk - Быстрый поиск фильма для просмотра",
+    "short_name": "gotFilm.tk",
     "description": "Быстрый поиск фильма для просмотра",
     "start_url": ".",
     "icons": [
