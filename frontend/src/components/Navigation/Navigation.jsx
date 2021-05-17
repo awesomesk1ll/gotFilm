@@ -24,7 +24,7 @@ const Navigation = ({ selection }) => {
             <span className="divition-line"></span>
 
             <CustomLink to='/film'
-                        value="search"
+                        value="film"
                         tag={ Radio }
                         className="navigation__buttons"
             >
