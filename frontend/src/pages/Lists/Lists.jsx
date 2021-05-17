@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { Button } from 'antd';
 
 import './Lists.scss';
-import Navigation from '../../components/Navigation';
 import ListLink from '../../components/ListLink';
 import { clearLists } from '../../store/actions/filmActions';
 
@@ -28,7 +27,6 @@ const Lists = ({ blacklist, temporary, alreadySeen, history, favorites, clearLis
             <div className="lists__button__group">
                 <Button className="button" type="secondary" size="large" onClick={handleClearButton}>Очистить списки</Button>
             </div>
-            <Navigation selection={'lists'} />
         </div>
     )
 };

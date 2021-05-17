@@ -8,7 +8,6 @@ import { Typography, Button, Slider, Select, Switch } from 'antd';
 import { clearSettings } from '../../store/actions/filmActions';
 import { setSettingsAndSave, createFilteredFilms } from '../../store/actions/complexFilmActions';
 
-import Navigation from '../../components/Navigation';
 import { TYPES, RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
 
@@ -156,7 +155,6 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
 
             </div>
             <div className="settings__empty">_</div>
-            <Navigation selection={ 'settings' } />
         </div>
     )
 };

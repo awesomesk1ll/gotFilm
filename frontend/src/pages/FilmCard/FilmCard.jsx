@@ -9,7 +9,6 @@ import Star from '../../components/icons/Star';
 import Bookmark from '../../components/icons/Bookmark';
 import Kp from '../../components/icons/Kp';
 import './FilmCard.scss';
-import Navigation from '../../components/Navigation/Navigation';
 
 
 const IMAGE_ENDPOINT = `https://st.kp.y${'a'}ndex.net/images`;
@@ -108,7 +107,6 @@ const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, r
                 </div>
                 <div className="filmCard__footer__emptyBlock" ref={ cardEndRef }></div>
             </div>
-            <Navigation selection={ 'search' } />
         </div>
     )
 };
