@@ -6,8 +6,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { removeFromListAndSave } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
-import Navigation from '../../components/Navigation';
-import './Lists.scss';
+import './List.scss';
 
 
 const Favorites = ({ films, favorites, removeFromListAndSave }) => {
@@ -19,10 +18,10 @@ const Favorites = ({ films, favorites, removeFromListAndSave }) => {
         let film = films.find(film => film.id === item.id);
 
         if (!film) {
-            return <div key={item.id} className="lists__list--null">Фильм загружается</div>
+            return <div key={item.id} className="list__list--null">Фильм загружается</div>
         }
 
-        return <CSSTransition key={film.id} timeout={300} classNames="lists__list--item">
+        return <CSSTransition key={film.id} timeout={300} classNames="list__list--item">
                     <ListItem   key={film.id} 
                                 name={film.name} 
                                 secondName={film.secondName} 
@@ -35,14 +34,13 @@ const Favorites = ({ films, favorites, removeFromListAndSave }) => {
                 </CSSTransition>
     }).reverse();
 
-    const transitionGroup = () => <TransitionGroup className="lists__list">{ list }</TransitionGroup>
+    const transitionGroup = () => <TransitionGroup className="list__list">{ list }</TransitionGroup>
     
     return (
-        <div className="lists--wrapper theme">
-            <div className="lists__header theme">Избранные</div>
-            { list?.length ? transitionGroup() : (<div className="lists__placeholder"/>) }
-            <div className="lists__emptyBlock"></div>
-            <Navigation selection={'lists'} />
+        <div className="list--wrapper theme">
+            <div className="list__header theme">Избранные</div>
+            { list?.length ? transitionGroup() : (<div className="list__placeholder"/>) }
+            <div className="list__emptyBlock"></div>
         </div>
     )
 };

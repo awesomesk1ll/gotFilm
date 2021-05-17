@@ -6,8 +6,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { removeFromListAndSave, favoriteIconPush } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
-import Navigation from '../../components/Navigation';
-import './Lists.scss';
+import './List.scss';
 
 
 const History = ({ films, favorites, history, favoriteIconPush, removeFromListAndSave }) => {
@@ -23,10 +22,10 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
         let film = films.find(film => film.id === item.id);
 
         if (!film) {
-            return <div key={`${item.id}${item.timestamp}`} className="lists__list--null">Фильм загружается</div>
+            return <div key={`${item.id}${item.timestamp}`} className="list__list--null">Фильм загружается</div>
         }
 
-        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={300} classNames="lists__list--item">
+        return <CSSTransition key={`${film.id}${item.timestamp}`} timeout={300} classNames="list__list--item">
                     <ListItem   key={`${film.id}${item.timestamp}`} 
                                 name={film.name} 
                                 secondName={film.secondName} 
@@ -41,14 +40,13 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
                 </CSSTransition>
     });
 
-    const transitionGroup = () => <TransitionGroup className="lists__list">{ list }</TransitionGroup>
+    const transitionGroup = () => <TransitionGroup className="list__list">{ list }</TransitionGroup>
     
     return (
-        <div className="lists--wrapper theme">
-            <div className="lists__header theme">История предложений</div>
-            { list?.length ? transitionGroup() : (<div className="lists__placeholder"/>) }
-            <div className="lists__emptyBlock"></div>
-            <Navigation selection={'lists'} />
+        <div className="list--wrapper theme">
+            <div className="list__header theme">История предложений</div>
+            { list?.length ? transitionGroup() : (<div className="list__placeholder"/>) }
+            <div className="list__emptyBlock"></div>
         </div>
     )
 };

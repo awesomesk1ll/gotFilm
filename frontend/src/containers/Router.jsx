@@ -8,7 +8,7 @@ import RegistrationForm from "../pages/RegistrationPage";
 import FilmCardContainer from './FilmCardContainer';
 import Settings from '../pages/Settings';
 import Lists from '../pages/Lists';
-import {SeenList, History, Blacklist, Temporary, Favorites} from '../containers/Lists';
+import {SeenList, History, Blacklist, Temporary, Favorites} from './List';
 
 const routes = [
         { path: '/',             Component: Home                 , exact: true},

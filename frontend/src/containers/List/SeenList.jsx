@@ -6,27 +6,26 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { favoriteIconPush, removeFromListAndSave } from '../../store/actions/complexFilmActions';
 
 import ListItem from '../../components/ListItem';
-import Navigation from '../../components/Navigation';
-import './Lists.scss';
+import './List.scss';
 
 
-const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromListAndSave }) => {
+const SeenList = ({ films, favorites, alreadySeen, favoriteIconPush, removeFromListAndSave }) => {
     const handleAddToFavorites = useCallback((filmId) => {
         favoriteIconPush(filmId);
     }, [favoriteIconPush]);
 
     const handleRemoveFromList = useCallback((filmId) => {
-        removeFromListAndSave(filmId, "blacklist");
+        removeFromListAndSave(filmId, "alreadySeen");
     }, [removeFromListAndSave]);
-
-    let list = films.length && blacklist.data.map(item => {
+    
+    let list = films.length && alreadySeen.data.map(item => {
         let film = films.find(film => film.id === item.id);
 
         if (!film) {
-            return <div key={item.id} className="lists__list--null">Фильм загружается</div>
+            return <div key={item.id} className="list__list--null">Фильм загружается</div>
         }
 
-        return <CSSTransition key={film.id} timeout={300} classNames="lists__list--item">
+        return <CSSTransition key={film.id} timeout={300} classNames="list__list--item">
                     <ListItem   key={film.id} 
                                 name={film.name} 
                                 secondName={film.secondName} 
@@ -36,25 +35,24 @@ const Blacklist = ({ films, favorites, blacklist, favoriteIconPush, removeFromLi
                                 genre={film.genre} 
                                 addToFavorites={() => handleAddToFavorites(film.id)} 
                                 removeFromList={() => handleRemoveFromList(film.id)} 
-                                status={favorites.list[film.id]}
+                                status={favorites.list[film.id]} 
                     />
                 </CSSTransition>
     }).reverse();
-
-    const transitionGroup = () => <TransitionGroup className="lists__list">{ list }</TransitionGroup>
     
+    const transitionGroup = () => <TransitionGroup className="list__list">{ list }</TransitionGroup>
+
     return (
-        <div className="lists--wrapper theme">
-            <div className="lists__header theme">Отклоненные</div>
-            { list?.length ? transitionGroup() : (<div className="lists__placeholder"/>) }
-            <div className="lists__emptyBlock"></div>
-            <Navigation selection={'lists'} />
+        <div className="list--wrapper theme">
+            <div className="list__header theme">Просмотренные</div>
+            { list?.length ? transitionGroup() : (<div className="list__placeholder"/>) }
+            <div className="list__emptyBlock"></div>
         </div>
     )
 };
 
-Blacklist.propTypes = {
-    blacklist: PropTypes.object,
+SeenList.propTypes = {
+    alreadySeen: PropTypes.object,
     favorites: PropTypes.object,
     films: PropTypes.array,
     favoriteIconPush: PropTypes.func,
@@ -64,9 +62,9 @@ Blacklist.propTypes = {
 const mapStateToProps = ({ filmReducer }) => ({
     films: filmReducer.films,
     favorites: filmReducer.favorites,
-    blacklist: filmReducer.blacklist
+    alreadySeen: filmReducer.alreadySeen
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ favoriteIconPush, removeFromListAndSave }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Blacklist);
+export default connect(mapStateToProps, mapDispatchToProps)(SeenList);
