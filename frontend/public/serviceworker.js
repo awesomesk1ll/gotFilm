@@ -3,7 +3,12 @@ const dynamicAppCacheName = 'd-gf-app-rev0001';
 const filmsCacheName = 'gf-films-rev0001';
 const self = this;
 
-const staticFiles = ['/index.html', '/icons/favicon.ico', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'];
+const staticFiles = [
+  '/index.html',
+  '/icons/favicon.ico',
+  './offline.jpg',
+  'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'
+];
 
 const FILMS_ORIGINS = ['http://localhost:3000', 'https://gotfilm.tk'];
 
