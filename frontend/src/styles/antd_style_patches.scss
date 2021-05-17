@@ -97,7 +97,7 @@ a:hover {
   &:hover,
   &:focus {
     color: $activbtn;
-    background: #fff;
+    background: rgba(140, 140, 140, 0.2);
     border-color: $activeBtnLighter;
   }
 }
