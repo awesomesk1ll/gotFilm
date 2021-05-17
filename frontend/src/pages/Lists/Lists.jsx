@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { Button } from 'antd';
 
 import './Lists.scss';
-import Navigation from '../../components/Navigation';
 import ListLink from '../../components/ListLink';
 import { clearLists } from '../../store/actions/filmActions';
 
@@ -25,10 +24,11 @@ const Lists = ({ blacklist, temporary, alreadySeen, history, favorites, clearLis
             <Link className="lists__link--color theme" to="/blacklist"><ListLink listLength={blacklist.data.length}>Отклоненные фильмы</ListLink></Link>
             <Link className="lists__link--color theme" to="/temporary"><ListLink listLength={temporary.data.length}>В другой раз</ListLink></Link>
             <Link className="lists__link--color theme" to="/favorites"><ListLink listLength={favorites.data.length}>Избранные</ListLink></Link>
-            <div className="lists__button__group">
-                <Button className="button" type="secondary" size="large" onClick={handleClearButton}>Очистить списки</Button>
+            <div className="lists__footer">
+                <div className="lists__button__group">
+                    <Button className="button" type="secondary" size="large" onClick={handleClearButton}>Очистить списки</Button>
+                </div>
             </div>
-            <Navigation checked={'lists'} />
         </div>
     )
 };

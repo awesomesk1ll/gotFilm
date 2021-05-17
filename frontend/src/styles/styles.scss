@@ -24,7 +24,40 @@ input, button {
 .App {
   height: 100%;
   width: 100%;
+}
+
+.container {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: $templateBackgroundColor;
+}
+
+.page {
   position: fixed;
+  width: 100%;
+  height: 100%;
+  // router animations
+  &-enter {
+    opacity: 0;
+    z-index: 2;
+    &-active {
+      opacity: 1;
+      transition: opacity 700ms;
+    }
+  }
+  &-exit {
+    top: 0px;
+    width: 100% !important;
+    z-index: 1;
+    filter: blur(0px);
+    opacity: 1;
+    &-active {
+      filter: blur(100px);
+      opacity: 0;
+      transition: opacity 700ms, filter 700ms;
+    }
+  }
 }
 
 @media screen and (orientation: landscape) {
@@ -48,5 +81,34 @@ input, button {
     right:10px;
     left:auto;
     transform:skew(8deg) rotate(3deg);
+  }
+  .page {
+    width: $desktopWidth !important;
+  }
+  // fixes router animations for desktop
+  .page-exit {
+    .filmCard {
+      &__poster__background {
+          width: 100% !important;
+      }
+      &__footer {
+        width: 100% !important;
+      }
+    }
+    .settings {
+      &__content {
+        width: 100% !important;
+      }
+    }
+    .navigation {
+      &__container {
+        width: 100% !important;
+      }
+    }
+    .lists {
+      &__footer {
+        width: 100% !important;
+      }
+    }
   }
 }

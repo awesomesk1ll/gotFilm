@@ -17,7 +17,9 @@ const App = ({ fetchFilms, settings, filmsCount }) => {
 
   return (
     <div className="App">
-      <Router />
+      <div className="container theme">
+        <Router /> 
+      </div>
     </div>
   );
 };

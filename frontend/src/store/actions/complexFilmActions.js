@@ -1,17 +1,17 @@
 import axios from 'axios';
-import { loadFilms, loadFilmsStarted, loadFilmsFailure, setFilteredFilms, showNotification } from './filmActions';
+import { loadFilms, loadFilmsStarted, loadFilmsFailure, addFilms, lazyLoadFilmsStarted, lazyLoadFilmsEnded, setFilteredFilms, showNotification } from './filmActions';
 import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavorites, removeFromAlreadySeen, removeFromBlacklist, removeFromFavorites, removeFromHistory } from './filmActions';
 import { setSettings } from './filmActions';
 
 /**
- * Сохраняет список в local storage
+ * Сохраняет что-то из redux в local storage
  * 
- * @param {string} listName - имя списка для сохранения.
+ * @param {string} someName - имя чего-то для сохранения.
  */
-export const saveList = (listName) => {
+export const saveFromRedux = (someName) => {
     return (dispatch, getState) => {
-        const { [listName]: list } = getState().filmReducer;
-        localStorage.setItem(listName, JSON.stringify(list));
+        const { [someName]: something } = getState().filmReducer;
+        localStorage.setItem(someName, JSON.stringify(something));
     }
 };
 
@@ -53,12 +53,14 @@ export const saveList = (listName) => {
     return (dispatch, getState) => {
         const { films, settings } = getState().filmReducer;
         const { types, ratings, years, genres, countries } = settings.filters;
+        const skipGenres = !genres.length || genres.includes('Все');
+        const skipCountries = !countries.length || countries.includes('Все');
         // фильтры настроек
         const typesFilter = (film) => (types.length !== 1 || film.type === types[0]);
-        const ratingsFilter = (film) => (film.rate > ratings[0] && film.rate < ratings[1]);
-        const yearsFilter = (film) => (film.year > years[0] && film.year < years[1]);
-        const genresFilter = (film) => film.genres.some(genre => genres.includes(genre));
-        const countriesFilter = (film) => film.countries.some(country => countries.includes(country));
+        const ratingsFilter = (film) => (film.rate >= ratings[0] && film.rate <= ratings[1]);
+        const yearsFilter = (film) => (film.year >= years[0] && film.year <= years[1]);
+        const genresFilter = (film) => skipGenres || film.genres.some(genre => genres.includes(genre));
+        const countriesFilter = (film) => skipCountries || film.countries.some(country => countries.includes(country));
 
         // фильтр всё в одном
         const appendFilters = (film) => [ typesFilter, ratingsFilter, yearsFilter, genresFilter, countriesFilter ].every(filter => filter(film));
@@ -86,13 +88,13 @@ export const setSettingsAndSave = (settings) => {
         const settingsChanged = filters.some((value, index) => value !== filtersPrev[index]);
 
         dispatch(setSettings(settings));
-        dispatch(saveList('settings'));
+        dispatch(saveFromRedux('settings'));
         if (settingsChanged) {
             dispatch(createFilteredFilms());
             dispatch(showNotification(
                 'success',
                 'Настройки успешно сохранены',
-                'Новые настройки будут применены при последующем поиске.',
+                'Настройки поиска применятся при следующем переключении фильма.',
             ));
         };
     }
@@ -105,7 +107,7 @@ export const setSettingsAndSave = (settings) => {
  * @param {string} [listName="history"] - имя списка для добавляемого фильма и сохранения.
  */
 export const addToListAndSave = (filmId, listName = "history") => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         switch (listName) {
             case "blacklist":
                 dispatch(addToBlacklist(filmId));
@@ -119,7 +121,7 @@ export const addToListAndSave = (filmId, listName = "history") => {
             default:
                 dispatch(addToHistory(filmId));
         }
-        dispatch(saveList(listName));
+        dispatch(saveFromRedux(listName));
     }
 };
 
@@ -127,10 +129,11 @@ export const addToListAndSave = (filmId, listName = "history") => {
  * Удаляет фильм из списка, затем сохраняет список в local storage
  * 
  * @param {number} filmId - id удаляемого фильма.
- * @param {string} [listName="history"] - имя списка для удаляемого фильма и сохранения.
+ * @param {string} [listName="history"] - имя списка для удаляемого фильма и сохранения (опционально).
+ * @param {number} [timestamp=0] - таймштамп добавления в список, для списка history.
  */
-export const removeFromListAndSave = (filmId, listName = "history") => {
-    return (dispatch, getState) => {
+export const removeFromListAndSave = (filmId, listName = "history", timestamp = 0) => {
+    return (dispatch) => {
         switch (listName) {
             case "blacklist":
                 dispatch(removeFromBlacklist(filmId));
@@ -142,9 +145,9 @@ export const removeFromListAndSave = (filmId, listName = "history") => {
                 dispatch(removeFromFavorites(filmId));
                 break;
             default:
-                dispatch(removeFromHistory(filmId));
+                dispatch(removeFromHistory(filmId, timestamp));
         }
-        dispatch(saveList(listName));
+        dispatch(saveFromRedux(listName));
     }
 };
 
@@ -162,6 +165,18 @@ export const favoriteIconPush = (filmId, listName = "favorites") => {
         } else {
             dispatch(addToListAndSave(filmId, listName));
         }
+    }
+};
+
+/**
+ * Запускает выбор фильма и сохраняет его в local storage
+ * 
+ * @param {number} index - index фильма в films.
+ */
+ export const loadFilm = (index) => {
+    return dispatch => {
+        dispatch(selectFilm(index));
+        dispatch(saveFromRedux('film'));
     }
 };
 
@@ -194,7 +209,7 @@ export const changeFilm = () => {
         if (current === null) {
             if (history.data.length) {
                 const historyLast = history.data.reverse()[0];
-                return dispatch(selectFilm(films.findIndex(elem => elem.id === historyLast.id)));
+                return dispatch(loadFilm(films.findIndex(elem => elem.id === historyLast.id)));
             } else if (!preparedFilms.length) {
                 dispatch(selectFilm(0));
                 return dispatch(loadFilmsFailure('Ошибка загрузки фильма. Попробуйте сбросить настройки.'));
@@ -212,7 +227,7 @@ export const changeFilm = () => {
         // выбор фильма по порядку в ранкинге кинопоиска
         // film = filteredFilms[randomIndex++];
         
-        dispatch(selectFilm(films.findIndex(elem => elem.id === film.id)));
+        dispatch(loadFilm(films.findIndex(elem => elem.id === film.id)));
         dispatch(addToListAndSave(film.id));
     }
 };
@@ -221,17 +236,69 @@ export const changeFilm = () => {
  * Загружает фильмы и запускает выбор одного из них
  */
 export const fetchFilms = () => {
-    return dispatch => {
+    return (dispatch, getState) => {
+        const { film: current } = getState().filmReducer;
+        
         dispatch(loadFilmsStarted());
 
-        axios.get("./films.json")
+        axios.get("./films/0.json")
             .then(response => {
                 dispatch(loadFilms(response.data));
                 dispatch(createFilteredFilms());
-                dispatch(changeFilm());
+                if (current === null) dispatch(changeFilm());
+                dispatch(lazyLoadStart());
             })
             .catch(err => {
                 dispatch(loadFilmsFailure(err.message));
+            });
+    }
+};
+
+/**
+ * Начинает догрузку фильмов
+ */
+ export const lazyLoadStart = () => {
+    return (dispatch) => {
+        dispatch(lazyLoadFilmsStarted());
+        if (localStorage.getItem('count') === null) {
+            dispatch(showNotification(
+                'info',
+                'Началась фоновая загрузка фильмов',
+                'Загруженные фильмы станут доступны для поиска сразу после загрузки.',
+            ));
+        }
+        dispatch(lazyLoad());
+    }
+};
+
+/**
+ * Докачивает и дополняет базу фильмов
+ * 
+ * @param {number} [page=0] - Номер файла.
+ */
+ export const lazyLoad = (page = 0) => {
+    ++page;
+    return (dispatch, getState) => {
+        axios.get(`./films/${page}.json`)
+            .then(response => {
+                dispatch(addFilms(response.data));
+                if (page < 243) {
+                    dispatch(lazyLoad(page));
+                } else {
+                    dispatch(createFilteredFilms());
+                    dispatch(lazyLoadFilmsEnded());
+                    const count = getState().filmReducer.films.length;
+                    localStorage.setItem('count', count);
+                    dispatch(showNotification(
+                        'success',
+                        'Фильмы успешно загружены',
+                        `Загружено фильмов: ${count}`,
+                    ));
+                }
+
+            })
+            .catch(err => {
+                console.log('Ошибка дополнения базы:', err);
             });
     }
 };
