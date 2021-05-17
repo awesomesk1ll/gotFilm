@@ -3,6 +3,9 @@ import { loadFilms, loadFilmsStarted, loadFilmsFailure, addFilms, lazyLoadFilmsS
 import { selectFilm, addToHistory, addToBlacklist, addToAlreadySeen, addToFavorites, removeFromAlreadySeen, removeFromBlacklist, removeFromFavorites, removeFromHistory } from './filmActions';
 import { setSettings } from './filmActions';
 
+const DB = window.indexedDB || window.mozIndexedDB || window.wekitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+const DB_VERSION = 1;
+
 /**
  * Сохраняет что-то из redux в local storage
  * 
@@ -233,16 +236,72 @@ export const changeFilm = () => {
 };
 
 /**
+ * Пробует загрузить фильмы из локальной базы или запускает скачивание
+ */
+export const getFilms = () => {
+    return (dispatch, getState) => {
+        const dbReq = DB.open('gotfilm', DB_VERSION);
+
+        dbReq.onupgradeneeded = ({ target: { result } }) => {
+            const isTable = result.objectStoreNames.contains('films');
+            
+            if (!isTable) {
+                result.createObjectStore("films", {keyPath: "id"});
+            }
+        }
+
+        dbReq.onsuccess = function ({ target: { result } }) { 
+            const store = result.transaction(['films'], 'readwrite').objectStore('films');
+
+            store.get("films").onsuccess = ({ target: { result } }) => {
+                if (result && result.films) {
+                    const { film: current } = getState().filmReducer;
+                    dispatch(loadFilms(result.films));
+                    dispatch(createFilteredFilms());
+                    if (current === null) dispatch(changeFilm());
+                } else {
+                    dispatch(fetchFilms());
+                }
+            }
+        }
+
+        dbReq.onerror = (event) => {
+            console.log('load from database error occured', event);
+        }
+    }
+};
+
+/**
+ * Сохраняет фильмы в локальную базу данных
+ */
+ export const saveFilmsToDB = () => {
+    return (dispatch, getState) => {
+        
+        const dbReq = DB.open('gotfilm', DB_VERSION);
+        
+        dbReq.onsuccess = function ({ target: { result } }) {
+            const { films } = getState().filmReducer;
+            const store = result.transaction(['films'], 'readwrite').objectStore('films');
+            store.put({id: "films", films});
+        }
+
+        dbReq.onerror = (event) => {
+            console.log('save database error occured', event);
+        }
+    }
+};
+
+/**
  * Загружает фильмы и запускает выбор одного из них
  */
 export const fetchFilms = () => {
     return (dispatch, getState) => {
-        const { film: current } = getState().filmReducer;
         
         dispatch(loadFilmsStarted());
 
         axios.get("./films/0.json")
             .then(response => {
+                const { film: current } = getState().filmReducer;
                 dispatch(loadFilms(response.data));
                 dispatch(createFilteredFilms());
                 if (current === null) dispatch(changeFilm());
@@ -287,6 +346,7 @@ export const fetchFilms = () => {
                 } else {
                     dispatch(createFilteredFilms());
                     dispatch(lazyLoadFilmsEnded());
+                    dispatch(saveFilmsToDB());
                     const count = getState().filmReducer.films.length;
                     localStorage.setItem('count', count);
                     dispatch(showNotification(
@@ -298,7 +358,7 @@ export const fetchFilms = () => {
 
             })
             .catch(err => {
-                console.log('Ошибка дополнения базы:', err);
+                console.log('Ошибка скачивания дополнительных фильмов:', err);
             });
     }
 };
