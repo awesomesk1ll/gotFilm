@@ -19,9 +19,7 @@ const App = ({ getFilms, settings, filmsCount, error }) => {
   return (
     <div className="App">
       <div className="container theme">
-       { error ? <Error text={error}/> : 
-            filmsCount ? <Router /> : <div></div>
-        }
+       { error ? <Error text={error}/> : <Router /> }
       </div>
     </div>
   );
