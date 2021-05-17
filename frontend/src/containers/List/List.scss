@@ -31,7 +31,7 @@
       height: 0;
       transition: opacity 220ms ease-out, height 280ms ease-in, min-height 280ms ease-in;
     }
-    height: calc(100% - 100px);
+    height: calc(100% - #{$headerHeight} - #{$navigationHeight});
     position: relative;
     overflow-y: auto;
   }
