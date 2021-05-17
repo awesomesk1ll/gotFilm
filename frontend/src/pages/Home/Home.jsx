@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
+import connect from 'react-redux/es/connect/connect';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Texty from 'rc-texty';
 import 'rc-texty/assets/index.css';
 
@@ -7,7 +9,7 @@ import Search from '../../components/icons/Search';
 
 import './Home.scss';
 
-const Home = (props) => {
+const Home = ({ filmsCount }) => {
   const anim = useCallback((e) => {
     switch (e.index) {
       case 0:
@@ -68,7 +70,9 @@ const Home = (props) => {
 
   return (
     <div className="main-page theme">
-      <h1 className="main-page__title"><Texty enter={anim}>gotfilm</Texty></h1>
+      <h1 className="main-page__title">
+        { (filmsCount > 0) && <Texty enter={anim}>gotfilm</Texty> }
+      </h1>
       <Link className="main-page__icon" to="/film">
         <Search className="search-icon_home theme" />
       </Link>
@@ -76,4 +80,12 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+Home.propTypes = {
+  filmsCount: PropTypes.number
+};
+
+const mapStateToProps = ({ filmReducer }) => ({
+  filmsCount: filmReducer.films.length
+});
+
+export default connect(mapStateToProps)(Home);
