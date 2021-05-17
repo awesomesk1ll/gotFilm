@@ -7,178 +7,178 @@
 }
 
 .filmCard {
-    &--wrapper {
-      min-width: 151px;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background-color: $templateBackgroundColor;
+  &--wrapper {
+    min-width: 151px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: $templateBackgroundColor;
+  }
+  &__poster {
+    width: 100%;
+    height: 35vh;
+    background-color: black;
+    display: flex;
+    object-fit: cover;
+    .ant-image {
+      width: 100%
     }
-    &__poster {
-      width: 100%;
+    &__background {
       height: 35vh;
-      background-color: black;
+      position: fixed;
+      width: 100%;
+      filter: blur(7px);
+    }
+    &__image {
+      width: 100%;
+      height: 100%;
+      object-fit: scale-down;
+    }
+  }
+  &__infoBlock {
+    width: 100%;
+    position: fixed;
+    top: 35vh;
+    max-height: 49.5vh;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    border-radius: 35px 35px 0 0;
+    background-color: $templateBackgroundColor;
+    font: $generalFont;
+    color: $textColor;
+    margin-top: -50px;
+    padding: 19px 15px 0;
+    margin-bottom: 102px + $navigationHeight;
+    &--titleWrapper {
       display: flex;
-      object-fit: cover;
-      .ant-image {
-        width: 100%
+      justify-content: space-between;
+      padding: 0 10px;
+    }
+    &__title {
+      width: 80%;
+      @include fontFrame(500, 25px, black);
+      text-transform: uppercase;
+      hyphens: auto;
+      margin: 0;
+    }
+    &__rate {
+      display: flex;
+      justify-content: flex-end;
+      align-self: flex-start;
+      @include fontFrame(400, 20px, $activbtn);
+      margin: 0 0 0 5px;
+    }
+    &--secondTitleWrapper {
+      display: flex;
+      justify-content: space-between;
+      margin: 2px 0 12px;
+      padding: 0 10px;
+    }
+    &__secondTitle {
+      text-transform: capitalize;
+      hyphens: auto;
+      margin: 0;
+    }
+    &__year {
+      text-align: right;
+      margin: 0;
+    }
+    &__genre, &__error {
+      text-align: center;
+      margin: 0 0 7px;
+    }
+    &__error {
+      color: darkred;
+      font-size: large;
+      font-weight: bold;
+    }
+    &--underline {
+      width: 75%;
+      color: rgb(112, 112, 112);
+      margin: 0 auto 13px;
+    }
+    &--scrollableWrapper {
+      overflow: auto;
+    }
+    &__description {
+      text-align: justify;
+      hyphens: auto;
+      margin: 0;
+      &--label {
+        width: 100%;
+        max-height: 150px;
+        overflow: hidden;
+        position: relative;
+        transition: ease-in 800ms all;
       }
+    }
+  }
+  &__footer {
+      width: 100%;
+      position: fixed;
+      bottom: 0px;
+      height: 110px + $navigationHeight;
+      background-color: $templateBackgroundColor;
+      flex: 0 0 auto;
+      &__buttonGroup {
+          width: 100%;
+          display: flex;
+          justify-content: space-evenly;
+          margin: 8px 0 12px;
+          padding: 0 15px;
+          & button {
+            background: transparent !important;
+            height: 40px;
+          }
+          & .small__button {
+            fill: $listsButtonColor;
+            border: 1px dotted $activbtn;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            svg {
+              width: 26px;
+              height: 26px;
+            }
+          }
+          &:first-child {
+            margin-bottom: 10px;
+            justify-content: space-between;
+          }
+          &.repair {
+              justify-content: center;
+          }
+      }
+      &__emptyBlock {
+          width: 100%;
+          height: 50px;
+      }
+    }
+}
+
+.inputDesc {
+  position: absolute;
+  opacity: 0;
+  &:checked ~ .filmCard__infoBlock__description--label {
+    max-height: 100%;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .filmCard {
+    &__poster {
       &__background {
-        height: 35vh;
-        position: fixed;
-        width: 100%;
-        filter: blur(7px);
-      }
-      &__image {
-        width: 100%;
-        height: 100%;
-        object-fit: scale-down;
+        width: $desktopWidth;
       }
     }
     &__infoBlock {
-      width: 100%;
-      position: fixed;
-      top: 35vh;
-      max-height: 49.5vh;
-      display: flex;
-      flex-direction: column;
-      flex: 1 0 auto;
-      border-radius: 35px 35px 0 0;
-      background-color: $templateBackgroundColor;
-      font: $generalFont;
-      color: $textColor;
-      margin-top: -50px;
-      padding: 19px 15px 0;
-      margin-bottom: 102px + $navigationHeight;
-      &--titleWrapper {
-        display: flex;
-        justify-content: space-between;
-        padding: 0 10px;
-      }
-      &__title {
-        width: 80%;
-        @include fontFrame(500, 25px, black);
-        text-transform: uppercase;
-        hyphens: auto;
-        margin: 0;
-      }
-      &__rate {
-        display: flex;
-        justify-content: flex-end;
-        align-self: flex-start;
-        @include fontFrame(400, 20px, $activbtn);
-        margin: 0 0 0 5px;
-      }
-      &--secondTitleWrapper {
-        display: flex;
-        justify-content: space-between;
-        margin: 2px 0 12px;
-        padding: 0 10px;
-      }
-      &__secondTitle {
-        text-transform: capitalize;
-        hyphens: auto;
-        margin: 0;
-      }
-      &__year {
-        text-align: right;
-        margin: 0;
-      }
-      &__genre, &__error {
-        text-align: center;
-        margin: 0 0 7px;
-      }
-      &__error {
-        color: darkred;
-        font-size: large;
-        font-weight: bold;
-      }
-      &--underline {
-        width: 75%;
-        color: rgb(112, 112, 112);
-        margin: 0 auto 13px;
-      }
-      &--scrollableWrapper {
-        overflow: auto;
-      }
-      &__description {
-        text-align: justify;
-        hyphens: auto;
-        margin: 0;
-        &--label {
-          width: 100%;
-          max-height: 150px;
-          overflow: hidden;
-          position: relative;
-          transition: ease-in 800ms all;
-        }
-      }
+      position: relative;
+      top: 0;
     }
     &__footer {
-        width: 100%;
-        position: fixed;
-        bottom: 0px;
-        height: 118px + $navigationHeight;
-        background-color: $templateBackgroundColor;
-        flex: 0 0 auto;
-        &__buttonGroup {
-            width: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            margin: 10px 0 18px;
-            padding: 0 15px;
-            & button {
-              background: transparent !important;
-              height: 40px;
-            }
-            & .small__button {
-              fill: $listsButtonColor;
-              border: 1px dotted $activbtn;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              border-radius: 8px;
-              svg {
-                width: 26px;
-                height: 26px;
-              }
-            }
-            &:first-child {
-              margin-bottom: 10px;
-              justify-content: space-between;
-            }
-            &.repair {
-                justify-content: center;
-            }
-        }
-        &__emptyBlock {
-            width: 100%;
-            height: 50px;
-        }
-      }
-  }
-
-  .inputDesc {
-    position: absolute;
-    opacity: 0;
-    &:checked ~ .filmCard__infoBlock__description--label {
-      max-height: 100%;
+      width: $desktopWidth;
     }
-  }
-
-  @media screen and (orientation: landscape) {
-    .filmCard {
-      &__poster {
-        &__background {
-          width: $desktopWidth;
-        }
-      }
-      &__infoBlock {
-        position: relative;
-        top: 0;
-      }
-      &__footer {
-        width: $desktopWidth;
-      }
   }
 }
