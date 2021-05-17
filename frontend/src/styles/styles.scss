@@ -35,46 +35,26 @@ input, button {
 
 .page {
   position: relative;
-}
-
-// router animations
-.page-enter {
-  opacity: 0;
-}
-
-.page-enter-active {
-  opacity: 1;
-  transition: opacity 2000ms;
-}
-
-.page-exit {
-  width: 100%;
-  filter: blur(0px);
-  opacity: 1;
-}
-
-.page-exit-active {
-  filter: blur(100px);
-  opacity: 0;
-  transition: opacity 2000ms, filter 2000ms;
-}
-
-.page-exit,
-.page-exit-active {
-  position: absolute;
-  width: 100%;
-  // fix router animations
-  .filmCard {
-    &__poster__background {
-        width: 100% !important;
-    }
-    &__footer {
-      width: 100% !important;
+  // router animations
+  &-enter {
+    opacity: 0;
+    z-index: 2;
+    &-active {
+      opacity: 1;
+      transition: opacity 700ms;
     }
   }
-  .navigation {
-    &__container {
-      width: 100% !important;
+  &-exit {
+    top: 0px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    filter: blur(0px);
+    opacity: 1;
+    &-active {
+      filter: blur(100px);
+      opacity: 0;
+      transition: opacity 700ms, filter 700ms;
     }
   }
 }
@@ -100,5 +80,32 @@ input, button {
     right:10px;
     left:auto;
     transform:skew(8deg) rotate(3deg);
+  }
+  // fixes router animations for desktop
+  .page-exit {
+    position: absolute;
+    .filmCard {
+      &__poster__background {
+          width: 100% !important;
+      }
+      &__footer {
+        width: 100% !important;
+      }
+    }
+    .settings {
+      &__content {
+        width: 100% !important;
+      }
+    }
+    .navigation {
+      &__container {
+        width: 100% !important;
+      }
+    }
+    .lists {
+      &__button__group {
+        width: 100% !important;
+      }
+    }
   }
 }
