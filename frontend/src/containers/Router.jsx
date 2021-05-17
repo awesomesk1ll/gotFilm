@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
-import { CSSTransition } from 'react-transition-group'
+import { CSSTransition } from 'react-transition-group';
 
-import Home from "../pages/Home/Home"
+import Home from "../pages/Home/Home";
 import LoginForm from '../pages/LoginPage';
 import RegistrationForm from "../pages/RegistrationPage";
 import FilmCardContainer from './FilmCardContainer';
