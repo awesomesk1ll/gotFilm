@@ -118,14 +118,14 @@
       width: 100%;
       position: fixed;
       bottom: 0px;
-      height: 110px + $navigationHeight;
+      height: 112px + $navigationHeight;
       background-color: $templateBackgroundColor;
       flex: 0 0 auto;
       &__buttonGroup {
           width: 100%;
           display: flex;
           justify-content: space-evenly;
-          margin: 8px 0 12px;
+          margin: 10px 0 12px;
           padding: 0 15px;
           & button {
             background: transparent !important;
