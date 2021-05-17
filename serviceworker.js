@@ -73,8 +73,10 @@ async function cacheFirstOrSave (request) {
         return await fetch('./offline.jpg')
       }
       
-      fetched && cache.put(request.url, fetched);
+      // we cannot put original request to cache as it changes request's "bodyUsed" to true
+      fetched && cache.put(request.url, fetched.clone());
     }
   }
-  return cached ?? await fetch(request.url, options)
+  // console.log(!!cached && 'cached' || !!fetched && 'fetched now' || 'new download / cannot be cached');
+  return cached ?? fetched ?? await fetch(request.url, options)
 }
