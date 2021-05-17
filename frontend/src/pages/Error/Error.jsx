@@ -11,7 +11,7 @@ const Error = ({ text }) => {
     }, []);
 
     return (
-        <div className="error--wrapper">
+        <div className="error--wrapper theme">
             <div className="error__text"><span>{text}</span></div>
             <div className="error__buttons">
                 <Button className="button" onClick={() => {window.location.replace(window.location.href);}}>Перезагрузить</Button>
