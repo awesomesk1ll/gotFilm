@@ -29,7 +29,7 @@
     padding-top: $headerHeight + 12px;
     padding-bottom: $navigationHeight + 12px;
     height: 100%;
-    width: 100%;
+    width: var(--app-width);
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -97,14 +97,6 @@
       border: 2px solid $activbtn;
       text-transform: uppercase;
       font-weight: bold;
-    }
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .settings {
-    &__content {
-      width: $desktopWidth;
     }
   }
 }

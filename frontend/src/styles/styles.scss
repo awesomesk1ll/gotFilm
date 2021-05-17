@@ -22,8 +22,9 @@ input, button {
 }
 
 .App {
+  --app-width: #{$appWidthDefault};
   height: 100%;
-  width: 100%;
+  width: var(--app-width);
 }
 
 .container {
@@ -35,7 +36,7 @@ input, button {
 
 .page {
   position: fixed;
-  width: 100%;
+  width: var(--app-width);
   height: 100%;
   // router animations
   &-enter {
@@ -62,9 +63,8 @@ input, button {
 
 @media screen and (orientation: landscape) {
   .App {
-    width: $desktopWidth;
     margin: 0 auto;
-    position:relative;
+    position: relative;
     box-shadow:0 1px 4px var(--box-shadow-color), 0 0 40px rgba(0, 0, 0, 0.1) inset;
   }
   .App:before, .App:after {
@@ -83,7 +83,7 @@ input, button {
     transform:skew(8deg) rotate(3deg);
   }
   .page {
-    width: $desktopWidth !important;
+    width: var(--app-width) !important;
   }
   // fixes router animations for desktop
   .page-exit {
@@ -110,5 +110,22 @@ input, button {
         width: 100% !important;
       }
     }
+  }
+
+}
+
+@media screen and (orientation: landscape) and (min-width: 769px) {
+  .App {
+    --app-width: #{$appWidthMinWidth769px};
+  }
+}
+@media screen and (orientation: landscape) and (min-width: 1025px) {
+  .App {
+    --app-width: #{$appWidthMinWidth1025px};
+  }
+}
+@media screen and (orientation: landscape) and (min-width: 1201px) {
+  .App {
+    --app-width: #{$appWidthMinWidth1201px};
   }
 }

@@ -22,5 +22,7 @@ $textColorDarkNormal: #ccc;
 $textColorDarkBright: #eee;
 $shadowColorDark: rgba(200, 200, 200, 0.29);
 $rootDarkColor: #1E1E1E;
-//desktop version
-$desktopWidth: 40%;
+$appWidthDefault: 100%;
+$appWidthMinWidth769px: 45%;
+$appWidthMinWidth1025px: 36%;
+$appWidthMinWidth1201px: 32%;
