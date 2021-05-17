@@ -3,7 +3,7 @@
 
 .lists {
   &--wrapper {
-    height: 100vh;
+    height: 100%;
     background-color: $templateBackgroundColor;
   }
   &__header {
@@ -20,17 +20,32 @@
   &__link--color {
     color: rgb(112, 112, 112);
   }
+  &__footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
   &__button__group {
     width: 100%;
-    position: absolute;
-    bottom: $navigationHeight * 2;
     display: flex;
     justify-content: center;
+    height: $navigationHeight + 52px;
     & button {
       width: 90%;
       font: 600 16px 'Roboto', sans-serif;
-      background-color: transparent;
+      background-color: transparent !important;
       line-height: 50%;
+      border-radius: 10px;
+      color: $activbtn;
+      border: 2px solid $activbtn;
+      text-transform: uppercase;
+      font-weight: bold;
     }
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .lists__footer {
+    width: $desktopWidth;
   }
 }
