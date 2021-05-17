@@ -24,17 +24,19 @@ input, button {
 .App {
   height: 100%;
   width: 100%;
-  position: fixed;
 }
 
 .container {
+  height: 100vh;
   position: relative;
   overflow: hidden;
   background-color: $templateBackgroundColor;
 }
 
 .page {
-  position: relative;
+  position: fixed;
+  width: 100%;
+  height: 100%;
   // router animations
   &-enter {
     opacity: 0;
@@ -46,8 +48,7 @@ input, button {
   }
   &-exit {
     top: 0px;
-    position: fixed;
-    width: 100%;
+    width: 100% !important;
     z-index: 1;
     filter: blur(0px);
     opacity: 1;
@@ -81,9 +82,11 @@ input, button {
     left:auto;
     transform:skew(8deg) rotate(3deg);
   }
+  .page {
+    width: $desktopWidth !important;
+  }
   // fixes router animations for desktop
   .page-exit {
-    position: absolute;
     .filmCard {
       &__poster__background {
           width: 100% !important;
@@ -103,7 +106,7 @@ input, button {
       }
     }
     .lists {
-      &__button__group {
+      &__footer {
         width: 100% !important;
       }
     }
