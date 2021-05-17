@@ -88,11 +88,6 @@
       text-align: center;
       margin: 0 0 7px;
     }
-    &__error {
-      color: darkred;
-      font-size: large;
-      font-weight: bold;
-    }
     &--underline {
       width: 75%;
       color: rgb(112, 112, 112);
@@ -158,9 +153,6 @@
           &:first-child {
             margin-bottom: 10px;
             justify-content: space-between;
-          }
-          &.repair {
-              justify-content: center;
           }
       }
       &__emptyBlock {
