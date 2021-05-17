@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { Image, notification } from 'antd';
+import { Image, Button, notification } from 'antd';
 import Spinner from '../../components/Spinner';
 import ErrorFilmCard from './ErrorFilmCard';
-import FilmCardButton from '../../components/FilmCardButton/FilmCardButton';
 import Star from '../../components/icons/Star';
 import Bookmark from '../../components/icons/Bookmark';
 import Kp from '../../components/icons/Kp';
@@ -93,14 +92,14 @@ const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, r
             </div>
             <div className="filmCard__footer theme">
                 <div className="filmCard__footer__buttonGroup">
-                    <FilmCardButton eventAction={ seenFilm }>уже смотрел</FilmCardButton>
-                    <FilmCardButton eventAction={ removeFilm }>не предлагать</FilmCardButton>
+                    <Button className='button' type="secondary" size="large" onClick={ seenFilm }>уже смотрел</Button>
+                    <Button className='button' type="secondary" size="large" onClick={ removeFilm }>не предлагать</Button>
                 </div>
                 <div className="filmCard__footer__buttonGroup">
                     <button className={`small__button${status ? ' active' : ''}`} onClick={ addToFavorites }>
                         <Bookmark status={ status } />
                     </button>
-                    <FilmCardButton eventAction={ addToTemporary }>в другой раз</FilmCardButton>
+                    <Button className='button' type="secondary" size="large" onClick={ addToTemporary }>в другой раз</Button>
                     <button className="small__button" onClick={ handleKpOpen }>
                         <Kp className="theme" />
                     </button>

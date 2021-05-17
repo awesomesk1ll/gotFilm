@@ -128,8 +128,20 @@
           margin: 10px 0 12px;
           padding: 0 15px;
           & button {
+            font: 600 16px 'Roboto', sans-serif;
             background: transparent !important;
             height: 40px;
+          }
+          & .button {
+            width: 48%;
+            border-radius: 10px;
+            color: $activbtn;
+            border: 2px solid $activbtn;
+            text-transform: uppercase;
+            font-weight: bold;
+            //font-size: 1.1em;
+            font-size: 15px;
+            margin: 0 15px;
           }
           & .small__button {
             fill: $listsButtonColor;
