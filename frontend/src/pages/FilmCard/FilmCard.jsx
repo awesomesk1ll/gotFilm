@@ -33,7 +33,7 @@ const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, r
     useEffect(() => {
         if (notify.message && notify.description) {
             notification[notify.type]({
-                duration: 5,
+                duration: 4,
                 message: notify.message,
                 description: notify.description
             });
