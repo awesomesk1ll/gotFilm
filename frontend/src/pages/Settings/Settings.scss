@@ -25,12 +25,16 @@
     }
   }
   &__content {
+    position: fixed;
+    padding-top: $headerHeight + 12px;
+    padding-bottom: $navigationHeight + 12px;
+    height: 100%;
+    width: 100%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    margin-bottom: $navigationHeight;
+    justify-content: space-between;
     &--row {
       span {
         color: $textColor;
@@ -93,8 +97,12 @@
       font-weight: bold;
     }
   }
-  &__empty {
-    width: 100%;
-    height: 0;
+}
+
+@media screen and (orientation: landscape) {
+  .settings {
+    &__content {
+      width: $desktopWidth;
+    }
   }
 }

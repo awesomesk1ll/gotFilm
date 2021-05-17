@@ -154,7 +154,6 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                 </Button>
 
             </div>
-            <div className="settings__empty">_</div>
         </div>
     )
 };
