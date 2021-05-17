@@ -22,8 +22,8 @@
   }
   &__button__group {
     width: 100%;
-    position: fixed;
-    bottom: $navigationHeight + 12px;
+    position: absolute;
+    bottom: $navigationHeight * 2;
     display: flex;
     justify-content: center;
     & button {
@@ -31,14 +31,6 @@
       font: 600 16px 'Roboto', sans-serif;
       background-color: transparent;
       line-height: 50%;
-    }
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .lists {
-    &__button__group {
-        width: $desktopWidth;
     }
   }
 }
