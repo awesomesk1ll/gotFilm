@@ -335,20 +335,21 @@ export const fetchFilms = () => {
  */
  export const lazyLoad = (page = 0) => {
     ++page;
-    return (dispatch) => {
+    return (dispatch, getState) => {
         axios.get(`./films/${page}.json`)
             .then(response => {
                 dispatch(addFilms(response.data));
                 if (page < 243) {
                     dispatch(lazyLoad(page));
                 } else {
+                    const { films } = getState().filmReducer;
                     dispatch(createFilteredFilms());
                     dispatch(lazyLoadFilmsEnded());
                     dispatch(saveFilmsToDB());
                     dispatch(showNotification(
                         'success',
                         'Фильмы успешно загружены',
-                        `Загружено фильмов: ${count}`,
+                        `Загружено фильмов: ${ films.length }`,
                     ));
                 }
 
