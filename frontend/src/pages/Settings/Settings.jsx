@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { Typography, Button, Slider, Select, Switch } from 'antd';
+import { Typography, Button, Slider, Select, Switch, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { clearSettings } from '../../store/actions/filmActions';
 import { setSettingsAndSave, createFilteredFilms } from '../../store/actions/complexFilmActions';
@@ -14,6 +15,7 @@ import './Settings.scss';
 const DEFAULT_RATING = [7, 10];
 const DEFAULT_YEARS = [1990, 2021];
 
+const { confirm } = Modal;
 const { Title, Text } = Typography;
 
 const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, filteredFilmsCount, isLazyLoading, createFilteredFilms }) => {
@@ -59,11 +61,22 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
     }, [setSettings, settings]);
 
     const handleClearSettings = useCallback(() => {
-        localStorage.removeItem('settings');
-        clearSettings();
-        createFilteredFilms();
-        setSelectedRatings(DEFAULT_RATING);
-        setSelectedYears(DEFAULT_YEARS);
+        confirm({
+            title: 'Сброс настроек',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Выполнить сброс',
+            okType: 'danger',
+            cancelText: 'Отмена',
+            style: {top: "50%"},
+            content: 'Все настройки будут переведены в статус "По умолчанию". Данное действие не затрагивает списки фильмов. Вы уверены?',
+            onOk() {
+                localStorage.removeItem('settings');
+                clearSettings();
+                createFilteredFilms();
+                setSelectedRatings(DEFAULT_RATING);
+                setSelectedYears(DEFAULT_YEARS);
+            }, onCancel() {}
+          });
     }, [clearSettings, createFilteredFilms]);
 
     return (
