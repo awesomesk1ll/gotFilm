@@ -88,7 +88,7 @@ export const setSettingsAndSave = (settings) => {
         const { types, ratings, years, genres, countries } = settings.filters;
         const filtersPrev = [ ...typesPrev, ...ratingsPrev, ...yearsPrev, ...genresPrev, ...countriesPrev ];
         const filters = [ ...types, ...ratings, ...years, ...genres, ...countries ];
-        const settingsChanged = filters.some((value, index) => value !== filtersPrev[index]);
+        const settingsChanged = (filtersPrev.length !== filters.length) || filters.some((value, index) => value !== filtersPrev[index]);
 
         dispatch(setSettings(settings));
         dispatch(saveFromRedux('settings'));
