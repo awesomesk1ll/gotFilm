@@ -23,7 +23,7 @@
   &__footer {
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: var(--app-width);
   }
   &__button__group {
     width: 100%;
@@ -41,11 +41,5 @@
       text-transform: uppercase;
       font-weight: bold;
     }
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .lists__footer {
-    width: $desktopWidth;
   }
 }

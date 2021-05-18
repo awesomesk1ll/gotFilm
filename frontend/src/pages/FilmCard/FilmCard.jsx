@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Image, Button, notification } from 'antd';
 import Spinner from '../../components/Spinner';
-import ErrorFilmCard from './ErrorFilmCard';
 import Star from '../../components/icons/Star';
 import Bookmark from '../../components/icons/Bookmark';
 import Kp from '../../components/icons/Kp';
@@ -57,7 +56,6 @@ const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, r
     const ageFormatted = film.age !== null && `, ${film.age}+`;
 
     return (
-        error ? <ErrorFilmCard error={error}/> :
         <div className="filmCard--wrapper theme">
             <div className="filmCard__poster">
                 <img className="filmCard__poster__background" alt=""
@@ -111,7 +109,6 @@ const FilmCard = ({ film, addToTemporary, seenFilm, removeFilm, error, notify, r
 };
 
 FilmCard.propTypes = {
-    error: PropTypes.string,
     notify: PropTypes.object,
     film: PropTypes.object,
     removeFilm: PropTypes.func,

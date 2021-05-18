@@ -49,7 +49,7 @@
   &__placeholder::before {
     content: $noFilmsText;
     height: 100%;
-    width: 100%;
+    width: var(--app-width);
     position: fixed;
     display:flex;
     justify-content: center;
@@ -73,9 +73,6 @@
       &::-webkit-scrollbar {
         width: 0;
       }
-    }
-    &__placeholder::before {
-      width: $desktopWidth;
     }
   }
 }

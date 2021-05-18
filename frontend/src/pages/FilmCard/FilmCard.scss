@@ -26,7 +26,7 @@
     &__background {
       height: 35vh;
       position: fixed;
-      width: 100%;
+      width: var(--app-width);
       filter: blur(10px);
     }
     &__image {
@@ -88,11 +88,6 @@
       text-align: center;
       margin: 0 0 7px;
     }
-    &__error {
-      color: darkred;
-      font-size: large;
-      font-weight: bold;
-    }
     &--underline {
       width: 75%;
       color: rgb(112, 112, 112);
@@ -115,7 +110,7 @@
     }
   }
   &__footer {
-      width: 100%;
+      width: var(--app-width);
       position: fixed;
       bottom: 0px;
       height: 112px + $navigationHeight;
@@ -159,9 +154,6 @@
             margin-bottom: 10px;
             justify-content: space-between;
           }
-          &.repair {
-              justify-content: center;
-          }
       }
       &__emptyBlock {
           width: 100%;
@@ -180,17 +172,9 @@
 
 @media screen and (orientation: landscape) {
   .filmCard {
-    &__poster {
-      &__background {
-        width: $desktopWidth;
-      }
-    }
     &__infoBlock {
       position: relative;
       top: 0;
-    }
-    &__footer {
-      width: $desktopWidth;
     }
   }
 }

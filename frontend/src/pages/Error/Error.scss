@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import '../../styles/variables.scss';
+
+@mixin fontFrame($weight, $size, $color) {
+    font: $weight $size 'Roboto', sans-serif;
+    color: $color;
+}
+
+.error {
+  &--wrapper {
+    min-width: 151px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: $templateBackgroundColor;
+  }
+  &__text {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font: $generalFont;
+    padding: 19px 15px 0;
+    margin-bottom: 102px + $navigationHeight;
+    color: darkred;
+    font-size: large;
+    font-weight: bold;
+  }
+  &__buttons {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      height: 100px;
+      padding: 0 15px;
+      & button {
+        font: 600 16px 'Roboto', sans-serif;
+        background: transparent !important;
+        height: 40px;
+      }
+      & .button {
+        width: 48%;
+        border-radius: 10px;
+        color: #888;
+        border: 2px solid #888;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 15px;
+        margin: 0 15px;
+      }
+      &.repair {
+          justify-content: center;
+      }
+  }
+}

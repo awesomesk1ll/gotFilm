@@ -8,7 +8,7 @@
     align-items: center;
     align-content: center;
     position: fixed;
-    width: 100%;
+    width: var(--app-width);
     height: $navigationHeight;
     bottom: 0;
     background-color: #eee;
@@ -35,14 +35,6 @@
     justify-content: center;
     &.ant-radio-wrapper-checked {
       fill: $activbtn;
-    }
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .navigation {
-    &__container {
-      width: $desktopWidth;
     }
   }
 }
