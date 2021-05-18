@@ -319,13 +319,11 @@ export const fetchFilms = () => {
  export const lazyLoadStart = () => {
     return (dispatch) => {
         dispatch(lazyLoadFilmsStarted());
-        if (localStorage.getItem('count') === null) {
-            dispatch(showNotification(
-                'info',
-                'Началась фоновая загрузка фильмов',
-                'Загруженные фильмы станут доступны для поиска сразу после загрузки.',
-            ));
-        }
+        dispatch(showNotification(
+            'info',
+            'Началась фоновая загрузка фильмов',
+            'Загруженные фильмы станут доступны для поиска сразу после загрузки.',
+        ));
         dispatch(lazyLoad());
     }
 };
@@ -337,7 +335,7 @@ export const fetchFilms = () => {
  */
  export const lazyLoad = (page = 0) => {
     ++page;
-    return (dispatch, getState) => {
+    return (dispatch) => {
         axios.get(`./films/${page}.json`)
             .then(response => {
                 dispatch(addFilms(response.data));
@@ -347,8 +345,6 @@ export const fetchFilms = () => {
                     dispatch(createFilteredFilms());
                     dispatch(lazyLoadFilmsEnded());
                     dispatch(saveFilmsToDB());
-                    const count = getState().filmReducer.films.length;
-                    localStorage.setItem('count', count);
                     dispatch(showNotification(
                         'success',
                         'Фильмы успешно загружены',
