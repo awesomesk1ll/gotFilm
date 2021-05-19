@@ -28,6 +28,7 @@ body {
   }
   &.dark .navigation__container {
     border-top: 2px solid $templateBackgroundColorDarkBright;
+    background-color: $templateBackgroundColorDarkNormal;
   }
 }
 
