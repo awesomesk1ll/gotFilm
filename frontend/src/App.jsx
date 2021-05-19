@@ -14,7 +14,9 @@ const App = ({ getFilms, settings, filmsCount, error }) => {
     }
   }, [getFilms, filmsCount]);
 
-  document.body.classList.toggle("dark", settings.dark);
+  useEffect(() => {
+    document.body.classList.toggle("dark", settings.dark);
+  }, [settings.dark]);
 
   return (
     <div className="App">
