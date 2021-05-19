@@ -37,6 +37,7 @@
     align-items: center;
     justify-content: space-between;
     &--row {
+      padding: 0px 1%;
       span {
         color: $textColor;
         font-family: 'Roboto', sans-serif;
