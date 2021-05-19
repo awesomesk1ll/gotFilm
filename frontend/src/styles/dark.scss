@@ -26,6 +26,9 @@ body {
   &.dark {
     --box-shadow-color: #{ $shadowColorDark };
   }
+  &.dark .navigation__container {
+    border-top: 2px solid $templateBackgroundColorDarkBright;
+  }
 }
 
 /* Dark theme for antd */
