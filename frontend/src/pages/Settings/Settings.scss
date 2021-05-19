@@ -89,9 +89,9 @@
       & button {
         width: 100%;
         border-radius: 10px;
-        background-color: $activbtn;
+        background-color: var(--gf-color-main);
         color: white;
-        border: 2px solid $activbtn;
+        border: 2px solid var(--gf-color-main);
         text-transform: uppercase;
         font-weight: bold;
         text-align: center;
@@ -99,7 +99,7 @@
     }
     &--counter {
       font: 500 20px 'Roboto', sans-serif;
-      color: $activbtn;
+      color: var(--gf-color-main);
       code {
         padding: 0.3em 1em 0.3em;
       }
@@ -112,8 +112,8 @@
       width: 90%;
       border-radius: 10px;
       background-color: transparent;
-      color: $activbtn;
-      border: 2px solid $activbtn;
+      color: var(--gf-color-main);
+      border: 2px solid var(--gf-color-main);
       text-transform: uppercase;
       font-weight: bold;
     }

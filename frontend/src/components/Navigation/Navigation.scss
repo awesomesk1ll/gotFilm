@@ -34,7 +34,7 @@
     display: flex;
     justify-content: center;
     &.ant-radio-wrapper-checked {
-      fill: $activbtn;
+      fill: var(--gf-color-main);
     }
   }
 }
