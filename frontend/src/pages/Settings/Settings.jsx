@@ -12,6 +12,7 @@ import { setSettingsAndSave, createFilteredFilms } from '../../store/actions/com
 import { TYPES, RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
 
+const DEFAULT_HUE = 36;
 const DEFAULT_RATING = [7, 10];
 const DEFAULT_YEARS = [1990, 2021];
 
@@ -21,11 +22,13 @@ const { Title, Text } = Typography;
 const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, filteredFilmsCount, isLazyLoading, createFilteredFilms }) => {
     const [selectedRatings, setSelectedRatings] = React.useState(settings.filters.ratings);
     const [selectedYears, setSelectedYears] = React.useState(settings.filters.years);
+    const [selectedColor, setSelectedColor] = React.useState(settings.color.hue);
 
     const setSettings = useCallback((value, type) => {
         // отправляем новое состояние в store
         setSettingsAndSave({ 
             dark: (type === 'mode') ? value : settings.dark,
+            color: (type === 'color') ? { hue: value } : settings.color,
             filters: {
                 types: (type === 'types') ? value : settings.filters.types,
                 ratings: (type === 'ratings') ? value : settings.filters.ratings,
@@ -73,6 +76,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                 localStorage.removeItem('settings');
                 clearSettings();
                 createFilteredFilms();
+                setSelectedColor(DEFAULT_HUE);
                 setSelectedRatings(DEFAULT_RATING);
                 setSelectedYears(DEFAULT_YEARS);
             }, onCancel() {}
@@ -94,7 +98,18 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Switch onChange={(val) => {setSettings(val, "mode")}} value={settings.dark} checked={settings.dark} />
                 </div>
 
-                <Title level={3}>Настройки поиска</Title>
+                <div className="settings__content--row">
+                    <Text className="theme">Цвет</Text>
+                    <Slider className="settings__content--color"
+                            min={0} max={360} defaultValue={selectedColor}
+                            value={selectedColor}
+                            style={{"--gf-handle-color": `hsl(${selectedColor},70%,52%)`}}
+                            onChange={setSelectedColor}
+                            onAfterChange={(val) => {setSettings(val, "color")}}
+                    />
+                </div>
+
+                <Title level={3} style={{marginBottom:0}}>Настройки поиска</Title>
 
                 <div className="settings__content--row">
                     <Text className="theme">Тип</Text>
@@ -113,7 +128,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Slider className="settings__content--slider" range
                             marks={RATINGS} min={5} max={10} step={0.5} defaultValue={settings.filters.ratings}
                             value={selectedRatings}
-                            onChange={(val) => {setSelectedRatings(val);}}
+                            onChange={setSelectedRatings}
                             onAfterChange={(val) => {setSettings(val, "ratings")}}
                     />
                 </div>
@@ -123,7 +138,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Slider className="settings__content--slider" range
                             marks={YEARS} min={1950} max={2021} defaultValue={settings.filters.years}
                             value={selectedYears}
-                            onChange={(val) => {setSelectedYears(val);}}
+                            onChange={setSelectedYears}
                             onAfterChange={(val) => {setSettings(val, "years")}}
                     />
                 </div>
