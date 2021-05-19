@@ -14,7 +14,16 @@ const App = ({ getFilms, settings, filmsCount, error }) => {
     }
   }, [getFilms, filmsCount]);
 
-  document.body.classList.toggle("dark", settings.dark);
+  useEffect(() => {
+    document.body.classList.toggle("dark", settings.dark);
+  }, [settings.dark]);
+  
+  useEffect(() => {
+    document.body.style.cssText += 
+        `--gf-color-main: hsl(${settings.color.hue},60%,50%);`
+        + `--gf-color-dark: hsl(${settings.color.hue},55%,42%);`
+        + `--gf-color-light: hsl(${settings.color.hue},65%,58%);`;
+  }, [settings.color]);
 
   return (
     <div className="App">

@@ -66,7 +66,7 @@
       display: flex;
       justify-content: flex-end;
       align-self: flex-start;
-      @include fontFrame(400, 20px, $activbtn);
+      @include fontFrame(400, 20px, var(--gf-color-main));
       margin: 0 0 0 5px;
     }
     &--secondTitleWrapper {
@@ -130,8 +130,8 @@
           & .button {
             width: 48%;
             border-radius: 10px;
-            color: $activbtn;
-            border: 2px solid $activbtn;
+            color: var(--gf-color-main);
+            border: 2px solid var(--gf-color-main);
             text-transform: uppercase;
             font-weight: bold;
             //font-size: 1.1em;
@@ -140,7 +140,7 @@
           }
           & .small__button {
             fill: $listsButtonColor;
-            border: 1px dotted $activbtn;
+            border: 1px dotted var(--gf-color-main);
             display: flex;
             justify-content: center;
             align-items: center;

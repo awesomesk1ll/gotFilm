@@ -3,16 +3,30 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import './Lists.scss';
 import ListLink from '../../components/ListLink';
 import { clearLists } from '../../store/actions/filmActions';
 
+const { confirm } = Modal;
+
 const Lists = ({ blacklist, temporary, alreadySeen, history, favorites, clearLists }) => {
     const handleClearButton = useCallback(() => {
-        ['blacklist', 'alreadySeen', 'history', 'favorites'].forEach(list => {localStorage.removeItem(list)});
-        clearLists()
+        confirm({
+            title: 'Очистка списков',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Выполнить очистку',
+            okType: 'danger',
+            cancelText: 'Отмена',
+            style: {top: "50%"},
+            content: 'Все списки фильмов станут пустыми. Вы уверены?',
+            onOk() {
+                ['blacklist', 'alreadySeen', 'history', 'favorites'].forEach(list => {localStorage.removeItem(list)});
+                clearLists();
+            }, onCancel() {}
+          });
     }, [clearLists])
 
 

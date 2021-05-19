@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { Typography, Button, Slider, Select, Switch } from 'antd';
+import { Typography, Button, Slider, Select, Switch, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { clearSettings } from '../../store/actions/filmActions';
 import { setSettingsAndSave, createFilteredFilms } from '../../store/actions/complexFilmActions';
@@ -11,19 +12,23 @@ import { setSettingsAndSave, createFilteredFilms } from '../../store/actions/com
 import { TYPES, RATINGS, YEARS, GENRES, COUNTRIES } from './config';
 import './Settings.scss';
 
+const DEFAULT_HUE = 36;
 const DEFAULT_RATING = [7, 10];
 const DEFAULT_YEARS = [1990, 2021];
 
+const { confirm } = Modal;
 const { Title, Text } = Typography;
 
 const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, filteredFilmsCount, isLazyLoading, createFilteredFilms }) => {
     const [selectedRatings, setSelectedRatings] = React.useState(settings.filters.ratings);
     const [selectedYears, setSelectedYears] = React.useState(settings.filters.years);
+    const [selectedColor, setSelectedColor] = React.useState(settings.color.hue);
 
     const setSettings = useCallback((value, type) => {
         // отправляем новое состояние в store
         setSettingsAndSave({ 
             dark: (type === 'mode') ? value : settings.dark,
+            color: (type === 'color') ? { hue: value } : settings.color,
             filters: {
                 types: (type === 'types') ? value : settings.filters.types,
                 ratings: (type === 'ratings') ? value : settings.filters.ratings,
@@ -59,16 +64,30 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
     }, [setSettings, settings]);
 
     const handleClearSettings = useCallback(() => {
-        localStorage.removeItem('settings');
-        clearSettings();
-        createFilteredFilms();
-        setSelectedRatings(DEFAULT_RATING);
-        setSelectedYears(DEFAULT_YEARS);
+        confirm({
+            title: 'Сброс настроек',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Выполнить сброс',
+            okType: 'danger',
+            cancelText: 'Отмена',
+            style: {top: "50%"},
+            content: 'Все настройки будут переведены в статус "По умолчанию". Данное действие не затрагивает списки фильмов. Вы уверены?',
+            onOk() {
+                localStorage.removeItem('settings');
+                clearSettings();
+                createFilteredFilms();
+                setSelectedColor(DEFAULT_HUE);
+                setSelectedRatings(DEFAULT_RATING);
+                setSelectedYears(DEFAULT_YEARS);
+            }, onCancel() {}
+          });
     }, [clearSettings, createFilteredFilms]);
+
+    const getColorTooltip = () => <div style={{color: `hsl(${selectedColor},70%,52%)`, letterSpacing: -2, marginRight: 2}}>██</div>;
 
     return (
         <div className="settings--wrapper theme">
-            <div className="settings__header theme">
+            <div className="settings__header theme" onClick={() => {window.location.replace(window.location.href)}}>
                 <div className="settings__header--title" level={2}>Настройки</div>
             </div>
             <div className="settings__content">
@@ -81,13 +100,26 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Switch onChange={(val) => {setSettings(val, "mode")}} value={settings.dark} checked={settings.dark} />
                 </div>
 
-                <Title level={3}>Настройки поиска</Title>
+                <div className="settings__content--row">
+                    <Text className="theme">Цвет</Text>
+                    <Slider className="settings__content--color"
+                            min={0} max={360} defaultValue={selectedColor}
+                            tipFormatter={getColorTooltip}
+                            value={selectedColor}
+                            style={{"--gf-handle-color": `hsl(${selectedColor},70%,52%)`}}
+                            onChange={setSelectedColor}
+                            onAfterChange={(val) => {setSettings(val, "color")}}
+                    />
+                </div>
+
+                <Title level={3} style={{marginBottom:0}}>Настройки поиска</Title>
 
                 <div className="settings__content--row">
                     <Text className="theme">Тип</Text>
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
+                            maxTagCount="responsive"
                             value={settings.filters.types}
                             onChange={(val) => {setSettings(val, "types")}}
                             onDeselect={(val) => {handleDeSelect(val, "types")}}
@@ -100,7 +132,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Slider className="settings__content--slider" range
                             marks={RATINGS} min={5} max={10} step={0.5} defaultValue={settings.filters.ratings}
                             value={selectedRatings}
-                            onChange={(val) => {setSelectedRatings(val);}}
+                            onChange={setSelectedRatings}
                             onAfterChange={(val) => {setSettings(val, "ratings")}}
                     />
                 </div>
@@ -110,7 +142,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Slider className="settings__content--slider" range
                             marks={YEARS} min={1950} max={2021} defaultValue={settings.filters.years}
                             value={selectedYears}
-                            onChange={(val) => {setSelectedYears(val);}}
+                            onChange={setSelectedYears}
                             onAfterChange={(val) => {setSettings(val, "years")}}
                     />
                 </div>

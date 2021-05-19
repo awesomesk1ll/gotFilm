@@ -6,6 +6,7 @@ const prepareSettings = () => localStorage.getItem('settings')
                             ? JSON.parse(localStorage.getItem('settings')) 
                             : { 
                                 dark: false,
+                                color: { hue: 36 },
                                 filters: {
                                     types: ['FILM', 'TV_SHOW'],
                                     genres: ['боевик','комедия', 'драма'],
@@ -290,6 +291,7 @@ export default function filmReducer(store = initStore, action) {
                 settings: {
                     $set: {
                         dark: action.settings.dark,
+                        color: action.settings.color,
                         filters: {
                             types: [...action.settings.filters.types],
                             ratings: [...action.settings.filters.ratings],

@@ -36,8 +36,8 @@
       background-color: transparent !important;
       line-height: 50%;
       border-radius: 10px;
-      color: $activbtn;
-      border: 2px solid $activbtn;
+      color: var(--gf-color-main);
+      border: 2px solid var(--gf-color-main);
       text-transform: uppercase;
       font-weight: bold;
     }

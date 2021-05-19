@@ -19,7 +19,7 @@ img.ant-image-preview-img {
 }
 
 a:hover {
-  color: $activeBtnDarker;
+  color: var(--gf-color-dark);
 }
 
 /* ant  sliders patches */
@@ -29,10 +29,10 @@ a:hover {
   transform: translateY(50%);
   &:hover {
     .ant-slider-track {
-      background-color: $activeBtnLighter;
+      background-color: var(--gf-color-light);
     }
     .ant-slider-handle {
-      border: solid $handleSize/6 $activbtn !important;
+      border: solid $handleSize/6 var(--gf-color-main) !important;
     }
   }
   &-rail {
@@ -45,7 +45,7 @@ a:hover {
     background: #888;
   }
   &-track {
-    background-color: $activbtn;
+    background-color: var(--gf-color-main);
     height: $sliderHeight;
     z-index: 1;
   }
@@ -54,12 +54,12 @@ a:hover {
   }
   &-handle {
     &-dragging {
-      border: solid $handleSize/6 $activeBtnDarker !important;
+      border: solid $handleSize/6 var(--gf-color-dark) !important;
       -webkit-box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
       box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
     }
     &:focus {
-      border: solid $handleSize/6 $activbtn !important;
+      border: solid $handleSize/6 var(--gf-color-main) !important;
       -webkit-box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
       box-shadow: 0 0 0 5px rgba(141, 141, 141, 0.12) !important;
     }
@@ -68,7 +68,7 @@ a:hover {
     transform: translate3d(-50%, $sliderHeight/2, 0px) !important;
     width: $handleSize;
     height: $handleSize;
-    border: solid $handleSize/6 $activbtn !important;
+    border: solid $handleSize/6 var(--gf-color-main) !important;
   }
   &-mark {
     top: -24px;
@@ -88,7 +88,7 @@ a:hover {
       -webkit-box-shadow: 0 0 0 2px rgba(140, 140, 140, 0.2) !important;
       box-shadow: 0 0 0 2px rgba(140, 140, 140, 0.2) !important;
     }
-    background-color: $activbtn;
+    background-color: var(--gf-color-main);
   }
 }
 
@@ -96,9 +96,9 @@ a:hover {
 .ant-btn {
   &:hover,
   &:focus {
-    color: $activbtn;
+    color: var(--gf-color-main);
     background: rgba(140, 140, 140, 0.2);
-    border-color: $activeBtnLighter;
+    border-color: var(--gf-color-light);
   }
 }
 
@@ -108,17 +108,17 @@ a:hover {
   &:hover,
   &:focus {
     & .ant-select-selector {
-      border-color: $activbtn !important;
+      border-color: var(--gf-color-main) !important;
       -webkit-box-shadow: 0 0 0 2px rgba(140, 140, 140, 0.2) !important;
       box-shadow: 0 0 0 2px rgba(140, 140, 140, 0.2) !important;
     }
   }
   &-item-option {
     &-state {
-      color: $activeBtnDarker !important;
+      color: var(--gf-color-dark) !important;
     }
     &-selected {
-      background-color: $activeBtnLighter !important;
+      background-color: var(--gf-color-light) !important;
     }
   }
 }
@@ -127,14 +127,14 @@ a:hover {
 .ant-input {
   &:hover,
   &:focus {
-    border-color: $activeBtnLighter;
+    border-color: var(--gf-color-dark);
     box-shadow: none;
   }
   &-affix-wrapper {
     &-focused,
     &:not(.ant-input-affix-wrapper-disabled):hover,
     &:not(.ant-input-affix-wrapper-disabled):focus {
-      border-color: $activeBtnLighter !important;
+      border-color: var(--gf-color-light) !important;
       box-shadow: none;
     }
   }
@@ -143,13 +143,13 @@ a:hover {
 /* ant checkbox style patches */
 .ant-checkbox {
   &-checked &-inner {
-    background-color: $activbtn !important;
+    background-color: var(--gf-color-main) !important;
     border: none;
   }
   &::after,
   &-wrapper:hover &-inner,
   &-input:focus + &-inner {
-    border-color: $activeBtnLighter !important;
+    border-color: var(--gf-color-light) !important;
   }
 }
 

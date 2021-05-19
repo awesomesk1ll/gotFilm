@@ -18,12 +18,13 @@
     font-weight: 500;
   }
   &__icon {
-    box-shadow: 4px 3px 8px 3px var(--box-shadow-color);
+    box-shadow: 4px 3px 9px 3px transparentize($templateBackgroundColorDarkNormal, 0.6);
     border-radius: 50%;
+    border: 2px solid $templateBackgroundColor;
     padding: 15px;
     display: block;
-    :hover, :active {
-      fill: $activbtn;
+    &:hover, &:active {
+      fill: var(--gf-color-main);
     }
   }
 }

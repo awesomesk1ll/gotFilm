@@ -12,6 +12,7 @@
     background-color: $templateBackgroundColor;
   }
   &__header {
+    z-index:1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,6 +37,7 @@
     align-items: center;
     justify-content: space-between;
     &--row {
+      padding: 0px 1%;
       span {
         color: $textColor;
         font-family: 'Roboto', sans-serif;
@@ -51,6 +53,24 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+    }
+    &--color {
+      width: 78%;
+      transform: translateY(-3px);
+      & .ant-slider-track {
+        background: transparent !important;
+      }
+      & .ant-slider-step {
+        background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+      }
+      & .ant-slider-handle {
+        background-color: var(--gf-handle-color);
+        border: solid $handleSize/6 #fff !important;
+        box-shadow: rgba(0,0,0,0.37) 0px 1px 4px 0px;
+      }
+      &:hover .ant-slider-handle {
+        border: solid $handleSize/6 var(--gf-handle-color) !important;
+      }
     }
     &--slider {
       width: 78%;
@@ -70,19 +90,19 @@
       & button {
         width: 100%;
         border-radius: 10px;
-        background-color: $activbtn;
+        background-color: var(--gf-color-main);
         color: white;
-        border: 2px solid $activbtn;
+        border: 2px solid var(--gf-color-main);
         text-transform: uppercase;
         font-weight: bold;
         text-align: center;
       } 
     }
     &--counter {
-      font: 500 20px 'Roboto', sans-serif;
-      color: $activbtn;
+      font: 500 18px 'Roboto', sans-serif;
+      color: var(--gf-color-main);
       code {
-        padding: 0.3em 1em 0.3em;
+        padding: 0.3em 0.6em;
       }
       &.warning {
         color: #ff4d4f;
@@ -93,8 +113,8 @@
       width: 90%;
       border-radius: 10px;
       background-color: transparent;
-      color: $activbtn;
-      border: 2px solid $activbtn;
+      color: var(--gf-color-main);
+      border: 2px solid var(--gf-color-main);
       text-transform: uppercase;
       font-weight: bold;
     }

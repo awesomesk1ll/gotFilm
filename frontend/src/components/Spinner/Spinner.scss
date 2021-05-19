@@ -8,7 +8,7 @@
     font-size: 64px;
   }
   & svg {
-    fill:#DA952D;
+    fill: var(--gf-color-main);
   }
   background: rgba(75, 75, 75, 0.5);
 }

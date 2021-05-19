@@ -10,9 +10,8 @@
     position: fixed;
     width: var(--app-width);
     height: $navigationHeight;
+    background-color: $templateBackgroundColor;
     bottom: 0;
-    background-color: #eee;
-    background: linear-gradient(0deg, #ccc, #eee);
     border-top: 1px solid #ccc;
     .ant-radio {
       display: none;
@@ -33,8 +32,9 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-right: 0px;
     &.ant-radio-wrapper-checked {
-      fill: $activbtn;
+      fill: var(--gf-color-main);
     }
   }
 }
