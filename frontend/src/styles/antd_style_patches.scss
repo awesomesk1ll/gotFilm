@@ -94,12 +94,21 @@ a:hover {
 
 /* ant button patches */
 .ant-btn {
+  margin-bottom: 8px;
+  margin-right: 8px;
   &:hover,
   &:focus {
     color: var(--gf-color-main);
     background: rgba(140, 140, 140, 0.2);
     border-color: var(--gf-color-light);
   }
+  &-lg {
+    padding: 8px;
+  }
+}
+
+.ant-modal-confirm .ant-modal-confirm-btns .ant-btn + .ant-btn {
+  margin-left: 0;
 }
 
 /* ant select style patches */
