@@ -85,7 +85,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
 
     return (
         <div className="settings--wrapper theme">
-            <div className="settings__header theme">
+            <div className="settings__header theme" onClick={() => {window.location.replace(window.location.href)}}>
                 <div className="settings__header--title" level={2}>Настройки</div>
             </div>
             <div className="settings__content">
