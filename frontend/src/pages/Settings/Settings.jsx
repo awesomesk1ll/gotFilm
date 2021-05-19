@@ -119,6 +119,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Select className="settings__content--select"
                             mode="multiple"
                             showArrow
+                            maxTagCount="responsive"
                             value={settings.filters.types}
                             onChange={(val) => {setSettings(val, "types")}}
                             onDeselect={(val) => {handleDeSelect(val, "types")}}
