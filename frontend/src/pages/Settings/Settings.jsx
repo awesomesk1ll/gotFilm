@@ -83,6 +83,8 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
           });
     }, [clearSettings, createFilteredFilms]);
 
+    const getColorTooltip = () => <div style={{color: `hsl(${selectedColor},70%,52%)`, letterSpacing: -2, marginRight: 2}}>██</div>;
+
     return (
         <div className="settings--wrapper theme">
             <div className="settings__header theme" onClick={() => {window.location.replace(window.location.href)}}>
@@ -102,6 +104,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                     <Text className="theme">Цвет</Text>
                     <Slider className="settings__content--color"
                             min={0} max={360} defaultValue={selectedColor}
+                            tipFormatter={getColorTooltip}
                             value={selectedColor}
                             style={{"--gf-handle-color": `hsl(${selectedColor},70%,52%)`}}
                             onChange={setSelectedColor}
