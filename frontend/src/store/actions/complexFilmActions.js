@@ -223,8 +223,11 @@ export const changeFilm = () => {
         // если следующих фильмов нет, то показали уведомление (выше) и больше ничего не делаем
         if (current && preparedFilms.length === 0) {return;};
 
+        // сужающийся множитель, для 5 будет K = 1~, а для 5120 будет K = 0,028~
+        const K = Math.pow(0.7,(1.44267*Math.log(preparedFilms.length)-1.3219)-1);
+
         // случайный выбор фильма (если фильмов больше 4 то отсекаем вторую половину по ранкингу кинопоиска)
-        randomIndex = ~~(Math.random() * ((preparedFilms.length > 4) ? preparedFilms.length * 0.5 : preparedFilms.length));
+        randomIndex = ~~(Math.random() * ((preparedFilms.length > 4) ? preparedFilms.length * K : preparedFilms.length));
         film = preparedFilms[randomIndex];
 
         // выбор фильма по порядку в ранкинге кинопоиска
