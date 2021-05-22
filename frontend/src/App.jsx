@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
+import { ConfigProvider } from 'antd';
+import ru_RU from 'antd/lib/locale/ru_RU';
 
 import Router from './containers/Router';
 import Error from './pages/Error';
@@ -26,11 +28,13 @@ const App = ({ getFilms, settings, filmsCount, error }) => {
   }, [settings.color]);
 
   return (
-    <div className="App">
-      <div className="container theme">
-       { error ? <Error text={error}/> : <Router /> }
+    <ConfigProvider locale={ru_RU}>
+      <div className="App">
+        <div className="container theme">
+        { error ? <Error text={error}/> : <Router /> }
+        </div>
       </div>
-    </div>
+    </ConfigProvider>
   );
 };
 
