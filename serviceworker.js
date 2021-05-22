@@ -1,6 +1,6 @@
-const staticAppCacheName = 's-gf-app-rev0001';
-const dynamicAppCacheName = 'd-gf-app-rev0001';
-const filmsCacheName = 'gf-films-rev0001';
+const staticAppCacheName = 's-gf-app-rev0002';
+const dynamicAppCacheName = 'd-gf-app-rev0002';
+const filmsCacheName = 'gf-films-rev0002';
 const self = this;
 
 const staticFiles = [
