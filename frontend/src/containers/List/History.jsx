@@ -38,7 +38,7 @@ const History = ({ films, favorites, history, favoriteIconPush, removeFromListAn
                                 status={favorites.list[film.id]} 
                     />
                 </CSSTransition>
-    });
+    }).reverse();
 
     const transitionGroup = () => <TransitionGroup className="list__list">{ list }</TransitionGroup>
     
