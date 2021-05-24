@@ -130,7 +130,7 @@ const Settings = ({ settings, clearSettings, setSettingsAndSave, filmsCount, fil
                 <div className="settings__content--row theme">
                     <Text className="theme">Рейтинг</Text>
                     <Slider className="settings__content--slider" range
-                            marks={RATINGS} min={5} max={10} step={0.5} defaultValue={settings.filters.ratings}
+                            marks={RATINGS} min={5} max={10} step={0.1} defaultValue={settings.filters.ratings}
                             value={selectedRatings}
                             onChange={setSelectedRatings}
                             onAfterChange={(val) => {setSettings(val, "ratings")}}
