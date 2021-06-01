@@ -61,6 +61,7 @@ async function cacheFirstOrSave (request) {
   
   origin = new URL(request.url).origin;
 
+  if (origin === 'https://mc.yandex.ru') { return await fetch(request.url, options); }
   const isFilmsRequest = FILMS_ORIGINS.includes(origin) && (/\/films\/\d*.json/).test(request.url);
   const isPictureRequest = origin === 'https://st.kp.yandex.net';
   options = isPictureRequest ? {redirect: 'follow', mode: 'no-cors'} : {};
