@@ -10,7 +10,7 @@ const staticFiles = [
   'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'
 ];
 
-const FILMS_ORIGINS = ['http://localhost:3000', 'https://gotfilm.tk'];
+const FILMS_ORIGINS = ['http://localhost:3000', 'https://gotfilm.tech'];
 
 const getDynamicFiles = async () => {
   const list = await fetch('./asset-manifest.json').then(data => data.json());
