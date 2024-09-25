@@ -1,4 +1,4 @@
-# gotfilm.xyz
+# gotFilm
 Исходные коды проекта, размещенного по адресу [gotfilm.xyz](https://gotfilm.xyz)
 
 Списки фильмов             |  Поиск                    |  Настройки
